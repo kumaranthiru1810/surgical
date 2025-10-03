@@ -277,6 +277,43 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
+  // Send message logic
+  const API_KEY = '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'; 
+  chatbotSend.addEventListener('click', async () => {
+    const userMessage = chatbotInput.value.trim();
+    if (userMessage) {
+        chatbotContent.innerHTML += `<p><strong>You:</strong> ${userMessage}</p>`;
+        chatbotInput.value = '';
+
+        try {
+            const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${API_KEY}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: 'gpt-4o',  
+                    messages: [{ role: 'user', content: userMessage }],
+                    max_tokens: 200
+                })
+            });
+
+            const data = await response.json();
+            console.log(data);
+            if (data.choices && data.choices[0].message && data.choices[0].message.content) {
+                chatbotContent.innerHTML += `<p><strong>Bot:</strong> ${data.choices[0].message.content}</p>`;
+            } else {
+                chatbotContent.innerHTML += `<p><strong>Bot:</strong> Sorry, I couldn't understand that.</p>`;
+            }
+
+            chatbotContent.scrollTop = chatbotContent.scrollHeight;
+        } catch (error) {
+            chatbotContent.innerHTML += `<p><strong>Bot:</strong> Sorry, I'm having trouble responding right now.</p>`;
+            console.error('Error:', error);
+        }
+    }
+});
   
 
 });
