@@ -1,0 +1,447 @@
+Array
+(
+    [CONTENT_LENGTH] => 712
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryJHdyWiWQKUhHc5QF
+    [CONTEXT_DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [CONTEXT_PREFIX] => 
+    [DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [HTTP_ACCEPT] => application/json
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate
+    [HTTP_ACCEPT_LANGUAGE] => en-US,en;q=0.9
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_HOST] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_ORIGIN] => http://bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_REFERER] => http://bharathi-surgicals-products.com.parasuramnurserygarden.com/pages/Products.php
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+    [PATH] => /bin
+    [PHPRC] => /etc/sentora/configs/apache/fcgi-config/vyasawom
+    [QUERY_STRING] => 
+    [REDIRECT_STATUS] => 200
+    [REMOTE_ADDR] => 42.106.177.209
+    [REMOTE_PORT] => 29583
+    [REQUEST_METHOD] => POST
+    [REQUEST_SCHEME] => http
+    [REQUEST_URI] => /pages/products.email.php
+    [SCRIPT_FILENAME] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com/pages/products.email.php
+    [SCRIPT_NAME] => /pages/products.email.php
+    [SERVER_ADDR] => 103.180.120.27
+    [SERVER_ADMIN] => mailtoanjanainfotech@gmail.com
+    [SERVER_NAME] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SERVER_PORT] => 80
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache
+    [UNIQUE_ID] => aMhVcTpnMuf@jb-3wH2fOwAAACM
+    [PHP_SELF] => /pages/products.email.php
+    [REQUEST_TIME_FLOAT] => 1757959537.2709
+    [REQUEST_TIME] => 1757959537
+)
+Array
+(
+    [CONTEXT_DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [CONTEXT_PREFIX] => 
+    [DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [HTTP_ACCEPT] => text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate
+    [HTTP_ACCEPT_LANGUAGE] => en-US,en;q=0.9
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_HOST] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_REFERER] => http://bharathi-surgicals-products.com.parasuramnurserygarden.com/pages/Products.php
+    [HTTP_UPGRADE_INSECURE_REQUESTS] => 1
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+    [PATH] => /bin
+    [PHPRC] => /etc/sentora/configs/apache/fcgi-config/vyasawom
+    [QUERY_STRING] => 
+    [REDIRECT_STATUS] => 200
+    [REMOTE_ADDR] => 42.106.177.209
+    [REMOTE_PORT] => 29583
+    [REQUEST_METHOD] => GET
+    [REQUEST_SCHEME] => http
+    [REQUEST_URI] => /pages/products.email.php
+    [SCRIPT_FILENAME] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com/pages/products.email.php
+    [SCRIPT_NAME] => /pages/products.email.php
+    [SERVER_ADDR] => 103.180.120.27
+    [SERVER_ADMIN] => mailtoanjanainfotech@gmail.com
+    [SERVER_NAME] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SERVER_PORT] => 80
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache
+    [UNIQUE_ID] => aMhVcjpnMuf@jb-3wH2fPAAAACM
+    [PHP_SELF] => /pages/products.email.php
+    [REQUEST_TIME_FLOAT] => 1757959538.6679
+    [REQUEST_TIME] => 1757959538
+)
+Array
+(
+    [CONTENT_LENGTH] => 716
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryRTtCmkLRzQApaQNA
+    [CONTEXT_DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [CONTEXT_PREFIX] => 
+    [DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [HTTP_ACCEPT] => application/json
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate
+    [HTTP_ACCEPT_LANGUAGE] => en-US,en;q=0.9
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_HOST] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_ORIGIN] => http://bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_REFERER] => http://bharathi-surgicals-products.com.parasuramnurserygarden.com/pages/Products.php
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+    [PATH] => /bin
+    [PHPRC] => /etc/sentora/configs/apache/fcgi-config/vyasawom
+    [QUERY_STRING] => 
+    [REDIRECT_STATUS] => 200
+    [REMOTE_ADDR] => 42.106.177.209
+    [REMOTE_PORT] => 29577
+    [REQUEST_METHOD] => POST
+    [REQUEST_SCHEME] => http
+    [REQUEST_URI] => /pages/products.email.php
+    [SCRIPT_FILENAME] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com/pages/products.email.php
+    [SCRIPT_NAME] => /pages/products.email.php
+    [SERVER_ADDR] => 103.180.120.27
+    [SERVER_ADMIN] => mailtoanjanainfotech@gmail.com
+    [SERVER_NAME] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SERVER_PORT] => 80
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache
+    [UNIQUE_ID] => aMhWF5KELNjV9OeFzc1WTAAAANA
+    [PHP_SELF] => /pages/products.email.php
+    [REQUEST_TIME_FLOAT] => 1757959704.0744
+    [REQUEST_TIME] => 1757959704
+)
+Array
+(
+    [CONTENT_LENGTH] => 714
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryCnhX9RG3CqbgUEia
+    [CONTEXT_DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [CONTEXT_PREFIX] => 
+    [DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [HTTP_ACCEPT] => application/json
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate
+    [HTTP_ACCEPT_LANGUAGE] => en-US,en;q=0.9
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_HOST] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_ORIGIN] => http://bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_REFERER] => http://bharathi-surgicals-products.com.parasuramnurserygarden.com/pages/Products.php
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+    [PATH] => /bin
+    [PHPRC] => /etc/sentora/configs/apache/fcgi-config/vyasawom
+    [QUERY_STRING] => 
+    [REDIRECT_STATUS] => 200
+    [REMOTE_ADDR] => 42.106.177.209
+    [REMOTE_PORT] => 29583
+    [REQUEST_METHOD] => POST
+    [REQUEST_SCHEME] => http
+    [REQUEST_URI] => /pages/products.email.php
+    [SCRIPT_FILENAME] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com/pages/products.email.php
+    [SCRIPT_NAME] => /pages/products.email.php
+    [SERVER_ADDR] => 103.180.120.27
+    [SERVER_ADMIN] => mailtoanjanainfotech@gmail.com
+    [SERVER_NAME] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SERVER_PORT] => 80
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache
+    [UNIQUE_ID] => aMhXNBaaAkIcRlEZcK9OpAAAAF8
+    [PHP_SELF] => /pages/products.email.php
+    [REQUEST_TIME_FLOAT] => 1757959988.7977
+    [REQUEST_TIME] => 1757959988
+)
+Array
+(
+    [CONTENT_LENGTH] => 676
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryrpVRl74slrjzkAUO
+    [CONTEXT_DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [CONTEXT_PREFIX] => 
+    [DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [HTTPS] => on
+    [HTTP_ACCEPT] => application/json
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => en-US,en;q=0.9,ta;q=0.8,de;q=0.7
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_HOST] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_ORIGIN] => https://bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_REFERER] => https://bharathi-surgicals-products.com.parasuramnurserygarden.com/pages/Products.php
+    [HTTP_SAVE_DATA] => on
+    [HTTP_SEC_CH_UA] => "Not;A=Brand";v="99", "Google Chrome";v="139", "Chromium";v="139"
+    [HTTP_SEC_CH_UA_MOBILE] => ?1
+    [HTTP_SEC_CH_UA_PLATFORM] => "Android"
+    [HTTP_SEC_FETCH_DEST] => empty
+    [HTTP_SEC_FETCH_MODE] => cors
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36
+    [PATH] => /bin
+    [PHPRC] => /etc/sentora/configs/apache/fcgi-config/vyasawom
+    [QUERY_STRING] => 
+    [REDIRECT_STATUS] => 200
+    [REMOTE_ADDR] => 106.197.93.24
+    [REMOTE_PORT] => 34446
+    [REQUEST_METHOD] => POST
+    [REQUEST_SCHEME] => https
+    [REQUEST_URI] => /pages/products.email.php
+    [SCRIPT_FILENAME] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com/pages/products.email.php
+    [SCRIPT_NAME] => /pages/products.email.php
+    [SERVER_ADDR] => 103.180.120.27
+    [SERVER_ADMIN] => mailtoanjanainfotech@gmail.com
+    [SERVER_NAME] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SERVER_PORT] => 443
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache
+    [SSL_CIPHER] => ECDHE-RSA-AES128-GCM-SHA256
+    [SSL_CIPHER_ALGKEYSIZE] => 128
+    [SSL_CIPHER_EXPORT] => false
+    [SSL_CIPHER_USEKEYSIZE] => 128
+    [SSL_CLIENT_VERIFY] => NONE
+    [SSL_COMPRESS_METHOD] => NULL
+    [SSL_PROTOCOL] => TLSv1.2
+    [SSL_SECURE_RENEG] => true
+    [SSL_SERVER_A_KEY] => rsaEncryption
+    [SSL_SERVER_A_SIG] => sha256WithRSAEncryption
+    [SSL_SERVER_I_DN] => CN=R13,O=Let's Encrypt,C=US
+    [SSL_SERVER_I_DN_C] => US
+    [SSL_SERVER_I_DN_CN] => R13
+    [SSL_SERVER_I_DN_O] => Let's Encrypt
+    [SSL_SERVER_M_SERIAL] => 05B8B4709ECD93665FA9512D55B993508E0F
+    [SSL_SERVER_M_VERSION] => 3
+    [SSL_SERVER_SAN_DNS_0] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_SAN_DNS_1] => www.bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_S_DN] => CN=bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_S_DN_CN] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_V_END] => Dec 11 05:22:34 2025 GMT
+    [SSL_SERVER_V_START] => Sep 12 05:22:35 2025 GMT
+    [SSL_SESSION_ID] => 602a5a90c9773d2b0729b9a95a4b8866b7508fdf63a3da968530d289ffe93956
+    [SSL_SESSION_RESUMED] => Resumed
+    [SSL_TLS_SNI] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_VERSION_INTERFACE] => mod_ssl/2.4.6
+    [SSL_VERSION_LIBRARY] => OpenSSL/1.0.2k-fips
+    [UNIQUE_ID] => aMhdeEUeIDKSeTMxu5xA5AAAAD4
+    [PHP_SELF] => /pages/products.email.php
+    [REQUEST_TIME_FLOAT] => 1757961592.9941
+    [REQUEST_TIME] => 1757961592
+)
+Array
+(
+    [CONTENT_LENGTH] => 714
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundarykmuvy9LYy9SZOBlS
+    [CONTEXT_DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [CONTEXT_PREFIX] => 
+    [DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [HTTPS] => on
+    [HTTP_ACCEPT] => application/json
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => en-US,en;q=0.9,ta-IN;q=0.8,ta;q=0.7
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_HOST] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_ORIGIN] => https://bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_REFERER] => https://bharathi-surgicals-products.com.parasuramnurserygarden.com/pages/Products.php
+    [HTTP_SEC_CH_UA] => "Chromium";v="140", "Not=A?Brand";v="24", "Google Chrome";v="140"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_SEC_FETCH_DEST] => empty
+    [HTTP_SEC_FETCH_MODE] => cors
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+    [PATH] => /bin
+    [PHPRC] => /etc/sentora/configs/apache/fcgi-config/vyasawom
+    [QUERY_STRING] => 
+    [REDIRECT_STATUS] => 200
+    [REMOTE_ADDR] => 49.37.194.134
+    [REMOTE_PORT] => 53801
+    [REQUEST_METHOD] => POST
+    [REQUEST_SCHEME] => https
+    [REQUEST_URI] => /pages/products.email.php
+    [SCRIPT_FILENAME] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com/pages/products.email.php
+    [SCRIPT_NAME] => /pages/products.email.php
+    [SERVER_ADDR] => 103.180.120.27
+    [SERVER_ADMIN] => mailtoanjanainfotech@gmail.com
+    [SERVER_NAME] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SERVER_PORT] => 443
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache
+    [SSL_CIPHER] => ECDHE-RSA-AES128-GCM-SHA256
+    [SSL_CIPHER_ALGKEYSIZE] => 128
+    [SSL_CIPHER_EXPORT] => false
+    [SSL_CIPHER_USEKEYSIZE] => 128
+    [SSL_CLIENT_VERIFY] => NONE
+    [SSL_COMPRESS_METHOD] => NULL
+    [SSL_PROTOCOL] => TLSv1.2
+    [SSL_SECURE_RENEG] => true
+    [SSL_SERVER_A_KEY] => rsaEncryption
+    [SSL_SERVER_A_SIG] => sha256WithRSAEncryption
+    [SSL_SERVER_I_DN] => CN=R13,O=Let's Encrypt,C=US
+    [SSL_SERVER_I_DN_C] => US
+    [SSL_SERVER_I_DN_CN] => R13
+    [SSL_SERVER_I_DN_O] => Let's Encrypt
+    [SSL_SERVER_M_SERIAL] => 05B8B4709ECD93665FA9512D55B993508E0F
+    [SSL_SERVER_M_VERSION] => 3
+    [SSL_SERVER_SAN_DNS_0] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_SAN_DNS_1] => www.bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_S_DN] => CN=bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_S_DN_CN] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_V_END] => Dec 11 05:22:34 2025 GMT
+    [SSL_SERVER_V_START] => Sep 12 05:22:35 2025 GMT
+    [SSL_SESSION_ID] => 713adab7fd7485f6cf3edf0fb57e806a7d678354d130b7485ef08385b8a7c852
+    [SSL_SESSION_RESUMED] => Resumed
+    [SSL_TLS_SNI] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_VERSION_INTERFACE] => mod_ssl/2.4.6
+    [SSL_VERSION_LIBRARY] => OpenSSL/1.0.2k-fips
+    [UNIQUE_ID] => aMrPCIcFIzUOG9jhzLD15QAAAP8
+    [PHP_SELF] => /pages/products.email.php
+    [REQUEST_TIME_FLOAT] => 1758121736.4653
+    [REQUEST_TIME] => 1758121736
+)
+Array
+(
+    [CONTENT_LENGTH] => 715
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryv7o1JBj5zsUtz5ne
+    [CONTEXT_DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [CONTEXT_PREFIX] => 
+    [DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [HTTPS] => on
+    [HTTP_ACCEPT] => application/json
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => en-US,en;q=0.9,ta-IN;q=0.8,ta;q=0.7
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_HOST] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_ORIGIN] => https://bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_REFERER] => https://bharathi-surgicals-products.com.parasuramnurserygarden.com/pages/Products.php
+    [HTTP_SEC_CH_UA] => "Chromium";v="140", "Not=A?Brand";v="24", "Google Chrome";v="140"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_SEC_FETCH_DEST] => empty
+    [HTTP_SEC_FETCH_MODE] => cors
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+    [PATH] => /bin
+    [PHPRC] => /etc/sentora/configs/apache/fcgi-config/vyasawom
+    [QUERY_STRING] => 
+    [REDIRECT_STATUS] => 200
+    [REMOTE_ADDR] => 49.37.194.134
+    [REMOTE_PORT] => 64843
+    [REQUEST_METHOD] => POST
+    [REQUEST_SCHEME] => https
+    [REQUEST_URI] => /pages/products.email.php
+    [SCRIPT_FILENAME] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com/pages/products.email.php
+    [SCRIPT_NAME] => /pages/products.email.php
+    [SERVER_ADDR] => 103.180.120.27
+    [SERVER_ADMIN] => mailtoanjanainfotech@gmail.com
+    [SERVER_NAME] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SERVER_PORT] => 443
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache
+    [SSL_CIPHER] => ECDHE-RSA-AES128-GCM-SHA256
+    [SSL_CIPHER_ALGKEYSIZE] => 128
+    [SSL_CIPHER_EXPORT] => false
+    [SSL_CIPHER_USEKEYSIZE] => 128
+    [SSL_CLIENT_VERIFY] => NONE
+    [SSL_COMPRESS_METHOD] => NULL
+    [SSL_PROTOCOL] => TLSv1.2
+    [SSL_SECURE_RENEG] => true
+    [SSL_SERVER_A_KEY] => rsaEncryption
+    [SSL_SERVER_A_SIG] => sha256WithRSAEncryption
+    [SSL_SERVER_I_DN] => CN=R13,O=Let's Encrypt,C=US
+    [SSL_SERVER_I_DN_C] => US
+    [SSL_SERVER_I_DN_CN] => R13
+    [SSL_SERVER_I_DN_O] => Let's Encrypt
+    [SSL_SERVER_M_SERIAL] => 05B8B4709ECD93665FA9512D55B993508E0F
+    [SSL_SERVER_M_VERSION] => 3
+    [SSL_SERVER_SAN_DNS_0] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_SAN_DNS_1] => www.bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_S_DN] => CN=bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_S_DN_CN] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_V_END] => Dec 11 05:22:34 2025 GMT
+    [SSL_SERVER_V_START] => Sep 12 05:22:35 2025 GMT
+    [SSL_SESSION_ID] => 6dceac06db0572914fb79672c4c4bf49986ea8055ef25b5381a8e1b752ea48f6
+    [SSL_SESSION_RESUMED] => Resumed
+    [SSL_TLS_SNI] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_VERSION_INTERFACE] => mod_ssl/2.4.6
+    [SSL_VERSION_LIBRARY] => OpenSSL/1.0.2k-fips
+    [UNIQUE_ID] => aMrPOSnS6GilKLK3Q6Q@FQAAABI
+    [PHP_SELF] => /pages/products.email.php
+    [REQUEST_TIME_FLOAT] => 1758121786.0624
+    [REQUEST_TIME] => 1758121786
+)
+Array
+(
+    [CONTENT_LENGTH] => 713
+    [CONTENT_TYPE] => multipart/form-data; boundary=----WebKitFormBoundaryQHLMWbFi2aXVsy98
+    [CONTEXT_DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [CONTEXT_PREFIX] => 
+    [DOCUMENT_ROOT] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com
+    [GATEWAY_INTERFACE] => CGI/1.1
+    [HTTPS] => on
+    [HTTP_ACCEPT] => application/json
+    [HTTP_ACCEPT_ENCODING] => gzip, deflate, br, zstd
+    [HTTP_ACCEPT_LANGUAGE] => en-US,en;q=0.9,ta-IN;q=0.8,ta;q=0.7
+    [HTTP_CONNECTION] => keep-alive
+    [HTTP_HOST] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_ORIGIN] => https://bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [HTTP_REFERER] => https://bharathi-surgicals-products.com.parasuramnurserygarden.com/pages/Products.php
+    [HTTP_SEC_CH_UA] => "Chromium";v="140", "Not=A?Brand";v="24", "Google Chrome";v="140"
+    [HTTP_SEC_CH_UA_MOBILE] => ?0
+    [HTTP_SEC_CH_UA_PLATFORM] => "Windows"
+    [HTTP_SEC_FETCH_DEST] => empty
+    [HTTP_SEC_FETCH_MODE] => cors
+    [HTTP_SEC_FETCH_SITE] => same-origin
+    [HTTP_USER_AGENT] => Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36
+    [PATH] => /bin
+    [PHPRC] => /etc/sentora/configs/apache/fcgi-config/vyasawom
+    [QUERY_STRING] => 
+    [REDIRECT_STATUS] => 200
+    [REMOTE_ADDR] => 49.37.194.134
+    [REMOTE_PORT] => 52163
+    [REQUEST_METHOD] => POST
+    [REQUEST_SCHEME] => https
+    [REQUEST_URI] => /pages/products.email.php
+    [SCRIPT_FILENAME] => /home/vyasawom/bharathi-surgicals-products_com_parasuramnurserygarden_com/pages/products.email.php
+    [SCRIPT_NAME] => /pages/products.email.php
+    [SERVER_ADDR] => 103.180.120.27
+    [SERVER_ADMIN] => mailtoanjanainfotech@gmail.com
+    [SERVER_NAME] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SERVER_PORT] => 443
+    [SERVER_PROTOCOL] => HTTP/1.1
+    [SERVER_SIGNATURE] => 
+    [SERVER_SOFTWARE] => Apache
+    [SSL_CIPHER] => ECDHE-RSA-AES128-GCM-SHA256
+    [SSL_CIPHER_ALGKEYSIZE] => 128
+    [SSL_CIPHER_EXPORT] => false
+    [SSL_CIPHER_USEKEYSIZE] => 128
+    [SSL_CLIENT_VERIFY] => NONE
+    [SSL_COMPRESS_METHOD] => NULL
+    [SSL_PROTOCOL] => TLSv1.2
+    [SSL_SECURE_RENEG] => true
+    [SSL_SERVER_A_KEY] => rsaEncryption
+    [SSL_SERVER_A_SIG] => sha256WithRSAEncryption
+    [SSL_SERVER_I_DN] => CN=R13,O=Let's Encrypt,C=US
+    [SSL_SERVER_I_DN_C] => US
+    [SSL_SERVER_I_DN_CN] => R13
+    [SSL_SERVER_I_DN_O] => Let's Encrypt
+    [SSL_SERVER_M_SERIAL] => 05B8B4709ECD93665FA9512D55B993508E0F
+    [SSL_SERVER_M_VERSION] => 3
+    [SSL_SERVER_SAN_DNS_0] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_SAN_DNS_1] => www.bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_S_DN] => CN=bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_S_DN_CN] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_SERVER_V_END] => Dec 11 05:22:34 2025 GMT
+    [SSL_SERVER_V_START] => Sep 12 05:22:35 2025 GMT
+    [SSL_SESSION_ID] => 60d537d2e60c44ca7a45c12b1b9fa1e494770bd4106ae7fb41e2b7fda6dd66b1
+    [SSL_SESSION_RESUMED] => Resumed
+    [SSL_TLS_SNI] => bharathi-surgicals-products.com.parasuramnurserygarden.com
+    [SSL_VERSION_INTERFACE] => mod_ssl/2.4.6
+    [SSL_VERSION_LIBRARY] => OpenSSL/1.0.2k-fips
+    [UNIQUE_ID] => aMrQfsD7Ban6PdwpdzwY0wAAAQ8
+    [PHP_SELF] => /pages/products.email.php
+    [REQUEST_TIME_FLOAT] => 1758122111.1642
+    [REQUEST_TIME] => 1758122111
+)
