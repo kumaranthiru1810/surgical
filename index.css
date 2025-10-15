@@ -26,12 +26,13 @@ body {
 /* Custom CSS */
 .navbar {
     height: 100px !important;
-    background-color: transparent !important;
-    z-index: 10000;
+    /* background-color: transparent !important; */
+    /* z-index: 10000; */
     /* background-image: url(./assets/nav-gradient-bg.png);
     background-repeat: no-repeat;
     background-size: cover;
     object-fit: cover; */
+    background-color: rgba(255, 255, 255, 0.95) !important;
 }
 
 .navbar-g{
@@ -244,7 +245,7 @@ body {
 
 .buttons .btn-outline {
     border: 2px solid #000;
-    padding: 12px 30px;
+    padding: 12px 25px;
     border-radius: 25px;
     color: #000;
     text-decoration: none;
@@ -256,7 +257,11 @@ body {
     color: #fff;
     border-color: var(--primary);
 }
-
+@media (max-width: 320px) {
+    .buttons .btn-outline{
+        padding: 12px 20px;
+    }
+}
 .doctor-img {
     max-width: 100%;
     height: auto;
@@ -1054,11 +1059,11 @@ label {
     padding-left: 25px;
 }
 
-.helper-widget {
-    display: none; /* Hidden by default */
+/* .helper-widget {
+    display: none; /* Hidden by default 
     opacity: 0;
     transition: opacity 0.3s ease;
-}
+} */
 
 .helper-widget.show {
     display: block;

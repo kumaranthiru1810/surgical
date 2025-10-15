@@ -1,95 +1,144 @@
+<?php session_start(); ?>
+<?php include('./db.php');
+$sql = $pdo->query("SELECT * FROM company_info WHERE id = 1");
+if ($sql->rowCount() > 0) {
+    $data = $sql->fetch(PDO::FETCH_ASSOC);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bharathi Surgicals</title>
+    <title><?php echo $data['title']; ?></title>
     <!-- Cache Control -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <!-- Bootstrap CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+        rel="stylesheet" />
     <!-- Animate.css for animations -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css" rel="stylesheet">
-    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        rel="stylesheet" />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
+        rel="stylesheet" />
+    <!-- AOS CSS -->
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+        rel="stylesheet" />
     <!-- css -->
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="./index.css" />
+
     <style>
+        .respon2 {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+        }
+
+        .respon {
+            display: none;
+        }
+
         @media (max-width: 991px) {
             .offcanvas {
                 background-color: blue !important;
             }
+        }
+
+        @media (min-width:558px) and (max-width:768px) {
+            .phone {
+                font-size: 15px;
+            }
+        }
+
+        @media(min-width:454px) and (max-width:557px) {
+            .phone {
+                font-size: 13px;
+            }
+        }
+
+        @media(min-width:425px) and (max-width:454px) {
+            .phone {
+                font-size: 12px;
+            }
+        }
+
+        @media(max-width:424px) {
+            .phone {
+                display: none;
+            }
+
+            .social-icons {
+                display: flex;
+                justify-self: start;
+                text-align: start;
+            }
+
+            .respon2 {
+                display: none;
+            }
+
+            .respon {
+                display: block;
+                background-color: #fff;
+            }
+
+            .respon .social-icons {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        @media(min-width:320px) and (max-width:374px) {
+            .phone1 {
+                font-size: 13px;
+            }
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: var(--primary);
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            font-size: 18px;
+        }
+
+        .social-icons a:hover {
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* Individual platform hover effects */
+        .social-icon.facebook:hover {
+            background-color: #3b5998;
+        }
+
+        .social-icon.instagram:hover {
+            background: linear-gradient(45deg, #fcc24d, #F77737, #D62976, #FD1D1D);
+        }
+
+        .social-icon.whatsapp:hover {
+            background-color: #25D366;
         }
     </style>
 </head>
 
 <body>
     <?php
-    // PHP configuration and data
-    $company_name = "Bharathi Surgicals";
-    $featured_products = [
-        [
-            'image' => './assets/product_1.png',
-            'tpi' => '27',
-            'width' => '90cm, 100cm, 110cm',
-            'length' => '9m - 36m',
-            'sterility' => 'Non-Sterile'
-        ],
-        [
-            'image' => './assets/product_2.png', // You might want different product images
-            'tpi' => '30',
-            'width' => '80cm, 90cm, 100cm',
-            'length' => '10m - 40m',
-            'sterility' => 'Sterile'
-        ],
-        [
-            'image' => './assets/product_3.png',
-            'tpi' => '25',
-            'width' => '95cm, 105cm, 115cm',
-            'length' => '8m - 35m',
-            'sterility' => 'Non-Sterile'
-        ]
-    ];
-
-    $testimonials = [
-        [
-            'name' => 'John Doe',
-            'position' => 'Nursing Manager',
-            'text' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias quae ad voluptates aliquam.',
-            'image' => './assets/testimonial_image.jpg',
-            'rating' => 5
-        ],
-        [
-            'name' => 'Jane Smith',
-            'position' => 'Head Surgeon',
-            'text' => 'Excellent quality products that we rely on for our critical procedures. Highly recommended!',
-            'image' => './assets/testimonial2.jpg',
-            'rating' => 5
-        ],
-        [
-            'name' => 'Robert Johnson',
-            'position' => 'Hospital Administrator',
-            'text' => 'Their products have consistently met our standards and their customer service is exceptional.',
-            'image' => './assets/testimonial3.jpg',
-            'rating' => 4
-        ]
-    ];
-
-    $contact_info = [
-        'phone' => '+91 98765 43210',
-        'email' => 'info@bharathisurgicals.com',
-        'address' => 'Rajapalayam, Tamil Nadu, India'
-    ];
 
     $social_links = [
-        'facebook' => '#',
-        'instagram' => '#',
         'whatsapp' => '#'
     ];
 
@@ -97,32 +146,67 @@
     $current_year = date('Y');
     ?>
     <!-- Top Navigation -->
-    <nav>
+    <nav class="respon2">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
                     <div class="contact-info text-start">
-                        <div>
-                            <a href="mailto:<?php echo $contact_info['email']; ?>" class="text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i> <?php echo $contact_info['email']; ?>
-                            </a>
-                        </div>
+                        <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
+                            <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
+                        </a>
                     </div>
                 </div>
-                <div class="col-md-4">
+
+                <?php
+                $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
+                if ($sql1->rowCount() > 0) {
+                    $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
+                }
+                ?>
+
+                <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
                     <div class="social-icons text-center">
-                        <a href="<?php echo $social_links['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $social_links['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
-                <div class="col-md-4 text-end">
+
+                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
                     <div class="contact-info text-end">
-                        <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $contact_info['phone']); ?>" class="text-decoration-none text-dark">
-                                <i class="bi bi-telephone-fill"></i> <?php echo $contact_info['phone']; ?>
-                            </a>
-                        </div>
+                        <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
+                            <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="respon">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+                    <div class="social-icons">
+                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                    <div class="contact-info text-start">
+                        <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
+                            <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                    <div class="contact-info text-end">
+                        <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
+                            <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -131,12 +215,14 @@
 
 
 
+
+
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <nav class="navbar navbar-expand-lg sticky-top position-sticky">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <div class="d-flex align-items-center">
-                    <img src="./assets/logo.png" alt="<?php echo $company_name; ?> Logo" class="me-2">
+                    <img src="./assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
                 </div>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -151,22 +237,33 @@
                         <a class="nav-link" href="./pages/about.php">About Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./pages/Products.php">Products</a>
+                        <a class="nav-link" href="./pages/products.php">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./pages/Management.php">Management</a>
+                        <a class="nav-link" href="./pages/management.php">Management</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./pages/contact-us.php">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <?php if (isset($_SESSION['name'])) { ?>
+                            <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
+                        <?php } else { ?>
+                            <a href="./pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
+                        <?php } ?>
+                    </li>
+                    <li class="nav-item">
+                        <?php if (isset($_SESSION['name'])) { ?>
+                            <a href="./pages/logout.php" class="btn btn-primary me-3">Logout</a>
+                        <?php } else { ?>
+                            <a href="./pages/signin.php" class="btn btn-primary me-3">Sign In</a>
+                        <?php } ?>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container navbar-g">
-        <img src="./assets/nav-gradient-bg.png" alt="" class="img-fluid">
-    </div>
 
     <section class="hero-section pt-5">
         <div class="container">
@@ -299,18 +396,17 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="footer-logo d-flex align-items-center mb-3">
-                        <img src="./assets/logo.png" alt="<?php echo $company_name; ?> Logo" class="me-2">
+                        <img src="./assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
                     </div>
                     <div class="opening-time">
-                        <h5>Opening Time</h5>
-                        <p>9.00 AM - 6.00 PM<br>(Monday - Sunday)</p>
+                        <?php echo $data['opening_time']; ?>
                     </div>
                 </div>
 
                 <div class="col-md-4">
                     <div class="social-icons text-center">
-                        <a href="<?php echo $social_links['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $social_links['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
                         <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
@@ -318,20 +414,20 @@
                 <div class="col-md-4">
                     <div class="contact-info">
                         <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $contact_info['phone']); ?>" class="text-decoration-none text-dark">
-                                <i class="bi bi-telephone-fill"></i> <?php echo $contact_info['phone']; ?>
+                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="text-decoration-none text-dark">
+                                <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
                             </a>
                         </div>
 
                         <div>
-                            <a href="mailto:<?php echo $contact_info['email']; ?>" class="text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i> <?php echo $contact_info['email']; ?>
+                            <a href="mailto:<?php echo $data['email']; ?>" class="text-decoration-none text-dark">
+                                <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
                             </a>
                         </div>
 
                         <div>
-                            <a href="https://www.google.com/maps/search/<?php echo urlencode($contact_info['address']); ?>" target="_blank" class="text-decoration-none text-dark">
-                                <i class="bi bi-geo-alt-fill"></i> <?php echo $contact_info['address']; ?>
+                            <a href="https://www.google.com/maps/search/<?php echo urlencode($data['address']); ?>" target="_blank" class="text-decoration-none text-dark">
+                                <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
                             </a>
                         </div>
                     </div>
@@ -341,7 +437,7 @@
             <div class="footer-bottom">
                 <div class="row">
                     <div class="col-md-4">
-                        <p>Developed by <a href="#" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
+                        <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
                     </div>
                     <div class="col-md-4 text-center">
                         <p>© <?php echo $current_year; ?> All Rights Reserved.</p>
@@ -363,17 +459,17 @@
         </button>
         <div class="helper-menu">
             <ul>
-                <li><a href="./forms/get_a_qoute.html">Get Quote</a></li>
-                <li><a href="./forms/request_sample.html">Request Samples</a></li>
+                <li><a href="./forms/get_a_qoute.php">Get Quote</a></li>
+                <li><a href="./forms/request_sample.php ">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
-                <li><a href="./forms/raise_of_complaint.html">Raise a Complaint</a></li>
-                <li><a href="./forms/suggestions.html">Suggestions</a></li>
+                <li><a href="./forms/raise_of_complaint.php">Raise a Complaint</a></li>
+                <li><a href="./forms/suggestions.php">Suggestions</a></li>
                 <li><a href="#chat" id="open-chat">Chat with us</a></li>
             </ul>
         </div>
     </div>
 
-    <div id="chatbot-box" class="hidden">
+    <!-- <div id="chatbot-box" class="hidden">
         <div id="chatbot-header">
             <span>Chatbot</span>
             <button id="chatbot-close" class="close-btn" aria-label="Close Chatbot">
@@ -385,14 +481,47 @@
         </div>
         <input type="text" id="chatbot-input" placeholder="Type your message...">
         <button id="chatbot-send">Send</button>
-    </div>
+    </div> -->
+    <script>
+        document.getElementById('open-chat').addEventListener('click', function() {
+            let message = `How can i help You? %0A%0A`;
+
+            const storeNumber = "918489089784"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+
+    <script>
+        // Toggle the helper menu
+        const toggleButton = document.querySelector('.helper-toggle');
+        const helperMenu = document.querySelector('.helper-menu');
+
+        toggleButton.addEventListener('click', () => {
+            helperMenu.classList.toggle('active');
+        });
+
+        // Optional: hide menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.helper-widget')) {
+                helperMenu.classList.remove('active');
+            }
+        });
+    </script>
 
 
     <!-- Bootstrap JS and dependencies -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="script.js"></script>
+
     <script>
         AOS.init({
             duration: 1000,
