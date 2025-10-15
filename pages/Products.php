@@ -1,3 +1,13 @@
+<?php session_start(); ?>
+
+
+<?php include('../db.php');
+$sql = $pdo->query("SELECT * FROM company_info WHERE id = 1");
+if ($sql->rowCount() > 0) {
+    $data = $sql->fetch(PDO::FETCH_ASSOC);
+}
+?>
+
 <?php
 // Database configuration
 $db_config = [
@@ -117,6 +127,72 @@ try {
     <!-- css -->
     <link rel="stylesheet" href="../index.css" />
     <style>
+      
+        .respon2 {
+            background-color: rgba(255, 255, 255, 0.95) !important;
+        }
+
+        .respon {
+            display: none;
+        }
+
+        @media (max-width: 991px) {
+            .offcanvas {
+                background-color: blue !important;
+            }
+        }
+
+        @media (min-width:558px) and (max-width:768px) {
+            .phone {
+                font-size: 15px;
+            }
+        }
+
+        @media(min-width:454px) and (max-width:557px) {
+            .phone {
+                font-size: 13px;
+            }
+        }
+
+        @media(min-width:425px) and (max-width:454px) {
+            .phone {
+                font-size: 12px;
+            }
+        }
+
+        @media(max-width:424px) {
+            .phone {
+                display: none;
+            }
+
+            .social-icons {
+                display: flex;
+                justify-self: start;
+                text-align: start;
+            }
+
+            .respon2 {
+                display: none;
+            }
+
+            .respon {
+                display: block;
+                background-color: #fff;
+            }
+
+            .respon .social-icons {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        @media(min-width:320px) and (max-width:374px) {
+            .phone1 {
+                font-size: 13px;
+            }
+        }
+    
       .product-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         height: 100%;
@@ -160,50 +236,130 @@ try {
   </head>
   <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-transparent animate-navbar">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <div class="d-flex align-items-center">
-            <img
-              src="../assets/logo.png"
-              alt="Bharathi Surgicals Logo"
-              class="me-2"
-            />
-          </div>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../index.php">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./about.php">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" href="./Products.php">Products</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./Management.php">Management</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./contact-us.php">Contact Us</a>
-            </li>
-          </ul>
+    <nav class="respon2">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                    <div class="contact-info text-start">
+                        <div>
+                            <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
+                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <?php
+
+                $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
+                if ($sql1->rowCount() > 0) {
+                    $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
+                }
+                ?>
+                <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
+                    <div class="social-icons text-center">
+                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                    <div class="contact-info text-end">
+                        <div>
+                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
+                                <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </nav>
+
+    <nav class="respon">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+                    <div class="social-icons">
+                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                    <div class="contact-info text-start">
+                        <div>
+                            <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
+                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                    <div class="contact-info text-end">
+                        <div>
+                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
+                                <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top position-sticky">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <div class="d-flex align-items-center">
+                    <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about.php">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./Products.php">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./Management.php">Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./contact-us.php">Contact Us</a>
+                    </li>
+                    <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <?php if (isset($_SESSION['name'])) { ?>
+                            <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
+                        <?php } else { ?>
+                            <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
+                        <?php } ?>
+                    </li>
+                    <li class="nav-item">
+                        <?php if (isset($_SESSION['name'])) { ?>
+                        <a href="./logout.php" class="btn btn-primary me-3">Logout</a>
+                        <?php } else { ?>
+                        <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
+                        <?php } ?>
+                    </li>
+                    </ul>
+                </ul>
+            </div>
+        </div>
     </nav>
     
-    <div class="container navbar-g">
-      <img src="../assets/nav-gradient-bg.png" alt="" class="img-fluid">
-    </div>
     
     <div class="container mt-4">
       <!-- Breadcrumb -->
@@ -343,18 +499,17 @@ try {
           <div class="row">
               <div class="col-md-4">
                   <div class="footer-logo d-flex align-items-center mb-3">
-                      <img src="../assets/logo.png" alt="Bharathi Surgicals Logo" class="me-2">
+                      <img src="../assets/logo.jpeg" alt="Bharathi Surgicals Logo" class="me-2">
                   </div>
                   <div class="opening-time">
-                      <h5>Opening Time</h5>
-                      <p>9.00 AM - 6.00 PM<br>(Monday - Sunday)</p>
+                      <?php echo $data['opening_time']; ?>
                   </div>
               </div>
               
               <div class="col-md-4">
                   <div class="social-icons text-center">
-                      <a href="#" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                      <a href="#" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                      <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                      <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
                       <a href="#" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                   </div>
               </div>
@@ -363,19 +518,19 @@ try {
                   <div class="contact-info">
                       <div>
                           <a href="tel:+91-97909 72432" class="text-decoration-none text-dark">
-                              <i class="bi bi-telephone-fill"></i> +91-97909 72432
+                              <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
                           </a>
                       </div>
                       
                       <div>
                           <a href="mailto:cs@bharathi.co.in" class="text-decoration-none text-dark">
-                              <i class="bi bi-envelope-fill"></i> cs@bharathi.co.in
+                              <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
                           </a>
                       </div>
                       
                       <div>
                           <a href="https://www.google.com/maps/search/Rajapalayam,+Tamil+Nadu,+India" target="_blank" class="text-decoration-none text-dark">
-                              <i class="bi bi-geo-alt-fill"></i> Rajapalayam, Tamil Nadu, India
+                              <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
                           </a>
                       </div>
                       
@@ -386,7 +541,7 @@ try {
           <div class="footer-bottom">
               <div class="row">
                   <div class="col-md-4">
-                      <p>Developed by <a href="#" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
+                      <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
                   </div>
                   <div class="col-md-4 text-center">
                       <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
@@ -408,15 +563,49 @@ try {
       </button>
       <div class="helper-menu">
           <ul>
-              <li><a href="./forms/get_a_qoute.html">Get Quote</a></li>
-                <li><a href="./forms/request_sample.html">Request Samples</a></li>
+              <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
+                <li><a href="../forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
-                <li><a href="./forms/raise_of_complaint.html">Raise a Complaint</a></li>
-                <li><a href="./forms/suggestions.html">Suggestions</a></li>
+                <li><a href="../forms/raise_of_complaint.php">Raise a Complaint</a></li>
+                <li><a href="../forms/suggestions.php">Suggestions</a></li>
                 <li><a href="#chat" id="open-chat">Chat with us</a></li>
           </ul>
       </div>
     </div>
+
+    <script>
+        document.getElementById('open-chat').addEventListener('click', function() {
+            let message = `How can i help You? %0A%0A`;
+
+            const storeNumber = "918489089784"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+
+    <script>
+        // Toggle the helper menu
+        const toggleButton = document.querySelector('.helper-toggle');
+        const helperMenu = document.querySelector('.helper-menu');
+
+        toggleButton.addEventListener('click', () => {
+            helperMenu.classList.toggle('active');
+        });
+
+        // Optional: hide menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.helper-widget')) {
+                helperMenu.classList.remove('active');
+            }
+        });
+    </script>
     
     <!-- Bootstrap 5.3 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

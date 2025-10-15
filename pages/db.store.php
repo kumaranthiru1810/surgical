@@ -129,16 +129,16 @@ $message = $_POST['message'];
                 'message' => ''
             ];
 try {
-    $to = "thirukumaran18102006@gmail.com";
+    $to = "";
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'thirukumaran18102006@gmail.com';
-    $mail->Password = 'knph zmxm mibl zshz';
+    $mail->Username = '';
+    $mail->Password = '';
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('thirukumaran18102006@gmail.com', 'Bharathi Surgicals:');
+    $mail->setFrom('', 'Bharathi Surgicals:');
     $mail->addAddress($to);
 
     $mail->isHTML(true);
