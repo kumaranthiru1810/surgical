@@ -139,7 +139,7 @@ if ($sql->rowCount() > 0) {
                     <div class="social-icons text-center">
                         <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                         <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
@@ -162,7 +162,7 @@ if ($sql->rowCount() > 0) {
                     <div class="social-icons">
                         <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                         <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
@@ -476,7 +476,7 @@ if ($sql->rowCount() > 0) {
                   <div class="social-icons text-center">
                       <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                       <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                      <a href="#" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                      <a href="#" id="footer-open-chat" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                   </div>
               </div>
               
@@ -555,6 +555,39 @@ if ($sql->rowCount() > 0) {
             window.open(whatsappURL, '_blank');
         });
     </script>
+    <script>
+        document.getElementById('nav-open-chat').addEventListener('click', function() {
+            let message = `How can i help You? %0A%0A`;
+
+            const storeNumber = "918489089784"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+    <script>
+        document.getElementById('footer-open-chat').addEventListener('click', function() {
+            let message = `How can i help You? %0A%0A`;
+
+            const storeNumber = "918489089784"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+
 
     <script>
         // Toggle the helper menu
@@ -572,12 +605,28 @@ if ($sql->rowCount() > 0) {
             }
         });
     </script>
+    <!-- <script>
+    document.getElementById('nav-open-chat').addEventListener('onclick', function() {
+      let message = `How can i help You? %0A%0A`;
+
+      const storeNumber = "918489089784"; // Your WhatsApp number
+      const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+      // WhatsApp URL - fixed encoding
+      const whatsappURL = isMobile ?
+        `https://wa.me/${storeNumber}?text=${message}` :
+        `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+      // Open WhatsApp in a new tab
+      window.open(whatsappURL, '_blank');
+    });
+  </script> -->
     
     <!-- Bootstrap 5.3 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- AOS JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script src="../index.js"></script>
+    
     <script>
       // Initialize AOS
       AOS.init({
