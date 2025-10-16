@@ -450,9 +450,9 @@ if ($sql->rowCount() > 0) {
 
                         <!-- Additional Options -->
                         <div class="mt-4 text-center">
-                            <a href="#" class="text-decoration-none">Forgot Password?</a>
+                            <!-- <a href="#" class="text-decoration-none">Forgot Password?</a> -->
                             <hr>
-                            <p class="mb-0">Don't have an account? <a href="#" class="text-decoration-none">Sign Up</a></p>
+                            <p class="mb-0">Don't have an account? <a href="signup.php" class="text-decoration-none">Sign Up</a></p>
                         </div>
                     </div>
                 </div>

@@ -101,41 +101,104 @@ if ($sql->rowCount() > 0) {
             }
         }
 
-        .social-icons a {
-            display: inline-flex;
-            align-items: center;
+        
+
+
+        /* Flash Message Styles */
+
+        #flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            /* hidden by default */
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #e9ecef;
-            color: var(--primary);
-            margin: 0 10px;
-            transition: all 0.3s ease;
-            font-size: 18px;
+            align-items: center;
+            z-index: 9999;
         }
 
-        .social-icons a:hover {
-            color: #fff;
-            transform: translateY(-3px);
+        /* Message box */
+        #flash-box {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease;
         }
 
-        /* Individual platform hover effects */
-        .social-icon.facebook:hover {
-            background-color: #3b5998;
+        #flash-box h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
         }
 
-        .social-icon.instagram:hover {
-            background: linear-gradient(45deg, #fcc24d, #F77737, #D62976, #FD1D1D);
+        #flash-box p {
+            color: #444;
+            line-height: 1.6;
+            font-size: 15px;
         }
 
-        .social-icon.whatsapp:hover {
-            background-color: #25D366;
+        #flash-ok {
+            margin-top: 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #flash-ok:hover {
+            background-color: #2980b9;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 991px) {
+            .offcanvas {
+                background-color: blue !important;
+            }
         }
     </style>
 </head>
 
 <body>
+
+    <!-- Flash Message at starting -->
+
+    <div id="flash-overlay">
+        <div id="flash-box">
+            <p>
+                5% of our profit will be transferred to <b>SELVI MANI FOUNDATION</b>,
+                a NGO non-profit foundation which will primarily focus on educating our Talented Poor Indian children.
+                <br><br>
+                We thank you so much for indirectly contributing, by placing order with our firm.
+                <br><br>
+                We appreciate your decision.
+            </p>
+            <h2>Thank You so Much!!!</h2>
+            <button id="flash-ok">OK</button>
+        </div>
+    </div>
+
+
+    <!-- Main Code -->
+
     <?php
 
     $social_links = [
@@ -247,14 +310,14 @@ if ($sql->rowCount() > 0) {
                     </li>
                     <li class="nav-item">
                         <?php if (isset($_SESSION['name'])) { ?>
-                            <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
+                            <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
                         <?php } else { ?>
                             <a href="./pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
                         <?php } ?>
                     </li>
                     <li class="nav-item">
                         <?php if (isset($_SESSION['name'])) { ?>
-                            <a href="./pages/logout.php" class="btn btn-primary me-3">Logout</a>
+                            <a href="./pages/logout.php" class="btn btn-primary me-3"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
                         <?php } else { ?>
                             <a href="./pages/signin.php" class="btn btn-primary me-3">Sign In</a>
                         <?php } ?>
@@ -548,6 +611,19 @@ if ($sql->rowCount() > 0) {
                 helperMenu.classList.remove('active');
             }
         });
+
+
+        window.onload = function() {
+            // Show only if not shown before in this browser session
+            if (!sessionStorage.getItem("flashShown")) {
+                document.getElementById("flash-overlay").style.display = "flex";
+                sessionStorage.setItem("flashShown", "true");
+            }
+
+            document.getElementById("flash-ok").onclick = function() {
+                document.getElementById("flash-overlay").style.display = "none";
+            };
+        };
     </script>
 
 
