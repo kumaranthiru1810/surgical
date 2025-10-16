@@ -15,7 +15,7 @@ if ($sql->rowCount() > 0) {
 // Database configuration
 $db_config = [
     'host' => 'localhost',
-    'dbname' => 'bharathi_surgicals',
+    'dbname' => 'surgical',
     'username' => 'root',
     'password' => ''
 ];
@@ -60,6 +60,7 @@ try {
         foreach ($managementTeam as $index => &$member) {
             $member['order'] = ($index % 2 == 0) ? 'image-first' : 'text-first';
         }
+        unset($member);
     }
 } catch (PDOException $e) {
     error_log("Error fetching management data: " . $e->getMessage());
@@ -133,8 +134,9 @@ if (empty($managementTeam)) {
     <link rel="stylesheet" href="../index.css" />
     <style>
       .management-img {
-        height: 300px;
+        height: 340px;
         object-fit: cover;
+        object-position: top;
         width: 100%;
       }
       .default-management-img {
@@ -319,7 +321,7 @@ if (empty($managementTeam)) {
                     </li>
                     <li class="nav-item">
                         <?php if (isset($_SESSION['name'])) { ?>
-                            <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
+                            <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
                         <?php } else { ?>
                             <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
                         <?php } ?>
@@ -407,14 +409,14 @@ if (empty($managementTeam)) {
                               <!-- White background card with subtle shadow -->
                               <div class="bg-white rounded-4 p-4 management-name-card">
                                   <!-- Name with blue color matching the design -->
-                                  <h2 class="text-primary mb-2" style="color: #007bff !important;">
+                                  <h3 class="text-primary mb-2" style="color: #007bff !important;">
                                       ' . htmlspecialchars($member['name']) . '
-                                  </h2>
+                                  </h3>
                                   
                                   <!-- Position text with proper line height and size -->
-                                  <h3 class="fs-4 fw-normal" style="line-height: 1.4;">
+                                  <h4 class="fs-4 fw-normal" style="line-height: 1.4;">
                                       ' . $member['position'] . '
-                                  </h3>
+                                  </h4>
                               </div>
                           </div>
                       </div>
@@ -427,14 +429,14 @@ if (empty($managementTeam)) {
                               <!-- White background card with subtle shadow -->
                               <div class="bg-white rounded-4 p-4 management-name-card">
                                   <!-- Name with blue color matching the design -->
-                                  <h2 class="text-primary mb-2" style="color: #007bff !important;">
+                                  <h3 class="text-primary mb-2" style="color: #007bff !important;">
                                       ' . htmlspecialchars($member['name']) . '
-                                  </h2>
+                                  </h3>
                                   
                                   <!-- Position text with proper line height and size -->
-                                  <h3 class="fs-4 fw-normal" style="line-height: 1.4;">
+                                  <h4 class="fs-4 fw-normal" style="line-height: 1.4;">
                                       ' . $member['position'] . '
-                                  </h3>
+                                  </h4>
                               </div>
                           </div>
                   
@@ -459,6 +461,8 @@ if (empty($managementTeam)) {
       }
       ?>
     </section>
+
+    
     <!-- Footer -->
     <footer class="mt-5">
       <div class="container">

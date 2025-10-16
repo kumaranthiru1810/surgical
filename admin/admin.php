@@ -118,9 +118,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['add_product']) || isset($_POST['edit_product'])) {
         $name = $_POST['product_name'];
         $description = $_POST['product_description'];
-        $price = $_POST['product_price'];
         $category = $_POST['product_category'];
-        $stock = $_POST['product_stock'];
+        $features = $_POST['product_features'];
+        $uses = $_POST['product_uses'];
         $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
 
         // Handle product image upload
@@ -159,17 +159,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_POST['edit_product']) && $product_id) {
                 // Update existing product
                 if ($image) {
-                    $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, price = ?, category = ?, stock = ?, image = ? WHERE id = ?");
-                    $stmt->execute([$name, $description, $price, $category, $stock, $image, $product_id]);
+                    $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, image = ?, key_characteristics = ?, uses = ?, category = ? WHERE id = ?");
+                    $stmt->execute([$name, $description, $image, $features, $uses, $category, $product_id]);
+                    echo "<script>
+                            alert('Updated Successfully');
+                            window.location.href='admin.php';
+                        </script>";
                 } else {
-                    $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, price = ?, category = ?, stock = ? WHERE id = ?");
-                    $stmt->execute([$name, $description, $price, $category, $stock, $product_id]);
+                    $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, key_characteristics = ?, uses = ?, category = ? WHERE id = ?");
+                    $stmt->execute([$name, $description, $features, $uses, $category, $product_id]);
+                    echo "<script>
+                            alert('Updated Successfully');
+                            window.location.href='admin.php';
+                        </script>";
                 }
                 $product_message = "Product updated successfully!";
             } else {
                 // Add new product
-                $stmt = $pdo->prepare("INSERT INTO products (name, description, price, category, stock, image) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$name, $description, $price, $category, $stock, $image]);
+                $stmt = $pdo->prepare("INSERT INTO products (name, description, image, key_characteristics, uses, category) VALUES (?, ?, ?, ?, ?, ?)");
+                $stmt->execute([$name, $description, $image, $features, $uses, $category]);
                 $product_message = "Product added successfully!";
             }
         } catch (PDOException $e) {
@@ -508,6 +516,7 @@ try {
             background-color: #fff3cd;
             border-left: 4px solid #ffc107;
         }
+
         .userentries-section {
             display: none;
         }
@@ -574,6 +583,12 @@ try {
                     <div class="d-inline-block p-2 rounded" style="background: rgba(255,255,255,0.2);">
                         <i class="fas fa-user me-1"></i> Administrator
                     </div>
+                    <div class="d-inline-block p-2 rounded" style="background: rgba(255,255,255,0.2);">
+                        <a href="logout.php" onclick="return confirm('Are you sure to Logout?');" style="color: white; text-decoration:none;"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+                    </div>
+                    <div class="d-inline-block p-2 rounded" style="background: rgba(255,255,255,0.2);">
+                        <a href="credentials.php" onclick="return confirm('Do you Want to Update Credentials?');" style="color: white; text-decoration:none;"><i class="fa-solid fa-lock"></i> Credentials</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -591,6 +606,9 @@ try {
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" data-section="management"><i class="fas fa-users me-1"></i> Management</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-section="contact"><i class="fas fa-phone me-1"></i> Contact Details</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" data-section="contacts"><i class="fas fa-envelope me-1"></i> Contact Submissions</a>
@@ -716,7 +734,10 @@ try {
             </div>
         </div>
 
+
         <!-- Products Section -->
+
+
         <div id="products" class="content-section">
             <h2 class="section-title">Product Management</h2>
 
@@ -745,16 +766,16 @@ try {
                                     <textarea class="form-control" name="product_description" rows="3" required><?php echo $edit_product ? htmlspecialchars($edit_product['description']) : ''; ?></textarea>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Price (₹)</label>
-                                    <input type="number" step="0.01" class="form-control" name="product_price" value="<?php echo $edit_product ? $edit_product['price'] : ''; ?>" required>
-                                </div>
-                                <div class="mb-3">
                                     <label class="form-label">Category</label>
                                     <input type="text" class="form-control" name="product_category" value="<?php echo $edit_product ? htmlspecialchars($edit_product['category']) : ''; ?>" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Stock Quantity</label>
-                                    <input type="number" class="form-control" name="product_stock" value="<?php echo $edit_product ? $edit_product['stock'] : ''; ?>" required>
+                                    <label class="form-label">Key Features</label>
+                                    <textarea class="form-control" name="product_features" rows="3" required><?php echo $edit_product ? htmlspecialchars($edit_product['key_characteristics']) : ''; ?></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Uses</label>
+                                    <textarea class="form-control" name="product_uses" rows="3"><?php echo $edit_product ? htmlspecialchars($edit_product['uses']) : ''; ?></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Product Image</label>
@@ -777,7 +798,6 @@ try {
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
@@ -785,23 +805,29 @@ try {
                         </div>
                         <div class="card-body">
                             <?php if ($total_products > 0): ?>
+                                <!-- Search Box -->
+                                <div class="mb-3 d-flex">
+                                    <input type="text" id="productSearchInput" class="form-control me-2" placeholder="Search product by name...">
+                                    <button class="btn btn-primary" style="margin-right: 5px;" onclick="searchProduct()">Search</button>
+                                    <button class="btn btn-primary" onclick="showAll()">All</button>
+                                </div>
+
+
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-hover">
+                                    <table class="table table-striped table-hover" id="productTable">
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
                                                 <th>Image</th>
                                                 <th>Name</th>
-                                                <th>Price</th>
                                                 <th>Category</th>
-                                                <th>Stock</th>
+                                                <th>Key Features</th>
+                                                <th>Uses</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php foreach ($products as $product): ?>
                                                 <tr>
-                                                    <td><?php echo $product['id']; ?></td>
                                                     <td>
                                                         <?php if (!empty($product['image'])): ?>
                                                             <img src="../<?php echo $product['image']; ?>" alt="Product Image" class="product-image-thumb">
@@ -809,14 +835,10 @@ try {
                                                             <span class="text-muted">No image</span>
                                                         <?php endif; ?>
                                                     </td>
-                                                    <td><?php echo htmlspecialchars($product['name']); ?></td>
-                                                    <td>₹<?php echo number_format($product['price'], 2); ?></td>
+                                                    <td class="product-name"><?php echo htmlspecialchars($product['name']); ?></td>
                                                     <td><?php echo htmlspecialchars($product['category']); ?></td>
-                                                    <td>
-                                                        <span class="<?php echo $product['stock'] < 10 ? 'text-danger fw-bold' : ''; ?>">
-                                                            <?php echo $product['stock']; ?>
-                                                        </span>
-                                                    </td>
+                                                    <td><?php echo htmlspecialchars($product['key_characteristics']); ?></td>
+                                                    <td><?php echo htmlspecialchars($product['uses']); ?></td>
                                                     <td>
                                                         <a href="?edit_product=<?php echo $product['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
                                                         <form method="POST" style="display:inline;">
@@ -836,8 +858,14 @@ try {
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
+
+
+        <!-- Management Section -->
+
 
         <!-- Management Section -->
         <div id="management" class="content-section">
@@ -912,9 +940,9 @@ try {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php foreach ($management as $member): ?>
+                                            <?php $i=1; foreach ($management as $member): ?>
                                                 <tr>
-                                                    <td><?php echo $member['id']; ?></td>
+                                                    <td><?php echo $i; $i++; ?></td>
                                                     <td>
                                                         <?php if (!empty($member['image'])): ?>
                                                             <img src="../<?php echo $member['image']; ?>" alt="Profile" class="member-image-thumb">
@@ -946,6 +974,166 @@ try {
             </div>
         </div>
 
+
+        <!-- Contact Details Section -->
+
+        <?php
+        if (isset($_POST['add_contact'])) {
+            $headoffice = $_POST['headoffice'];
+            $branchoffice = $_POST['branchoffice'];
+            $phone = $_POST['phone'];
+            $email = $_POST['email'];
+            $stmt = $pdo->prepare("INSERT INTO contact_page_details (headoffice, branchoffice, phone, email) VALUES (?, ?, ?, ?)");
+            $stmt->execute([$headoffice, $branchoffice, $phone, $email]);
+        }
+
+        // $conn = mysqli_connect("localhost", "root", "", "surgical");
+        include('../db.php');
+
+        if (isset($_GET['edit_contact'])) {
+            $contact_id = $_GET['edit_contact'];
+            try {
+                $select = $pdo->prepare("SELECT * FROM contact_page_details WHERE id = ?");
+                $select->execute([$contact_id]);
+                $edit_contact = $select->fetch(PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                $product_message = "Error loading product: " . $e->getMessage();
+            }
+        }
+
+
+        if (isset($_POST['delete_contact_detail'])) {
+            $id = $_POST['contactdetail_id'];
+            $sql = $pdo->prepare("DELETE FROM contact_page_details WHERE id = ?");
+            $sql->execute([$id]);
+            if ($sql) {
+                echo "<script>alert('Deleted Successfully');
+                            window.location.href = 'admin.php';
+                    </script>";
+            }
+        }
+
+        if (isset($_POST['update_contact'])) {
+            $headoffice = $_POST['headoffice'];
+            $branchoffice = $_POST['branchoffice'];
+            $phone = $_POST['phone'];
+            $email = $_POST['email'];
+            $id = $_POST['contactdetail_id'];
+
+            $sql = $pdo->prepare("UPDATE contact_page_details SET headoffice = ? , branchoffice = ?, phone = ? , email = ? WHERE id = ?");
+            $sql->execute([$headoffice , $branchoffice , $phone , $email , $id]);
+            if ($sql) {
+                echo "<script>alert('Updated Successfully');
+                                    window.location.href = 'admin.php';
+                    </script>";
+            }
+        }
+        ?>
+
+
+        <div id="contact" class="content-section">
+            <h2 class="section-title">Contact Details Section</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">
+                                <?php if (isset($edit_contact)) { ?>
+                                    Edit Contact Page Details
+                                <?php } else { ?>
+                                    Add Contact Page Details
+                                <?php } ?>
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data">
+                                <?php if (isset($edit_contact)): ?>
+                                    <input type="hidden" name="id" value="<?php echo $edit_contact['id']; ?>">
+                                <?php endif; ?>
+                                <div class="mb-3">
+                                    <label class="form-label">Head Office Address</label>
+                                    <input type="text" class="form-control" name="headoffice" value="<?php echo isset($edit_contact) ? htmlspecialchars($edit_contact['headoffice']) : '' ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Branch Office Address</label>
+                                    <input type="text" class="form-control" name="branchoffice" value="<?php echo isset($edit_contact) ? htmlspecialchars($edit_contact['branchoffice']) : ''; ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" class="form-control" name="phone" value="<?php echo isset($edit_contact) ? htmlspecialchars($edit_contact['phone']) : ''; ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" class="form-control" name="email" value="<?php echo isset($edit_contact) ? htmlspecialchars($edit_contact['email']) : ''; ?>" required>
+                                </div>
+                                <?php if (isset($edit_contact)): ?>
+                                    <form method="POST">
+                                        <input type="hidden" name="contactdetail_id" value="<?php echo $edit_contact['id']; ?>">
+                                        <button type="submit" name="update_contact" class="btn btn-primary w-100">Update Contact Page Details</button>
+                                        <a href="admin.php" class="btn btn-secondary w-100 mt-2">Cancel</a>
+                                    </form>
+                                <?php else: ?>
+                                    <button type="submit" name="add_contact" class="btn btn-primary w-100">Add Contact Page Details</button>
+                                <?php endif; ?>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <?php
+                $sql = $pdo->prepare("SELECT * FROM contact_page_details");
+                $sql->execute();
+                ?>
+
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Contact Page Details</h5>
+                        </div>
+                        <div class="card-body">
+                            <?php if ($sql): ?>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Head Office</th>
+                                                <th>Branch Office</th>
+                                                <th>Phone</th>
+                                                <th>Email</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php while ($res = $sql->fetch(PDO::FETCH_ASSOC)) { ?>
+                                                <tr>
+
+                                                    <td><?php echo $res['headoffice']; ?></td>
+                                                    <td><?php echo $res['branchoffice']; ?></td>
+                                                    <td><?php echo $res['phone']; ?></td>
+                                                    <td><?php echo $res['email']; ?></td>
+                                                    <td>
+                                                        <a href="?edit_contact=<?php echo $res['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                        <form method="POST" style="display:inline;">
+                                                            <input type="hidden" name="contactdetail_id" value="<?php echo $res['id']; ?>">
+                                                            <button type="submit" name="delete_contact_detail" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this Detail?')">Delete</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <?php else: ?>
+                                <p class="text-center text-muted">No Details Added.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <!-- Contacts Section -->
         <div id="contacts" class="content-section">
             <h2 class="section-title">Contact Form Submissions</h2>
@@ -974,9 +1162,9 @@ try {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($contacts as $contact): ?>
+                                    <?php $i=1; foreach ($contacts as $contact): ?>
                                         <tr>
-                                            <td><?php echo $contact['id']; ?></td>
+                                            <td><?php echo $i; $i++; ?></td>
                                             <td><?php echo htmlspecialchars($contact['name']); ?></td>
                                             <td><?php echo htmlspecialchars($contact['email']); ?></td>
                                             <td><?php echo htmlspecialchars($contact['subject']); ?></td>
@@ -1070,9 +1258,9 @@ try {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($users as $user): ?>
+                                <?php $i=1; foreach ($users as $user): ?>
                                     <tr>
-                                        <td><?php echo $user['id']; ?></td>
+                                        <td><?php echo $i; $i++; ?></td>
                                         <td><?php echo htmlspecialchars($user['firm']); ?></td>
                                         <td><?php echo htmlspecialchars($user['email']); ?></td>
                                         <td><?php echo htmlspecialchars($user['gst']); ?></td>
@@ -1229,6 +1417,31 @@ try {
                 alert.style.display = 'none';
             });
         }, 5000);
+
+
+
+        function searchProduct() {
+            const input = document.getElementById('productSearchInput').value.toLowerCase().trim();
+            const rows = document.querySelectorAll('#productTable tbody tr');
+
+            rows.forEach(row => {
+                const nameCell = row.querySelector('.product-name');
+                const productName = nameCell.textContent.toLowerCase();
+
+                if (productName.includes(input)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        function showAll() {
+            const rows = document.querySelectorAll('#productTable tbody tr');
+            rows.forEach(row => {
+                row.style.display = '';
+            });
+        }
     </script>
 </body>
 

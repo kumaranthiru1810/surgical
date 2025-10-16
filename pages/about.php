@@ -216,7 +216,7 @@ if ($sql->rowCount() > 0) {
           </li>
           <li class="nav-item">
             <?php if (isset($_SESSION['name'])) { ?>
-              <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
+              <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
             <?php } else { ?>
               <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
             <?php } ?>

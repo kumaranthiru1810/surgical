@@ -228,8 +228,10 @@ try {
         color: #6c757d;
       }
       .product-image {
-        height: 200px;
+        height: 290px;
         object-fit: cover;
+        /* object-position:center; */
+        border-radius: 20px;
         width: 100%;
       }
     </style>
@@ -342,7 +344,7 @@ try {
                     <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <?php if (isset($_SESSION['name'])) { ?>
-                            <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
+                            <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
                         <?php } else { ?>
                             <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
                         <?php } ?>
@@ -380,13 +382,13 @@ try {
     
     <?php
     // Loop through product categories
-    $categoryDelay = 200;
+    $categoryDelay = 100;
     foreach ($productCategories as $categoryName => $products) {
-        $categoryDelay += 100;
+        $categoryDelay += 50;
         echo '<!-- ' . $categoryName . ' -->
         <div class="container py-5">
             <h1 class="text-primary mb-4" data-aos="fade-up" data-aos-delay="' . $categoryDelay . '">' . $categoryName . '</h1>
-            <div class="row g-4">';
+            <div class="row g-7">';
         
         // Check if category has products
         if (count($products) > 0) {
@@ -406,39 +408,42 @@ try {
                     }
                 }
                 
-                echo '<div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="' . $productDelay . '">
+                echo '<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="' . $productDelay . '">
                         <div class="card product-card h-100">';
                 
                 // Display product image or placeholder
                 if (!empty($imagePath)) {
-                    echo '<img src="' . $imagePath . '" class="product-image" alt="' . htmlspecialchars($product['name']) . '">';
+                    echo '<a href="product-details.php?id=' . htmlspecialchars($product['id']) . '">
+                            <img src="' . $imagePath . '" class="product-image" alt="' . htmlspecialchars($product['name']) . '">
+                          </a>  
+                          ';
                 } else {
                     echo '<div class="default-product-img">
                             <i class="bi bi-image" style="font-size: 3rem;"></i>
                           </div>';
                 }
                 
-                echo '<div class="card-body">
-                                <h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5>
+                echo '<div class="card-body" style="height:45vh; overflow-y: auto;">
+                                <a href="product-details.php?id=' . htmlspecialchars($product['id']) . '" style="text-decoration:none;"><h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5></a>
                                 <p class="card-text">' . htmlspecialchars($product['description']) . '</p>';
                 
                 // Display price if available
-                if (!empty($product['price'])) {
-                    echo '<p class="card-text"><strong>Price: ₹' . number_format($product['price'], 2) . '</strong></p>';
-                }
+                // if (!empty($product['price'])) {
+                //     echo '<p class="card-text"><strong>Price: ₹' . number_format($product['price'], 2) . '</strong></p>';
+                // }
                 
                 // Display stock status if available
-                if (!empty($product['stock'])) {
-                    $stockClass = $product['stock'] > 10 ? 'text-success' : ($product['stock'] > 0 ? 'text-warning' : 'text-danger');
-                    $stockText = $product['stock'] > 0 ? 'In Stock (' . $product['stock'] . ')' : 'Out of Stock';
-                    echo '<p class="card-text ' . $stockClass . '"><strong>' . $stockText . '</strong></p>';
-                }
+                // if (!empty($product['stock'])) {
+                //     $stockClass = $product['stock'] > 10 ? 'text-success' : ($product['stock'] > 0 ? 'text-warning' : 'text-danger');
+                //     $stockText = $product['stock'] > 0 ? 'In Stock (' . $product['stock'] . ')' : 'Out of Stock';
+                //     echo '<p class="card-text ' . $stockClass . '"><strong>' . $stockText . '</strong></p>';
+                // }
                 
                 echo '</div>
                             <div class="card-footer bg-transparent border-0">
-                                <button class="btn btn-outline-primary w-100 inquire-btn" data-product="' . htmlspecialchars($product['name']) . '">Inquire Now</button>
+                                <a href="../forms/get_a_qoute.php" class="btn btn-outline-primary w-100 inquire-btn" data-product="' . htmlspecialchars($product['name']) . '">Get Quote</a>
                             </div>
-                        </div>
+                      </div>
                     </div>';
             }
         } else {
@@ -453,7 +458,7 @@ try {
     ?>
 
     <!-- Inquiry Modal -->
-    <div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -491,7 +496,7 @@ try {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     
     <!-- Footer -->
     <footer class="mt-5">
