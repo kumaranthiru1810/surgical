@@ -3,9 +3,8 @@ session_start();
 require_once('../db.php');
 
 // Redirect logic
-if (!isset($_SESSION['email'])) {
-    // User not logged in
-    header("Location: ../pages/signin.php?redirect=raise_of_complaint.php");
+if (!isset($_SESSION['name'])) {
+    echo "<script>alert('Please login to access this page.');window.location.href='../pages/signin.php';</script>";
     exit();
 }
 
@@ -209,7 +208,7 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
                     <div class="social-icons text-center">
                         <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                         <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
                 <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
@@ -232,7 +231,7 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
                     <div class="social-icons">
                         <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                         <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
@@ -410,7 +409,7 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
                   <div class="social-icons text-center">
                       <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                       <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                      <a href="#" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                      <a href="#" id="footer-open-chat" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                   </div>
               </div>
               
@@ -1526,6 +1525,54 @@ if (submitButton) {
         countryCodes.forEach(c => {
             mobileCC.add(new Option(`${c.country} (${c.code})`, c.code, c.code === "+91", c.code === "+91"));
             // whatsappCC.add(new Option(`${c.country} (${c.code})`, c.code, c.code === "+91", c.code === "+91"));
+        });
+    </script>
+    <script>
+        document.getElementById('open-chat').addEventListener('click', function() {
+            let message = `How can i help You? %0A%0A`;
+
+            const storeNumber = "918489089784"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+        <script>
+        document.getElementById('footer-open-chat').addEventListener('click', function() {
+            let message = `How can i help You? %0A%0A`;
+
+            const storeNumber = "918489089784"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+        <script>
+        document.getElementById('nav-open-chat').addEventListener('click', function() {
+            let message = `How can i help You? %0A%0A`;
+
+            const storeNumber = "918489089784"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
         });
     </script>
 

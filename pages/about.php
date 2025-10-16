@@ -134,7 +134,7 @@ if ($sql->rowCount() > 0) {
           <div class="social-icons text-center">
             <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
             <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
           </div>
         </div>
         <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
@@ -157,7 +157,7 @@ if ($sql->rowCount() > 0) {
           <div class="social-icons">
             <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
             <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-           <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
           </div>
         </div>
       </div>
@@ -362,71 +362,104 @@ if ($sql->rowCount() > 0) {
   </div>
 
 
-   <!-- Footer -->
-    <footer class="mt-5">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-4">
-                  <div class="footer-logo d-flex align-items-center mb-3">
-                      <img src="../assets/logo.jpeg" alt="Bharathi Surgicals Logo" class="me-2">
-                  </div>
-                  <div class="opening-time">
-                      <?php echo $data['opening_time']; ?>
-                  </div>
-              </div>
-              
-              <div class="col-md-4">
-                  <div class="social-icons text-center">
-                      <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                      <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                      <a href="#" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                  </div>
-              </div>
-              
-              <div class="col-md-4">
-                  <div class="contact-info">
-                      <div>
-                          <a href="tel:<?php echo $data['phone']; ?>" class="text-decoration-none text-dark">
-                              <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
-                          </a>
-                      </div>
-                      
-                      <div>
-                          <a href="mailto:<?php echo $data['email']; ?>" class="text-decoration-none text-dark">
-                              <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
-                          </a>
-                      </div>
-                      
-                      <div>
-                          <a href="https://www.google.com/maps/search/<?php echo $data['address']; ?>" target="_blank" class="text-decoration-none text-dark">
-                              <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
-                          </a>
-                      </div>
-                      
-                  </div>
-              </div>
+  <!-- Footer -->
+  <footer class="mt-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="footer-logo d-flex align-items-center mb-3">
+            <img src="../assets/logo.jpeg" alt="Bharathi Surgicals Logo" class="me-2">
           </div>
-    
-          <div class="footer-bottom">
-              <div class="row">
-                  <div class="col-md-4">
-                      <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
-                  </div>
-                  <div class="col-md-4 text-center">
-                      <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
-                  </div>
-                  <div class="col-md-4">
-                      <div class="footer-links text-end">
-                          <a href="#">Terms & Conditions</a>
-                          <a href="#">Privacy Policy</a>
-                      </div>
-                  </div>
-              </div>
+          <div class="opening-time">
+            <?php echo $data['opening_time']; ?>
           </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="social-icons text-center">
+            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+            <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" id="footer-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="contact-info">
+            <div>
+              <a href="tel:<?php echo $data['phone']; ?>" class="text-decoration-none text-dark">
+                <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
+              </a>
+            </div>
+
+            <div>
+              <a href="mailto:<?php echo $data['email']; ?>" class="text-decoration-none text-dark">
+                <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
+              </a>
+            </div>
+
+            <div>
+              <a href="https://www.google.com/maps/search/<?php echo $data['address']; ?>" target="_blank" class="text-decoration-none text-dark">
+                <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
+              </a>
+            </div>
+
+          </div>
+        </div>
       </div>
-    </footer>
-    <script>
-        document.getElementById('open-chat').addEventListener('click', function() {
+
+      <div class="footer-bottom">
+        <div class="row">
+          <div class="col-md-4">
+            <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
+          </div>
+          <div class="col-md-4 text-center">
+            <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
+          </div>
+          <div class="col-md-4">
+            <div class="footer-links text-end">
+              <a href="#">Terms & Conditions</a>
+              <a href="#">Privacy Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('open-chat').addEventListener('click', function() {
+      let message = `How can i help You? %0A%0A`;
+
+      const storeNumber = "918489089784"; // Your WhatsApp number
+      const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+      // WhatsApp URL - fixed encoding
+      const whatsappURL = isMobile ?
+        `https://wa.me/${storeNumber}?text=${message}` :
+        `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+      // Open WhatsApp in a new tab
+      window.open(whatsappURL, '_blank');
+    });
+  </script>
+
+  <script>
+    document.getElementById('nav-open-chat').addEventListener('click', function() {
+      let message = `How can i help You? %0A%0A`;
+
+      const storeNumber = "918489089784"; // Your WhatsApp number
+      const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+      // WhatsApp URL - fixed encoding
+      const whatsappURL = isMobile ?
+        `https://wa.me/${storeNumber}?text=${message}` :
+        `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+      // Open WhatsApp in a new tab
+      window.open(whatsappURL, '_blank');
+    });
+  </script>
+      <script>
+        document.getElementById('footer-open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
             const storeNumber = "918489089784"; // Your WhatsApp number
@@ -441,23 +474,23 @@ if ($sql->rowCount() > 0) {
             window.open(whatsappURL, '_blank');
         });
     </script>
-    
+
   <script>
-        // Toggle the helper menu
-        const toggleButton = document.querySelector('.helper-toggle');
-        const helperMenu = document.querySelector('.helper-menu');
+    // Toggle the helper menu
+    const toggleButton = document.querySelector('.helper-toggle');
+    const helperMenu = document.querySelector('.helper-menu');
 
-        toggleButton.addEventListener('click', () => {
-            helperMenu.classList.toggle('active');
-        });
+    toggleButton.addEventListener('click', () => {
+      helperMenu.classList.toggle('active');
+    });
 
-        // Optional: hide menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.helper-widget')) {
-                helperMenu.classList.remove('active');
-            }
-        });
-    </script>
+    // Optional: hide menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.helper-widget')) {
+        helperMenu.classList.remove('active');
+      }
+    });
+  </script>
 
   <!-- Bootstrap 5.3 JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

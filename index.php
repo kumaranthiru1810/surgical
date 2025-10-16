@@ -231,7 +231,7 @@ if ($sql->rowCount() > 0) {
                     <div class="social-icons text-center">
                         <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                         <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
 
@@ -253,7 +253,7 @@ if ($sql->rowCount() > 0) {
                     <div class="social-icons">
                         <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                         <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
             </div>
@@ -470,7 +470,7 @@ if ($sql->rowCount() > 0) {
                     <div class="social-icons text-center">
                         <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                         <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" id="footer-open-chat" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
 
@@ -523,11 +523,11 @@ if ($sql->rowCount() > 0) {
         <div class="helper-menu">
             <ul>
                 <li><a href="./forms/get_a_qoute.php">Get Quote</a></li>
-                <li><a href="./forms/request_sample.php ">Request Samples</a></li>
+                <li><a href="./forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
                 <li><a href="./forms/raise_of_complaint.php">Raise a Complaint</a></li>
                 <li><a href="./forms/suggestions.php">Suggestions</a></li>
-                <li><a href="#chat" id="open-chat">Chat with us</a></li>
+                <li><a href="#" id="open-chat">Chat with us</a></li>
             </ul>
         </div>
     </div>
@@ -561,6 +561,40 @@ if ($sql->rowCount() > 0) {
             window.open(whatsappURL, '_blank');
         });
     </script>
+
+    <script>
+        document.getElementById('nav-open-chat').addEventListener('click', function() {
+            let message = `How can i help You? %0A%0A`;
+
+            const storeNumber = "918489089784"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+    <script>
+        document.getElementById('footer-open-chat').addEventListener('click', function() {
+            let message = `How can i help You? %0A%0A`;
+
+            const storeNumber = "918489089784"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+
 
     <script>
         // Toggle the helper menu
@@ -597,6 +631,7 @@ if ($sql->rowCount() > 0) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 
     <script>
         AOS.init({
