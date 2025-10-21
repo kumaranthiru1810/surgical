@@ -184,8 +184,8 @@ if ($sql->rowCount() > 0) {
     <div id="flash-overlay">
         <div id="flash-box">
             <p>
-                5% of our profit will be transferred to <b>SELVI MANI FOUNDATION</b>,
-                a NGO non-profit foundation which will primarily focus on educating our Talented Poor Indian children.
+                Certain Percentage of our profit will be transferred to <b>SELVI MANI FOUNDATION</b>,
+                an NGO non-profitable foundation in the name of our Father & Mother which will primarily focus on educating our Talented Poor Indian children's.
                 <br><br>
                 We thank you so much for indirectly contributing, by placing order with our firm.
                 <br><br>
