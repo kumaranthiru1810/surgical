@@ -214,7 +214,7 @@
 
         <!-- Back Button -->
         <div class="text-center">
-            <a href="products.php" class="btn-back mt-4" style="text-decoration: none;">
+            <a href="Products.php" class="btn-back mt-4" style="text-decoration: none;">
                 <i class="fas fa-arrow-left"></i> Back to Products
             </a>
         </div>
