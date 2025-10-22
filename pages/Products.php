@@ -18,15 +18,16 @@ $db_config = [
 ];
 
 // Function to get database connection
-function getDBConnection() {
+function getDBConnection()
+{
     global $db_config;
     static $pdo = null;
-    
+
     if ($pdo === null) {
         try {
             $pdo = new PDO(
-                "mysql:host={$db_config['host']};dbname={$db_config['dbname']}", 
-                $db_config['username'], 
+                "mysql:host={$db_config['host']};dbname={$db_config['dbname']}",
+                $db_config['username'],
                 $db_config['password']
             );
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -34,7 +35,7 @@ function getDBConnection() {
             die("Database connection failed: " . $e->getMessage());
         }
     }
-    
+
     return $pdo;
 }
 
@@ -47,17 +48,17 @@ $productCategories = [];
 
 try {
     $pdo = getDBConnection();
-    
+
     // Get all distinct categories
     $stmt = $pdo->query("SELECT DISTINCT category FROM products ORDER BY category");
     $categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    
+
     // Get products for each category
     foreach ($categories as $category) {
         $stmt = $pdo->prepare("SELECT * FROM products WHERE category = ? ORDER BY name");
         $stmt->execute([$category]);
         $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
+
         $productCategories[$category] = $products;
     }
 } catch (PDOException $e) {
@@ -92,42 +93,37 @@ try {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><?php echo $pageTitle; ?></title>
     <!-- Cache Control -->
     <meta
-      http-equiv="Cache-Control"
-      content="no-cache, no-store, must-revalidate"
-    />
+        http-equiv="Cache-Control"
+        content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <!-- Description -->
     <meta name="description" content="<?php echo $pageDescription; ?>">
     <!-- Bootstrap CSS -->
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+        rel="stylesheet" />
     <!-- Animate.css for animations -->
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-      rel="stylesheet"
-    />
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        rel="stylesheet" />
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
-      rel="stylesheet"
-    />
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.1/font/bootstrap-icons.min.css"
+        rel="stylesheet" />
     <!-- AOS CSS -->
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
-      rel="stylesheet"
-    />
+        href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"
+        rel="stylesheet" />
     <!-- css -->
     <link rel="stylesheet" href="../index.css" />
     <style>
-      
         .respon2 {
             background-color: rgba(255, 255, 255, 0.95) !important;
         }
@@ -192,124 +188,145 @@ try {
                 font-size: 13px;
             }
         }
-    
-      .product-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        height: 100%;
-        border: 1px solid #e9ecef;
-        border-radius: 8px;
-        overflow: hidden;
-      }
-      .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-      }
-      .specs-list {
-        list-style-type: none;
-        padding-left: 0;
-      }
-      .specs-list li {
-        padding: 2px 0;
-        position: relative;
-        padding-left: 15px;
-      }
-      .specs-list li:before {
-        content: "•";
-        color: #007bff;
-        position: absolute;
-        left: 0;
-      }
-      .default-product-img {
-        height: 200px;
-        background-color: #f8f9fa;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #6c757d;
-      }
-      .product-image {
-        height: 290px;
-        object-fit: cover;
-        /* object-position:center; */
-        border-radius: 20px;
-        width: 100%;
-      }
+
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .specs-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .specs-list li {
+            padding: 2px 0;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .specs-list li:before {
+            content: "•";
+            color: #007bff;
+            position: absolute;
+            left: 0;
+        }
+
+        .default-product-img {
+            height: 200px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+
+        .product-image {
+            height: 350px;
+            object-fit: cover;
+            /* object-position:center; */
+            border-radius: 20px;
+            width: 40vw;
+        }
+
+        .key-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #007bff;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
     </style>
-  </head>
-  <body>
-    <!-- Navigation -->
-    <nav class="respon2">
-        <div class="container">
-            <div class="row">
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-start">
-                        <div>
-                            <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <?php
+</head>
 
-                $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
-                if ($sql1->rowCount() > 0) {
-                    $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
-                }
-                ?>
-                <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
-                    <div class="social-icons text-center">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-end">
-                        <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+<body>
 
-    <nav class="respon">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
-                    <div class="social-icons">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+    <div style="position: sticky; top:0; z-index:9999; background-color:white;">
+        <!-- Navigation -->
+        <nav class="respon2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-start">
+                            <div>
+                                <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
+                                    <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-start">
-                        <div>
-                            <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-                            </a>
+                    <?php
+
+                    $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
+                    if ($sql1->rowCount() > 0) {
+                        $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
+                    <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
+                        <div class="social-icons text-center">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-end">
+                            <div>
+                                <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
+                                    <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-end">
-                        <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
-                            </a>
+            </div>
+        </nav>
+
+        <nav class="respon">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="social-icons">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                        <div class="contact-info text-start">
+                            <div>
+                                <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
+                                    <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                        <div class="contact-info text-end">
+                            <div>
+                                <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
+                                    <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+
 
 
 
@@ -344,45 +361,43 @@ try {
                     <li class="nav-item">
                         <a class="nav-link" href="./contact-us.php">Contact Us</a>
                     </li>
-                    <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <?php if (isset($_SESSION['name'])) { ?>
-                            <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
-                        <?php } else { ?>
-                            <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
-                        <?php } ?>
-                    </li>
-                    <li class="nav-item">
-                        <?php if (isset($_SESSION['name'])) { ?>
-                        <a href="./logout.php" class="btn btn-primary me-3">Logout</a>
-                        <?php } else { ?>
-                        <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
-                        <?php } ?>
-                    </li>
+                        <li class="nav-item">
+                            <?php if (isset($_SESSION['name'])) { ?>
+                                <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
+                            <?php } else { ?>
+                                <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
+                            <?php } ?>
+                        </li>
+                        <li class="nav-item">
+                            <?php if (isset($_SESSION['name'])) { ?>
+                                <a href="./logout.php" class="btn btn-primary me-3">Logout</a>
+                            <?php } else { ?>
+                                <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
+                            <?php } ?>
+                        </li>
                     </ul>
-                </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    
-    
-    <div class="container mt-4">
-      <!-- Breadcrumb -->
-      <nav aria-label="breadcrumb" data-aos="fade-down" data-aos-delay="100" class="mb-4 d-flex justify-content-center">
-        <ol class="breadcrumb mt-4">
-          <li class="breadcrumb-item">
-            <a href="../index.php" class="text-decoration-none text-secondary">Home</a>
-          </li>
-          <li class="breadcrumb-item active text-primary">Products</li>
-        </ol>
-      </nav>
-
-      <!-- Main Title -->
-      <h1 class="about-title mt-5" data-aos="fade-up" data-aos-delay="200">
-        Products
-      </h1>
+        </nav>
     </div>
-    
+
+    <div class="container mt-4">
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" data-aos="fade-down" data-aos-delay="100" class="mb-4 d-flex justify-content-center">
+            <ol class="breadcrumb mt-4">
+                <li class="breadcrumb-item">
+                    <a href="../index.php" class="text-decoration-none text-secondary">Home</a>
+                </li>
+                <li class="breadcrumb-item active text-primary">Products</li>
+            </ol>
+        </nav>
+
+        <!-- Main Title -->
+        <h1 class="about-title mt-5" data-aos="fade-up" data-aos-delay="200">
+            Products
+        </h1>
+    </div>
+
     <?php
     // Loop through product categories
     $categoryDelay = 100;
@@ -392,14 +407,14 @@ try {
         <div class="container py-5">
             <h1 class="text-primary mb-4" data-aos="fade-up" data-aos-delay="' . $categoryDelay . '">' . $categoryName . '</h1>
             <div class="row g-7">';
-        
+
         // Check if category has products
         if (count($products) > 0) {
             // Loop through products in this category
             $productDelay = $categoryDelay;
             foreach ($products as $product) {
                 $productDelay += 50;
-                
+
                 // Handle image path - check if it's from database or fallback data
                 $imagePath = '';
                 if (!empty($product['image'])) {
@@ -410,10 +425,10 @@ try {
                         $imagePath = $product['image'];
                     }
                 }
-                
-                echo '<div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="' . $productDelay . '">
+
+                echo '<div class="col-md-6 col-lg-6 mt-5" data-aos="fade-up" data-aos-delay="' . $productDelay . '">
                         <div class="card product-card h-100">';
-                
+
                 // Display product image or placeholder
                 if (!empty($imagePath)) {
                     echo '<a href="product-details.php?id=' . htmlspecialchars($product['id']) . '">
@@ -425,23 +440,57 @@ try {
                             <i class="bi bi-image" style="font-size: 3rem;"></i>
                           </div>';
                 }
-                
-                echo '<div class="card-body" style="height:45vh; overflow-y: auto;">
-                                <a href="product-details.php?id=' . htmlspecialchars($product['id']) . '" style="text-decoration:none;"><h5 class="card-title">' . htmlspecialchars($product['name']) . '</h5></a>
-                                <p class="card-text">' . htmlspecialchars($product['description']) . '</p>';
-                
+
+
+                echo '<div class="card-body">
+                        <a href="product-details.php?id=' . htmlspecialchars($product['id']) . '" style="text-decoration:none;">
+                            <h5 class="key-title">' . htmlspecialchars($product['name']) . '</h5>
+                        </a>
+                        <p class="card-text">' . htmlspecialchars($product['description']) . '</p>
+                        <div class="features-box">
+                            <div class="key-title">
+                                <i class="fas fa-list-check"></i> Key Features
+                            </div>
+                            <ul class="check-list">';
+                                $features = explode("\n", $product['key_characteristics']);
+                                foreach ($features as $line) {
+                                    if (trim($line)) {
+                                        echo '<li>' . htmlspecialchars(trim($line)) . '</li>';
+                                    }
+                                }
+                echo '      </ul>
+                        </div>';
+                        if($product['uses']!=NULL){
+                    echo '<div class="uses-box">
+                            <div class="key-title">
+                                <i class="fas fa-stethoscope"></i> Uses
+                            </div>
+                            <ul class="check-list">';
+                                $uses = explode("\n", htmlspecialchars($product['uses']));
+                                foreach ($uses as $line) {
+                                    if (trim($line)) {
+                                        echo "<li>" . trim($line) . "</li>";
+                                    }
+                                }
+                echo '      </ul>
+                        </div>';
+                            }
+                            
+
+
+
                 // Display price if available
                 // if (!empty($product['price'])) {
                 //     echo '<p class="card-text"><strong>Price: ₹' . number_format($product['price'], 2) . '</strong></p>';
                 // }
-                
+
                 // Display stock status if available
                 // if (!empty($product['stock'])) {
                 //     $stockClass = $product['stock'] > 10 ? 'text-success' : ($product['stock'] > 0 ? 'text-warning' : 'text-danger');
                 //     $stockText = $product['stock'] > 0 ? 'In Stock (' . $product['stock'] . ')' : 'Out of Stock';
                 //     echo '<p class="card-text ' . $stockClass . '"><strong>' . $stockText . '</strong></p>';
                 // }
-                
+
                 echo '</div>
                             <div class="card-footer bg-transparent border-0">
                                 <a href="../forms/get_a_qoute.php" class="btn btn-outline-primary w-100 inquire-btn" data-product="' . htmlspecialchars($product['name']) . '">Get Quote</a>
@@ -454,7 +503,7 @@ try {
                     <p class="text-muted">No products available in this category yet.</p>
                   </div>';
         }
-        
+
         echo '</div>
         </div>';
     }
@@ -500,71 +549,71 @@ try {
         </div>
       </div>
     </div> -->
-    
+
     <!-- Footer -->
     <footer class="mt-5">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-4">
-                  <div class="footer-logo d-flex align-items-center mb-3">
-                      <img src="../assets/logo.jpeg" alt="Bharathi Surgicals Logo" class="me-2">
-                  </div>
-                  <div class="opening-time">
-                      <?php echo $data['opening_time']; ?>
-                  </div>
-              </div>
-              
-              <div class="col-md-4">
-                  <div class="social-icons text-center">
-                      <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                      <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                      <a href="#" id="footer-open-chat" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                  </div>
-              </div>
-              
-              <div class="col-md-4">
-                  <div class="contact-info">
-                      <div>
-                          <a href="tel:+91-97909 72432" class="text-decoration-none text-dark">
-                              <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
-                          </a>
-                      </div>
-                      
-                      <div>
-                          <a href="mailto:cs@bharathi.co.in" class="text-decoration-none text-dark">
-                              <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
-                          </a>
-                      </div>
-                      
-                      <div>
-                          <a href="https://www.google.com/maps/search/Rajapalayam,+Tamil+Nadu,+India" target="_blank" class="text-decoration-none text-dark">
-                              <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
-                          </a>
-                      </div>
-                      
-                  </div>
-              </div>
-          </div>
-    
-          <div class="footer-bottom">
-              <div class="row">
-                  <div class="col-md-4">
-                      <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
-                  </div>
-                  <div class="col-md-4 text-center">
-                      <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
-                  </div>
-                  <div class="col-md-4">
-                      <div class="footer-links text-end">
-                          <a href="#">Terms & Conditions</a>
-                          <a href="#">Privacy Policy</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-logo d-flex align-items-center mb-3">
+                        <img src="../assets/logo.jpeg" alt="Bharathi Surgicals Logo" class="me-2">
+                    </div>
+                    <div class="opening-time">
+                        <?php echo $data['opening_time']; ?>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="social-icons text-center">
+                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" id="footer-open-chat" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="contact-info">
+                        <div>
+                            <a href="tel:+91-97909 72432" class="text-decoration-none text-dark">
+                                <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="mailto:cs@bharathi.co.in" class="text-decoration-none text-dark">
+                                <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="https://www.google.com/maps/search/Rajapalayam,+Tamil+Nadu,+India" target="_blank" class="text-decoration-none text-dark">
+                                <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="footer-links text-end">
+                            <a href="#">Terms & Conditions</a>
+                            <a href="#">Privacy Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
-    
+
     <div class="helper-widget">
       <button class="helper-toggle">
           <i class="bi bi-question-circle-fill"></i>
@@ -578,13 +627,30 @@ try {
                 <li><a href="../forms/raise_of_complaint.php">Raise a Complaint</a></li>
                 <li><a href="../forms/suggestions.php">Suggestions</a></li>
                 <li><a href="#chat" id="open-chat">Chat with us</a></li>
-          </ul>
-      </div>
+            </ul>
+        </div>
     </div>
 
     <script>
+        document.getElementById('top-whatsapp').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+
+    <script>
         document.getElementById('open-chat').addEventListener('click', function() {
-            let message = `How can i help You? %0A%0A`;
+            let message = `How can I help You? %0A`;
 
             const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -598,9 +664,9 @@ try {
             window.open(whatsappURL, '_blank');
         });
     </script>
-        <script>
+    <script>
         document.getElementById('footer-open-chat').addEventListener('click', function() {
-            let message = `How can i help You? %0A%0A`;
+            let message = `How can I help You? %0A`;
 
             const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -614,9 +680,9 @@ try {
             window.open(whatsappURL, '_blank');
         });
     </script>
-        <script>
+    <script>
         document.getElementById('nav-open-chat').addEventListener('click', function() {
-            let message = `How can i help You? %0A%0A`;
+            let message = `How can I help You? %0A`;
 
             const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -647,90 +713,93 @@ try {
             }
         });
     </script>
-    
+
     <!-- Bootstrap 5.3 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <!-- AOS JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="../index.js"></script>
     <script>
-      // Initialize AOS
-      AOS.init({
-        duration: 1000,
-        once: true,
-        mirror: true, /* Re-trigger on scroll up */
-      });
-
-      // Product inquiry functionality
-      document.querySelectorAll('.inquire-btn').forEach(button => {
-        button.addEventListener('click', function() {
-          const productName = this.getAttribute('data-product');
-          document.getElementById('productName').value = productName;
-          document.getElementById('message').value = `I'm interested in ${productName}. Please provide more information.`;
-          
-          const inquiryModal = new bootstrap.Modal(document.getElementById('inquiryModal'));
-          inquiryModal.show();
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            mirror: true,
+            /* Re-trigger on scroll up */
         });
-      });
-      
-      // Form submission handling
-document.getElementById('submitInquiry').addEventListener('click', function () {
-  const form = document.getElementById('inquiryForm');
-  const formData = new FormData(form);
 
-  fetch('./products.email.php', {
-    method: 'POST',
-    body: formData,
-    headers: {
-      'Accept': 'application/json'  // Tell server we expect JSON
-    }
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === "success") {
-        alert("Thank you for your inquiry! We will contact you soon.");window.location.href='./Products.php';
+        // Product inquiry functionality
+        document.querySelectorAll('.inquire-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const productName = this.getAttribute('data-product');
+                document.getElementById('productName').value = productName;
+                document.getElementById('message').value = `I'm interested in ${productName}. Please provide more information.`;
 
-        // Close modal
-        const modal = bootstrap.Modal.getInstance(document.getElementById('inquiryModal'));
-        modal.hide();
+                const inquiryModal = new bootstrap.Modal(document.getElementById('inquiryModal'));
+                inquiryModal.show();
+            });
+        });
 
-        // Reset form
-        form.reset();
-      } else {
-        alert("Error: " + data.message);
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      alert("Something went wrong. Please try again.");
-    });
-});
+        // Form submission handling
+        document.getElementById('submitInquiry').addEventListener('click', function() {
+            const form = document.getElementById('inquiryForm');
+            const formData = new FormData(form);
+
+            fetch('./products.email.php', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json' // Tell server we expect JSON
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        alert("Thank you for your inquiry! We will contact you soon.");
+                        window.location.href = './Products.php';
+
+                        // Close modal
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('inquiryModal'));
+                        modal.hide();
+
+                        // Reset form
+                        form.reset();
+                    } else {
+                        alert("Error: " + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Something went wrong. Please try again.");
+                });
+        });
 
 
-      // Form submission handling
-      document.getElementById('submitInquiry').addEventListener('click', function() {
-        const formData = {
-          productName: document.getElementById('productName').value,
-          name: document.getElementById('name').value,
-          email: document.getElementById('email').value,
-          phone: document.getElementById('phone').value,
-          message: document.getElementById('message').value,
-          quantity: document.getElementById('quantity').value
-        };
-        
-        // Here you would typically send this data to your server
-        console.log('Inquiry submitted:', formData);
-        
-        // Show success message
-        // alert('Thank you for your inquiry! We will contact you soon.');window.location.href='./products.email.php';
-        
-        // Close modal
-        const modal = bootstrap.Modal.getInstance(document.getElementById('inquiryModal'));
-        modal.hide();
-        
-        // Reset form
-        document.getElementById('inquiryForm').reset();
-      });
+        // Form submission handling
+        document.getElementById('submitInquiry').addEventListener('click', function() {
+            const formData = {
+                productName: document.getElementById('productName').value,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                message: document.getElementById('message').value,
+                quantity: document.getElementById('quantity').value
+            };
+
+            // Here you would typically send this data to your server
+            console.log('Inquiry submitted:', formData);
+
+            // Show success message
+            // alert('Thank you for your inquiry! We will contact you soon.');window.location.href='./products.email.php';
+
+            // Close modal
+            const modal = bootstrap.Modal.getInstance(document.getElementById('inquiryModal'));
+            modal.hide();
+
+            // Reset form
+            document.getElementById('inquiryForm').reset();
+        });
     </script>
-  </body>
+</body>
+
 </html>

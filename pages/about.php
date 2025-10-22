@@ -10,6 +10,39 @@ if ($sql->rowCount() > 0) {
 ?>
 
 
+<?php // Database configuration
+$db_config = [
+  'host' => 'localhost',
+  'dbname' => 'surgical',
+  'username' => 'root',
+  'password' => ''
+];
+
+// Function to get database connection
+function getDBConnection()
+{
+  global $db_config;
+  static $pdo = null;
+
+  if ($pdo === null) {
+    try {
+      $pdo = new PDO(
+        "mysql:host={$db_config['host']};dbname={$db_config['dbname']}",
+        $db_config['username'],
+        $db_config['password']
+      );
+      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+      // Don't die, just return null so we can use fallback data
+      error_log("Database connection failed: " . $e->getMessage());
+      return null;
+    }
+  }
+
+  return $pdo;
+} ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -111,80 +144,80 @@ if ($sql->rowCount() > 0) {
 
 <body>
   <!-- Top Navigation -->
-  <nav class="respon2">
-    <div class="container">
-      <div class="row">
-        <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-          <div class="contact-info text-start">
-            <div>
-              <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
-                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-              </a>
+  <div style="position: sticky; top:0; z-index:9999; background-color:white;">
+    <!-- Navigation -->
+    <nav class="respon2">
+      <div class="container">
+        <div class="row">
+          <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+            <div class="contact-info text-start">
+              <div>
+                <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
+                  <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                </a>
+              </div>
             </div>
           </div>
-        </div>
-        <?php
+          <?php
 
-        $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
-        if ($sql1->rowCount() > 0) {
-          $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
-        }
-        ?>
-        <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
-          <div class="social-icons text-center">
-            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-            <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-          </div>
-        </div>
-        <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-          <div class="contact-info text-end">
-            <div>
-              <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
-                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
-              </a>
+          $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
+          if ($sql1->rowCount() > 0) {
+            $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
+          }
+          ?>
+          <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
+            <div class="social-icons text-center">
+              <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+              <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <nav class="respon">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
-          <div class="social-icons">
-            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-            <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-          <div class="contact-info text-start">
-            <div>
-              <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
-                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-          <div class="contact-info text-end">
-            <div>
-              <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
-                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
-              </a>
+          <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+            <div class="contact-info text-end">
+              <div>
+                <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
+                  <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-
+    <nav class="respon">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+            <div class="social-icons">
+              <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+              <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+            <div class="contact-info text-start">
+              <div>
+                <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
+                  <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+            <div class="contact-info text-end">
+              <div>
+                <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
+                  <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg">
@@ -233,8 +266,8 @@ if ($sql->rowCount() > 0) {
           </li>
         </ul>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 
   <div class="container mt-4">
     <!-- Breadcrumb -->
@@ -258,80 +291,112 @@ if ($sql->rowCount() > 0) {
       to have the very best equipment, supplies and service.
     </p>
 
-    <div class="row align-items-center">
-      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="400">
-        <!-- Our Story Section -->
-        <h1 class="subtitle">Our Story</h1>
-        <p class="mb-4" style="text-align: justify; line-height: 32px;">
-          Bharathi Surgicals was incorporated in Oct-2019 with a aim to
-          provide Ethical Business in the field of Health Care in India and
-          Abroad. We at Bharathi Surgicals strictly adhere to Corporate
-          Governance. We are a manufacturer of Surgical Disposable Dressing
-          Products such as Absorbent Gauze, Bandage Cloth, Grey Gauze Fabrics,
-          Roller bandage, Starch Jumbo Roll, Triangular Bandage, Gauze Swabs,
-          Mopping Pad/Abdominal Pad/Gauze Sponge/Laparotomy Sponge. We give
-          utmost important to quality and deliverables on time. It is being
-          managed by Educated experienced Professionals like Mrs. RenugaDevi R
-          holding B.Sc Degree in Microbiology, She is Co-Founder, Chairman,
-          Managing Director and Head of Production, very extensive experience
-          in handling production and make deliverables on time. Mr.
-          RajaRathinam R holding B.E Degree in Computer Science. He is
-          Co-Founder, Managing Director, CFO and CEO having extensive
-          experience in managing the company for Domestic and International.
-          Mr. Amit Bagchi holding Master of Computer Application Degree, He is
-          Chief Marketing Officer for India and Abroad, having extensive
-          experience in Marketing and works smartly.  Dr. Ranathive S holding
-          B.E and PhD in Computer Science. He is Marketing Manager for South
-          India.
-        </p>
-      </div>
-      <div class="col-lg-6 mt-5" data-aos="fade-up" data-aos-delay="500">
-        <!-- Doctor Image -->
+    <div class=" clearfix" data-aos="fade-up" data-aos-delay="400">
+      <!-- Our Story Section -->
+
+      <?php
+      $pdo = getDBConnection();
+      $id = 1;
+      $sql = "SELECT * FROM our_story WHERE id = ?";
+      $stmt =  $pdo->prepare($sql);
+      $stmt->execute([$id]);
+      $storycon = $stmt->fetch(PDO::FETCH_ASSOC);
+      ?>
+      <input type="hidden" name="id" value="<?= htmlspecialchars($storycon['id']) ?>">
+      <h1 class="subtitle"><?= htmlspecialchars($storycon['title']) ?></h1>
+      <?php if (!empty($storycon['image'])): ?>
         <img
-          src="../assets/about-us-doc-img.png"
+          src="../assets/<?= htmlspecialchars($storycon['image']) ?>"
           alt="Medical Professional"
-          class="about-us-doc-img img-fluid h-75 p-3" />
-      </div>
+          class="about-us-doc-img  col-md-6 float-md-end mb-3 ms-md-3 img-fluid mx-auto d-block" /><?php endif; ?>
+      <p class="mb-4" style="text-align: justify; line-height: 30px;">
+        <?= nl2br(htmlspecialchars($storycon['story'])) ?>
+
+      </p>
     </div>
+    <!-- <div class="col-lg-6 mt-5" data-aos="fade-up" data-aos-delay="500">
+           Doctor Image 
+          
+        </div> -->
   </div>
 
+  <!-- Our vision section -->
   <div class="container py-5 mt-5">
     <h1 class=" text-primary mb-4" data-aos="fade-up">Our Vision</h1>
 
     <div class="row">
       <?php
       // Vision data array - can be fetched from database in real scenario
-      $visions = [
-        [
-          'number' => '01.',
-          'title' => 'Customers First',
-          'description' => 'We prioritize safety, reliability, and innovation, delivering solutions that empower healthcare professionals to provide exceptional care with confidence and precision.'
-        ],
-        [
-          'number' => '02.',
-          'title' => 'Move Intentionally Fast',
-          'description' => 'We ensure timely service, empowering healthcare providers to stay focused on what truly matters—patient care and well-being.'
-        ],
-        [
-          'number' => '03.',
-          'title' => 'Think Big',
-          'description' => 'Our mission is to deliver cutting-edge medical supplies that elevate patient outcomes and redefine possibilities in the medical field.'
-        ]
-      ];
+
+
+      $pdo = getDBConnection();
+      $sql = "SELECT * FROM vision";
+      $stmt =  $pdo->prepare($sql);
+      $stmt->execute();
+      $visions = $stmt->fetchAll();
+      $i = 1;
+      // $visions = [
+      //   [
+      //     'number' => '01.',
+      //     'title' => 'Customers First',
+      //     'description' => 'We prioritize safety, reliability, and innovation, delivering solutions that empower healthcare professionals to provide exceptional care with confidence and precision.'
+      //   ],
+      //   [
+      //     'number' => '02.',
+      //     'title' => 'Move Intentionally Fast',
+      //     'description' => 'We ensure timely service, empowering healthcare providers to stay focused on what truly matters—patient care and well-being.'
+      //   ],
+      //   [
+      //     'number' => '03.',
+      //     'title' => 'Think Big',
+      //     'description' => 'Our mission is to deliver cutting-edge medical supplies that elevate patient outcomes and redefine possibilities in the medical field.'
+      //   ]
+      // ];
 
       // Loop through vision items
       foreach ($visions as $vision) {
         echo '<div class="col-md-4">
                   <div class="vision-section text-center" data-aos="fade-up">
                     <div>
-                      <div class="vision-number">' . $vision['number'] . '</div>
-                      <h2 class="vision-title">' . $vision['title'] . '</h2>
-                      <p style="text-align: justify;">' . $vision['description'] . '</p>
+                      <div class="vision-number">0' . $i++ . '.</div>
+                      <h2 class="vision-title">' . $vision['vision_title'] . '</h2>
+                      <p style="text-align: justify;">' . $vision['vision_content'] . '</p>
                     </div>
                   </div>
                 </div>';
       }
+
       ?>
+    </div>
+  </div>
+  <!-- Mission section -->
+  <div class="container">
+    <h1 class=" text-primary mb-4" data-aos="fade-up">Mission</h1>
+
+    <div class="selector-for-some-widget p-4 mb-4" data-aos="fade-up" style="box-shadow: rgba(13, 110, 253, 0.5);">
+      <ul class="mission-section ">
+        <?php
+        // Vision data array - can be fetched from database in real scenario
+
+
+        $pdo = getDBConnection();
+        $sql = "SELECT * FROM mission";
+        $stmt =  $pdo->prepare($sql);
+        $stmt->execute();
+        $missions = $stmt->fetchAll();
+        $i = 1;
+
+
+        // Loop through mission items
+        foreach ($missions as $mission) {
+          echo '
+          <li class="p-2" style="font-weight: 500; font-size:1.1rem;">' . $mission['mission_content'] . '</li>
+          ';
+        }
+
+        ?>
+      </ul>
+
     </div>
   </div>
 
@@ -429,9 +494,27 @@ if ($sql->rowCount() > 0) {
       </div>
     </div>
   </footer>
+
+  <script>
+        document.getElementById('top-whatsapp').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+
   <script>
     document.getElementById('open-chat').addEventListener('click', function() {
-      let message = `How can i help You? %0A%0A`;
+      let message = `How can I help You? %0A`;
 
       const storeNumber = "919790972432"; // Your WhatsApp number
       const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -448,7 +531,7 @@ if ($sql->rowCount() > 0) {
 
   <script>
     document.getElementById('nav-open-chat').addEventListener('click', function() {
-      let message = `How can i help You? %0A%0A`;
+      let message = `How can I help You? %0A`;
 
       const storeNumber = "919790972432"; // Your WhatsApp number
       const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -467,6 +550,23 @@ if ($sql->rowCount() > 0) {
       let message = `How can i help You? %0A%0A`;
 
       const storeNumber = "919790972432"; // Your WhatsApp number
+      const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+      // WhatsApp URL - fixed encoding
+      const whatsappURL = isMobile ?
+        `https://wa.me/${storeNumber}?text=${message}` :
+        `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+      // Open WhatsApp in a new tab
+      window.open(whatsappURL, '_blank');
+    });
+  </script>
+
+  <script>
+    document.getElementById('footer-open-chat').addEventListener('click', function() {
+      let message = `How can I help You? %0A`;
+
+      const storeNumber = "918489089784"; // Your WhatsApp number
       const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
       // WhatsApp URL - fixed encoding

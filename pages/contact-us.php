@@ -119,19 +119,19 @@ if ($sql->rowCount() > 0) {
       }
     }
 
-    @media(max-width:425px) {
+    @media(min-width:425px) and (max-width:767px) {
       #map {
         width: 400px;
       }
     }
 
-    @media(max-width:375px) {
+    @media(min-width:375px) and (max-width:424px) {
       #map {
         width: 350px;
       }
     }
 
-    @media(max-width:320px) {
+    @media(min-width:320px) and (max-width:374px) {
       #map {
         width: 300px;
       }
@@ -141,82 +141,81 @@ if ($sql->rowCount() > 0) {
 
 <body>
   <!-- Navigation -->
+
   <!-- Top Navigation -->
-  <nav class="respon2">
-    <div class="container">
-      <div class="row">
-        <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-          <div class="contact-info text-start">
-            <div>
-              <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
-                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-              </a>
+  <div style="position: sticky; top:0; z-index:9999; background-color:white;">
+    <!-- Navigation -->
+    <nav class="respon2">
+      <div class="container">
+        <div class="row">
+          <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+            <div class="contact-info text-start">
+              <div>
+                <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
+                  <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                </a>
+              </div>
+          </div>
+          </div>
+          <?php
+          $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
+          if ($sql1->rowCount() > 0) {
+            $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
+          }
+          ?>
+          <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
+            <div class="social-icons text-center">
+              <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+              <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
             </div>
           </div>
-        </div>
-        <?php
-
-        $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
-        if ($sql1->rowCount() > 0) {
-          $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
-        }
-        ?>
-        <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
-          <div class="social-icons text-center">
-            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-            <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-          </div>
-        </div>
-        <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-          <div class="contact-info text-end">
-            <div>
-              <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
-                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
-  <nav class="respon">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
-          <div class="social-icons">
-            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-            <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-          <div class="contact-info text-start">
-            <div>
-              <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
-                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-          <div class="contact-info text-end">
-            <div>
-              <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
-                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
-              </a>
+          <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+            <div class="contact-info text-end">
+              <div>
+                <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
+                  <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
 
-
-
+    <nav class="respon">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+            <div class="social-icons">
+              <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+              <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+            <div class="contact-info text-start">
+              <div>
+                <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
+                  <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+            <div class="contact-info text-end">
+              <div>
+                <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
+                  <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
@@ -264,8 +263,8 @@ if ($sql->rowCount() > 0) {
           </li>
         </ul>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 
   <!-- Breadcrumb -->
   <nav
@@ -390,10 +389,14 @@ if ($sql->rowCount() > 0) {
         <div class="col-md-6">
           <div class="d-flex flex-column align-items-center">
             <div class="mb-3">
-              <img src="../assets/contact-no.png" alt="Phone icon" />
+              <a href="#" id="whatsapp" class="phone1 text-decoration-none text-dark">
+                <i class="bi bi-whatsapp" style="color: #007BFF; font-size:50px;"></i>
+              </a>
             </div>
             <h5 class="mb-2">Contact Number</h5>
-            <p class="text-muted"><?php echo htmlspecialchars($res['phone']); ?></p>
+            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $res['phone']); ?>" class="phone1 text-decoration-none text-dark">
+              <p class="text-muted"><?php echo htmlspecialchars($res['phone']); ?></p>
+            </a>
           </div>
         </div>
 
@@ -401,7 +404,9 @@ if ($sql->rowCount() > 0) {
         <div class="col-md-6">
           <div class="d-flex flex-column align-items-center">
             <div class="mb-3">
-              <img src="../assets/emailus.png" alt="Email icon" />
+              <a href="mailto:<?php echo $res['email']; ?>" class="phone1 text-decoration-none text-dark">
+                <img src="../assets/emailus.png" alt="Email icon" />
+              </a>
             </div>
             <h5 class="mb-2">Email us</h5>
             <p class="text-muted"><?php echo htmlspecialchars($res['email']); ?></p>
@@ -533,6 +538,7 @@ if ($sql->rowCount() > 0) {
               <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
               <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
               <a href="#" id="footer-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+
             </div>
           </div>
 
@@ -549,34 +555,33 @@ if ($sql->rowCount() > 0) {
                   <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
                 </a>
               </div>
+                <div>
+                  <a href="https://www.google.com/maps/search/<?php echo $data['address']; ?>" target="_blank" class="text-decoration-none text-dark">
+                    <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
+                  </a>
+                </div>
 
-              <div>
-                <a href="https://www.google.com/maps/search/<?php echo $data['address']; ?>" target="_blank" class="text-decoration-none text-dark">
-                  <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
-                </a>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <div class="footer-bottom">
-          <div class="row">
-            <div class="col-md-4">
-              <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
-            </div>
-            <div class="col-md-4 text-center">
-              <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
-            </div>
-            <div class="col-md-4">
-              <div class="footer-links text-end">
-                <a href="#">Terms & Conditions</a>
-                <a href="#">Privacy Policy</a>
               </div>
             </div>
           </div>
+
+          <div class="footer-bottom">
+            <div class="row">
+              <div class="col-md-4">
+                <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
+              </div>
+              <div class="col-md-4 text-center">
+                <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
+              </div>
+              <div class="col-md-4">
+                <div class="footer-links text-end">
+                  <a href="#">Terms & Conditions</a>
+                  <a href="#">Privacy Policy</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
     </footer>
 
     <div class="helper-widget">
@@ -596,9 +601,44 @@ if ($sql->rowCount() > 0) {
       </div>
     </div>
 
+
+    <script>
+        document.getElementById('top-whatsapp').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+
+    <script>
+      document.getElementById('whatsapp').addEventListener('click', function() {
+        let message = ``;
+
+        const storeNumber = "919790972432"; // Your WhatsApp number
+        const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+        // WhatsApp URL - fixed encoding
+        const whatsappURL = isMobile ?
+          `https://wa.me/${storeNumber}?text=${message}` :
+          `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+        // Open WhatsApp in a new tab
+        window.open(whatsappURL, '_blank');
+      });
+    </script>
+
     <script>
       document.getElementById('open-chat').addEventListener('click', function() {
-        let message = `How can i help You? %0A%0A`;
+        let message = `How can I help You? %0A`;
 
         const storeNumber = "919790972432"; // Your WhatsApp number
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -614,7 +654,8 @@ if ($sql->rowCount() > 0) {
     </script>
     <script>
       document.getElementById('nav-open-chat').addEventListener('click', function() {
-        let message = `How can i help You? %0A%0A`;
+
+        let message = `How can I help You? %0A`;
 
         const storeNumber = "919790972432"; // Your WhatsApp number
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -630,9 +671,11 @@ if ($sql->rowCount() > 0) {
     </script>
     <script>
       document.getElementById('footer-open-chat').addEventListener('click', function() {
-        let message = `How can i help You? %0A%0A`;
+
+        let message = `How can I help You? %0A`;
 
         const storeNumber = "919790972432"; // Your WhatsApp number
+
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
         // WhatsApp URL - fixed encoding

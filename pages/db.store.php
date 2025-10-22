@@ -1,12 +1,6 @@
 <?php
-// Database configuration
-$db_config = [
-    'host' => 'localhost',
-    'dbname' => 'surgical',
-    'username' => 'root',
-    'password' => ''
-];
-            use PHPMailer\PHPMailer\PHPMailer;
+include("../db.php");
+use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require '../PHPmailer/vendor/phpmailer/phpmailer/src/Exception.php';
@@ -18,26 +12,7 @@ require '../PHPmailer/vendor/autoload.php';
 $mail = new PHPMailer(true);
 
 
-// Function to get database connection
-function getDBConnection() {
-    global $db_config;
-    static $pdo = null;
-    
-    if ($pdo === null) {
-        try {
-            $pdo = new PDO(
-                "mysql:host={$db_config['host']};dbname={$db_config['dbname']}", 
-                $db_config['username'], 
-                $db_config['password']
-            );
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die("Database connection failed: " . $e->getMessage());
-        }
-    }
-    
-    return $pdo;
-}
+
 
 // Initialize variables
 $locations = [];
@@ -53,7 +28,6 @@ $form_data = [
 
 // Fetch locations from database
 try {
-    $pdo = getDBConnection();
     $stmt = $pdo->query("SELECT * FROM locations ORDER BY display_order");
     $locations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -63,7 +37,6 @@ try {
 
 // Fetch contact information from database
 try {
-    $pdo = getDBConnection();
     $stmt = $pdo->query("SELECT * FROM company_info LIMIT 1");
     $contact_info = $stmt->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
@@ -108,7 +81,7 @@ $message = $_POST['message'];
     // If no errors, insert into database
     if (empty($form_errors)) {
         try {
-            $pdo = getDBConnection();
+            // $pdo = getDBConnection();
             $stmt = $pdo->prepare("INSERT INTO contact_submissions (name, email, subject, message, ip_address) 
                                   VALUES (:name, :email, :subject, :message, :ip)");
             $stmt->execute([
@@ -129,22 +102,22 @@ $message = $_POST['message'];
                 'message' => ''
             ];
 try {
-    $to = "";
+    $to = "srvnkmrmarimuthu@gmail.com";
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = '';
-    $mail->Password = '';
+    $mail->Username = 'srvnkmrmarimuthu@gmail.com';
+    $mail->Password = 'nqdm ktju anvb zoqf';
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
 
-    $mail->setFrom('', 'Bharathi Surgicals:');
+    $mail->setFrom('srvnkmrmarimuthu@gmail.com', 'Bharathi Surgicals:');
     $mail->addAddress($to);
 
     $mail->isHTML(true);
     $mail->Subject = 'Bharathi Surgicals';
     $mail->Body = "
-    <html xmlns='http://www.w3.org/1999/xhtml'>
+    <html>
     <head>
         <meta http-equiv='content-type' content='text/html; charset=utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0;'>
@@ -163,7 +136,7 @@ try {
         a, a:hover { color: #B72C43; }
         .footer a, .footer a:hover { color: #999999; }
         </style>
-        <title>Strata-2K24</title>
+        <title>Bharathi Surgicals</title>
     </head>
     <body topmargin='0' rightmargin='0' bottommargin='0' leftmargin='0' marginwidth='0' marginheight='0' width='100%' style='border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; width: 100%; height: 100%; -webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; line-height: 100%;
         background-color: #F0F0F0; color: #000000;' bgcolor='#F0F0F0' text='#000000'>
@@ -178,11 +151,11 @@ try {
                         <td align='center' valign='top' style='border-collapse: collapse; border-spacing: 0; margin: 0; padding: 0; padding-left: 6.25%; padding-right: 6.25%; width: 87.5%;
                             padding-top: 20px; padding-bottom: 20px;'>
                             <a target='_blank' style='text-decoration: none;'
-                                href='https://anjacstrata.in'><img border='0' vspace='0' hspace='0'
-                                src='../assets/logo.png'
-                                width='130' height='150'
+                                href='bharathi.co.in'><img
+                                src='https://bharathi-surgicals-products.com.parasuramnurserygarden.com/assets/logo.jpeg'
+                                width='130' height='100'
                                 alt='Logo' title='Logo' style='color: #000000;
-                                font-size: 10px; margin: 0; padding: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: none; display: block;' /></a>
+                                font-size: 10px; margin: 0; padding: 0; display: block;' /></a>
                         </td>
                     </tr>
                     <tr>
@@ -202,7 +175,7 @@ Thank you for your assistance.</p>
                     max-width: 560px;' class='container'>
                     <tr>
                         <td align='left' valign='top' style='padding-left: 20px;'>
-                            <h3>Leader Details:</h3>
+                            <h3>User Details:</h3>
                             <p><b>Name:</b> $name</p>
                             <p><b>Email:</b> $email</p>
                             <p><b>Subject:</b>$subject</p>

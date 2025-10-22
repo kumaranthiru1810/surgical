@@ -109,6 +109,9 @@ checkAndCreateTables();
 $product_message = '';
 $member_message = '';
 $contact_message = '';
+$vision_message = '';
+$story_message = '';
+$mission_message = '';
 
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -230,16 +233,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($image) {
                     $stmt = $pdo->prepare("UPDATE management SET name = ?, position = ?, bio = ?, image = ? WHERE id = ?");
                     $stmt->execute([$name, $position, $bio, $image, $member_id]);
+                    echo "<script>alert('Updated Member Successfully');
+                                window.location.href='admin.php';
+                </script>";
                 } else {
                     $stmt = $pdo->prepare("UPDATE management SET name = ?, position = ?, bio = ? WHERE id = ?");
                     $stmt->execute([$name, $position, $bio, $member_id]);
+                    echo "<script>alert('Updated Member Successfully');
+                                window.location.href='admin.php';
+                </script>";
                 }
-                $member_message = "Management member updated successfully!";
+                // $member_message = "Management member updated successfully!";
             } else {
                 // Add new member
                 $stmt = $pdo->prepare("INSERT INTO management (name, position, bio, image) VALUES (?, ?, ?, ?)");
                 $stmt->execute([$name, $position, $bio, $image]);
-                $member_message = "Management member added successfully!";
+                // $member_message = "Management member added successfully!";
+                echo "<script>alert('Added Successfully');
+                                window.location.href='admin.php';
+                <script>";
             }
         } catch (PDOException $e) {
             $member_message = "Error: " . $e->getMessage();
@@ -371,6 +383,165 @@ if (isset($_GET['edit_member'])) {
     }
 }
 
+//Update story
+if (isset($_POST['update_story'])) {
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $image = '';
+    $id = 1;
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['photo']['tmp_name'];
+        $fileName = $_FILES['photo']['name'];
+        $fileSize = $_FILES['photo']['size'];
+        $fileType = $_FILES['photo']['type'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+
+        // Allowed file extensions
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+
+        // Validate extension
+        if (in_array($fileExtension, $allowedExtensions)) {
+
+            // Validate MIME type using getimagesize
+            $imageInfo = getimagesize($fileTmpPath);
+            if ($imageInfo !== false) {
+                // It’s a valid image
+                $uploadFileDir = '../assets/';
+                $newFileName = time() . '_' . basename($_FILES['photo']['name']);
+                $image = $uploadFileDir . $newFileName;
+                if (move_uploaded_file($fileTmpPath, $image)) {
+                    echo "";
+                }
+            }
+        }
+    }
+    $stmt = $pdo->prepare("UPDATE our_story SET title = ? ,story = ? ,image = ? WHERE id = ?");
+    $stmt->execute([$title, $content, $image, $id]);
+    $story_message = 'Story Updated Successsfully';
+}
+
+
+if (isset($_POST['add_vision']) || isset($_POST['edit_vision'])) {
+    $vis_title = $_POST['vision_title'];
+    $vis_content = $_POST['vision_content'];
+
+    $vis_id = isset($_POST['vision_id']) ? $_POST['vision_id'] : null;
+
+
+
+    try {
+        if (isset($_POST['edit_vision']) && $vis_id) {
+            // Update existing vision
+
+            $stmt = $pdo->prepare("UPDATE vision SET vision_title = ?, vision_content = ? WHERE id = ?");
+            $stmt->execute([$vis_title, $vis_content, $vis_id]);
+            $vision_message = "Vision updated successfully!";
+            header("Location: " . $_SERVER['PHP_SELF']);
+        } else {
+            // Add new vision
+            $stmt = $pdo->prepare("INSERT INTO vision (vision_title , vision_content) VALUES (?, ?)");
+            $stmt->execute([$vis_title, $vis_content]);
+            $vision_message = "Vision added successfully!";
+        }
+    } catch (PDOException $e) {
+        $vision_message = "Error: " . $e->getMessage();
+    }
+}
+
+//Add/Edit mission
+
+if (isset($_POST['add_mission']) || isset($_POST['edit_mission'])) {
+    $mis_content = $_POST['mission_content'];
+
+    $mis_id = isset($_POST['mission_id']) ? $_POST['mission_id'] : null;
+
+
+
+    try {
+        if (isset($_POST['edit_mission']) && $mis_id) {
+            // Update existing mission
+
+            $stmt = $pdo->prepare("UPDATE mission SET mission_content = ? WHERE id = ?");
+            $stmt->execute([$mis_content, $mis_id]);
+            $mission_message = "Mission updated successfully!";
+            header("Location: " . $_SERVER['PHP_SELF']);
+        } else {
+            // Add new mission
+            $stmt = $pdo->prepare("INSERT INTO mission ( mission_content) VALUES (?)");
+            $stmt->execute([$mis_content]);
+            $mission_message = "Mission added successfully!";
+        }
+    } catch (PDOException $e) {
+        $mission_message = "Error: " . $e->getMessage();
+    }
+}
+
+
+
+
+//Delete vision
+
+if (isset($_POST['delete_vision'])) {
+    $vis_id = $_POST['vision_id'];
+
+    try {
+        $stmt = $pdo->prepare("DELETE FROM vision WHERE id = ?");
+        $stmt->execute([$vis_id]);
+
+
+
+        $vision_message = "vision deleted successfully!";
+    } catch (PDOException $e) {
+        $product_message = "Error deleting vision: " . $e->getMessage();
+    }
+}
+
+//Delete mission
+
+if (isset($_POST['delete_mission'])) {
+    $mis_id = $_POST['mission_id'];
+
+    try {
+        $stmt = $pdo->prepare("DELETE FROM mission WHERE id = ?");
+        $stmt->execute([$mis_id]);
+
+
+
+        $mission_message = "Mission deleted successfully!";
+    } catch (PDOException $e) {
+        $product_message = "Error deleting vision: " . $e->getMessage();
+    }
+}
+
+
+$edit_vision = null;
+$edit_mission = null;
+
+if (isset($_GET['edit_vision'])) {
+    $pdo = getDBConnection();
+    $vis_id = $_GET['edit_vision'];
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM vision WHERE id = ?");
+        $stmt->execute([$vis_id]);
+        $edit_vision = $stmt->fetch();
+    } catch (PDOException $e) {
+        $vision_message = "Error loading product: " . $e->getMessage();
+    }
+}
+
+if (isset($_GET['edit_mission'])) {
+    $pdo = getDBConnection();
+    $mis_id = $_GET['edit_mission'];
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM mission WHERE id = ?");
+        $stmt->execute([$mis_id]);
+        $edit_mission = $stmt->fetch();
+    } catch (PDOException $e) {
+        $mission_message = "Error loading product: " . $e->getMessage();
+    }
+}
+
 // Fetch data for display
 $pdo = getDBConnection();
 try {
@@ -378,6 +549,8 @@ try {
     $management = $pdo->query("SELECT * FROM management ORDER BY id DESC")->fetchAll();
     $contacts = $pdo->query("SELECT * FROM contact_submissions ORDER BY submitted_at DESC")->fetchAll();
     $users = $pdo->query("SELECT * FROM users ORDER BY created_at DESC")->fetchAll();
+    $visions = $pdo->query("SELECT * FROM vision ORDER BY id DESC")->fetchAll();
+    $missions = $pdo->query("SELECT * FROM mission ORDER BY id DESC")->fetchAll();
 } catch (PDOException $e) {
     // Handle error if tables don't exist yet
     $products = [];
@@ -391,6 +564,8 @@ $total_products = count($products);
 $total_members = count($management);
 $total_contacts = count($contacts);
 $total_users = count($users);
+$total_visions = count($visions);
+$total_missions = count($missions);
 $new_contacts = count(array_filter($contacts, function ($contact) {
     return $contact['status'] == 'new';
 }));
@@ -602,6 +777,18 @@ try {
                     <a class="nav-link active" href="#" data-section="dashboard"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a>
                 </li>
                 <li class="nav-item">
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle " href="javascript:void(0);" data-bs-toggle="dropdown" id="aboutDropdown"
+                            data-section="story" aria-expanded="false">
+                            <i class="fa-solid fa-address-card"></i> About
+                        </a>
+                        <ul class="dropdown-menu" id="d_down">
+                            <li><a class="nav-link dropdown-item  di" href="#" data-section="vision">Vision</a></li>
+                            <li><a class="nav-link dropdown-item di" href="#" data-section="mission">Mission</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#" data-section="products"><i class="fas fa-box me-1"></i> Products</a>
                 </li>
                 <li class="nav-item">
@@ -615,9 +802,6 @@ try {
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#" data-section="users"><i class="fas fa-user me-1"></i> Users</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="../index.php" target="_blank"><i class="fas fa-external-link-alt me-1"></i> View Website</a>
                 </li>
             </ul>
         </div>
@@ -733,6 +917,296 @@ try {
                 </div>
             </div>
         </div>
+
+
+        <!-- About page Story-->
+        <div id="story" class="content-section">
+            <h2 class="section-title">Manage Story Content</h2>
+            <?php if (!empty($story_message)): ?>
+                <div class="alert alert-info"><?php echo $story_message; ?></div>
+            <?php endif; ?>
+
+            <div class="card">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Our Content</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive table-container">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Content</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $pdo = getDBConnection();
+                                $id = 1;
+                                $sql = "SELECT * FROM our_story WHERE id = ?";
+                                $stmt =  $pdo->prepare($sql);
+                                $stmt->execute([$id]);
+                                $storycon = $stmt->fetch(PDO::FETCH_ASSOC);
+                                ?> <tr>
+                                    <td><?php echo $id ?></td>
+                                    <td><img
+                                            src="../assets/<?= htmlspecialchars($storycon['image']) ?>" alt='Error' style='width:120px;' /></td>
+                                    <td>
+                                        <?= htmlspecialchars($storycon['title']) ?></td>
+                                    <td style="min-width: auto;"> <?= nl2br(htmlspecialchars($storycon['story'])) ?></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <p class="text-center text-muted">No contact submissions yet.</p> -->
+                </div>
+
+            </div>
+
+            <div class="card u_story" style="display: none;border-top: 2px solid var(--primary);" id="u_story">
+
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Choose Content</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <table class="table table-striped table-hover align-middle">
+
+                                <tbody>
+                                    <tr>
+                                        <td> <input type="file" name="photo" id="story_img" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" name="title" id="title" class="form-control" placeholder="Story Title" required></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <textarea class="form-control" name="content" id="content" placeholder="Story Content" rows="6" required></textarea></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button class="btn-outline-success  p-2 btn" type="submit" data-section="story" name="update_story" onclick="return confirm('Are you sure you want to update the story?');">
+                                                Change
+                                            </button>
+                                            <button class="btn-outline-secondary  p-2 btn u_story" onclick="
+                                                    const box = document.getElementById('u_story');
+                                                    box.style.display='none'; 
+                                                    const this_btn =  document.getElementById('up_btn');
+                                                    this_btn.style.display = 'block';
+                                                " data-section="story" name="cancel_content">Cancel</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <!-- <p class="text-center text-muted">No contact submissions yet.</p> -->
+                </div>
+
+            </div>
+
+
+
+            <button class=" btn-outline-success  p-2 btn" type="submit" id="up_btn" data-section="u_story" name="a_story" onclick="
+                const box = document.getElementById('u_story');
+                const this_btn =  document.getElementById('up_btn');
+                this_btn.style.display = 'none';
+                if(box){
+                box.style.display='block';  
+                            }   
+            
+            ">
+                Change Story
+            </button>
+
+        </div>
+
+
+        <!-- About us page Vision-->
+
+        <div id="vision" class="content-section">
+            <h2 class="section-title">Manage Vision</h2>
+            <?php if (!empty($vision_message)): ?>
+                <div class="alert alert-info"><?php echo $vision_message; ?></div>
+            <?php endif; ?>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><?php echo $edit_vision ? 'Edit Vision' : 'Add New Vision'; ?></h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data">
+                                <?php if ($edit_vision): ?>
+                                    <input type="hidden" name="vision_id" value="<?php echo $edit_vision['id']; ?>">
+                                <?php endif; ?>
+                                <div class="mb-3">
+                                    <label class="form-label">Vision Title</label>
+                                    <input type="text" class="form-control" name="vision_title" value="<?php echo $edit_vision ? htmlspecialchars($edit_vision['vision_title']) : ''; ?>" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Vision Content</label>
+                                    <textarea class="form-control" name="vision_content" rows="5" required><?php echo $edit_vision ? htmlspecialchars($edit_vision['vision_content']) : ''; ?></textarea>
+                                </div>
+
+
+
+                                <?php if ($edit_vision): ?>
+                                    <button type="submit" name="edit_vision" class="btn btn-primary w-100">Update Vision</button>
+                                    <a href="admin.php" class="btn btn-secondary w-100 mt-2">Cancel</a>
+                                <?php else: ?>
+                                    <button type="submit" name="add_vision" class="btn btn-primary w-100">Add Vision</button>
+                                <?php endif; ?>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <?php
+                            $stmt = $pdo->prepare("SELECT * FROM vision");
+                            $stmt->execute();
+                            $visions = $stmt->fetchAll();
+
+                            ?>
+                            <h5 class="mb-0">Our Visions (<?php echo $total_visions; ?>)</h5>
+                        </div>
+                        <div class="card-body">
+                            <?php if ($total_visions > 0): ?>
+                                <div class="table-responsive table-container">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Content</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            foreach ($visions as $vision): ?>
+                                                <tr>
+
+                                                    <td><?php echo htmlspecialchars($vision['vision_title']); ?></td>
+                                                    <td><?php echo htmlspecialchars($vision['vision_content']); ?></td>
+
+                                                    <td>
+                                                        <a href="?edit_vision=<?php echo $vision['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                        <form method="POST" style="display:inline;">
+                                                            <input type="hidden" name="vision_id" value="<?php echo $vision['id']; ?>">
+                                                            <button type="submit" name="delete_vision" class="btn btn-sm btn-outline-danger" data-section="vision" onclick="return confirm('Are you sure you want to delete this vision?')">Delete</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <?php else: ?>
+                                <p class="text-center text-muted">No visions added yet.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- About us mission page -->
+        <div id="mission" class="content-section">
+            <h2 class="section-title">Manage Mission</h2>
+            <?php if (!empty($mission_message)): ?>
+                <div class="alert alert-info"><?php echo $mission_message; ?></div>
+            <?php endif; ?>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><?php echo $edit_mission ? 'Edit Mission' : 'Add New Mission'; ?></h5>
+                        </div>
+                        <div class="card-body">
+                            <form method="POST" enctype="multipart/form-data">
+                                <?php if ($edit_mission): ?>
+                                    <input type="hidden" name="mission_id" value="<?php echo $edit_mission['id']; ?>">
+                                <?php endif; ?>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Mission Content</label>
+                                    <textarea class="form-control" name="mission_content" rows="5" required><?php echo $edit_mission ? htmlspecialchars($edit_mission['mission_content']) : ''; ?></textarea>
+                                </div>
+
+
+
+                                <?php if ($edit_mission): ?>
+                                    <button type="submit" name="edit_mission" class="btn btn-primary w-100">Update Mission</button>
+                                    <a href="admin.php" class="btn btn-secondary w-100 mt-2">Cancel</a>
+                                <?php else: ?>
+                                    <button type="submit" name="add_mission" class="btn btn-primary w-100">Add Misssion</button>
+                                <?php endif; ?>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                            <?php
+                            $stmt = $pdo->prepare("SELECT * FROM mission");
+                            $stmt->execute();
+                            $missions = $stmt->fetchAll();
+
+                            ?>
+                            <h5 class="mb-0">Our Missions (<?php echo $total_missions; ?>)</h5>
+                        </div>
+                        <div class="card-body">
+                            <?php if ($total_missions > 0): ?>
+                                <div class="table-responsive table-container">
+                                    <table class="table table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Content</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php foreach ($missions as $mission): ?>
+                                                <tr>
+
+                                                    <td><?php echo htmlspecialchars($mission['mission_content']); ?></td>
+
+                                                    <td>
+                                                        <a href="?edit_mission=<?php echo $mission['id']; ?>" class="btn btn-sm btn-outline-primary">Edit</a>
+                                                        <form method="POST" style="display:inline;">
+                                                            <input type="hidden" name="mission_id" value="<?php echo $mission['id']; ?>">
+                                                            <button type="submit" name="delete_mission" class="btn btn-sm btn-outline-danger" data-section="mission" onclick="return confirm('Are you sure you want to delete this mission?')">Delete</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <?php else: ?>
+                                <p class="text-center text-muted">No missions added yet.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
 
         <!-- Products Section -->
@@ -893,11 +1367,11 @@ try {
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Position</label>
-                                    <input type="text" class="form-control" name="member_position" value="<?php echo $edit_member ? htmlspecialchars($edit_member['position']) : ''; ?>" required>
+                                    <textarea class="form-control" name="member_position" rows="1"><?php echo $edit_member ? htmlspecialchars($edit_member['position']) : ''; ?> </textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Bio/Description</label>
-                                    <textarea class="form-control" name="member_bio" rows="3" required><?php echo $edit_member ? htmlspecialchars($edit_member['bio']) : ''; ?></textarea>
+                                    <textarea class="form-control" name="member_bio" rows="3"><?php echo $edit_member ? htmlspecialchars($edit_member['bio']) : ''; ?></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Profile Image</label>
@@ -940,9 +1414,11 @@ try {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php $i=1; foreach ($management as $member): ?>
+                                            <?php $i = 1;
+                                            foreach ($management as $member): ?>
                                                 <tr>
-                                                    <td><?php echo $i; $i++; ?></td>
+                                                    <td><?php echo $i;
+                                                        $i++; ?></td>
                                                     <td>
                                                         <?php if (!empty($member['image'])): ?>
                                                             <img src="../<?php echo $member['image']; ?>" alt="Profile" class="member-image-thumb">
@@ -1021,7 +1497,7 @@ try {
             $id = $_POST['contactdetail_id'];
 
             $sql = $pdo->prepare("UPDATE contact_page_details SET headoffice = ? , branchoffice = ?, phone = ? , email = ? WHERE id = ?");
-            $sql->execute([$headoffice , $branchoffice , $phone , $email , $id]);
+            $sql->execute([$headoffice, $branchoffice, $phone, $email, $id]);
             if ($sql) {
                 echo "<script>alert('Updated Successfully');
                                     window.location.href = 'admin.php';
@@ -1162,9 +1638,11 @@ try {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i=1; foreach ($contacts as $contact): ?>
+                                    <?php $i = 1;
+                                    foreach ($contacts as $contact): ?>
                                         <tr>
-                                            <td><?php echo $i; $i++; ?></td>
+                                            <td><?php echo $i;
+                                                $i++; ?></td>
                                             <td><?php echo htmlspecialchars($contact['name']); ?></td>
                                             <td><?php echo htmlspecialchars($contact['email']); ?></td>
                                             <td><?php echo htmlspecialchars($contact['subject']); ?></td>
@@ -1258,9 +1736,11 @@ try {
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php $i=1; foreach ($users as $user): ?>
+                                <?php $i = 1;
+                                foreach ($users as $user): ?>
                                     <tr>
-                                        <td><?php echo $i; $i++; ?></td>
+                                        <td><?php echo $i;
+                                            $i++; ?></td>
                                         <td><?php echo htmlspecialchars($user['firm']); ?></td>
                                         <td><?php echo htmlspecialchars($user['email']); ?></td>
                                         <td><?php echo htmlspecialchars($user['gst']); ?></td>

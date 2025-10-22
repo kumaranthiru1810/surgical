@@ -1246,28 +1246,6 @@ label {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Responsive adjustments Mansgement*/
 @media (max-width: 992px) {
     .management-card {
@@ -1311,10 +1289,9 @@ label {
     .management-name {
         font-size: 1.5rem;
     }
-}
 
 
-
-.image img {
+.image img{
     height: 100%;
+
 }
