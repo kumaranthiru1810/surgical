@@ -37,7 +37,9 @@ if ($sql->rowCount() > 0) {
 
     <style>
         .respon2 {
+            /* background-color: #fff !important; */
             background-color: rgba(255, 255, 255, 0.95) !important;
+
         }
 
         .respon {
@@ -85,7 +87,9 @@ if ($sql->rowCount() > 0) {
 
             .respon {
                 display: block;
-                background-color: #fff;
+                /* background-color: #fff; */
+                background-color: rgba(255, 255, 255, 0.95) !important;
+
             }
 
             .respon .social-icons {
@@ -101,7 +105,8 @@ if ($sql->rowCount() > 0) {
             }
         }
 
-        
+
+
 
 
         /* Flash Message Styles */
@@ -209,124 +214,128 @@ if ($sql->rowCount() > 0) {
     $current_year = date('Y');
     ?>
     <!-- Top Navigation -->
-    <nav class="respon2">
-        <div class="container">
-            <div class="row">
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-start">
-                        <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
-                            <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
-                        </a>
+    <div style="position: sticky; top:0; z-index:9999; background-color:white;">
+        <nav class="respon2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-start">
+                            <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
+                                <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
+                            </a>
+                        </div>
                     </div>
-                </div>
 
-                <?php
-                $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
-                if ($sql1->rowCount() > 0) {
-                    $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
-                }
-                ?>
+                    <?php
+                    $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
+                    if ($sql1->rowCount() > 0) {
+                        $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
 
-                <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
-                    <div class="social-icons text-center">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                    <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
+                        <div class="social-icons text-center">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-end">
-                        <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
-                            <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <nav class="respon">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
-                    <div class="social-icons">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-end">
+                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
+                                <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-start">
-                        <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
-                            <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
-                        </a>
+        </nav>
+
+        <nav class="respon">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="social-icons">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        </div>
                     </div>
                 </div>
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-end">
-                        <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
-                            <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
-                        </a>
+                <div class="row">
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                        <div class="contact-info text-start">
+                            <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
+                                <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                        <div class="contact-info text-end">
+                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
+                                <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
 
 
 
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg sticky-top position-sticky">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <div class="d-flex align-items-center">
-                    <img src="./assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <div class="d-flex align-items-center">
+                        <img src="./assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+                    </div>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/about.php">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/products.php">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/management.php">Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./forms/request_sample.php">Place Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./pages/contact-us.php">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <?php if (isset($_SESSION['name'])) { ?>
+                                <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
+                            <?php } else { ?>
+                                <a href="./pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
+                            <?php } ?>
+                        </li>
+                        <li class="nav-item">
+                            <?php if (isset($_SESSION['name'])) { ?>
+                                <a href="./pages/logout.php" class="btn btn-primary me-3"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                            <?php } else { ?>
+                                <a href="./pages/signin.php" class="btn btn-primary me-3">Sign In</a>
+                            <?php } ?>
+                        </li>
+                    </ul>
                 </div>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./pages/about.php">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./pages/products.php">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./pages/management.php">Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./pages/contact-us.php">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <?php if (isset($_SESSION['name'])) { ?>
-                            <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
-                        <?php } else { ?>
-                            <a href="./pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
-                        <?php } ?>
-                    </li>
-                    <li class="nav-item">
-                        <?php if (isset($_SESSION['name'])) { ?>
-                            <a href="./pages/logout.php" class="btn btn-primary me-3"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
-                        <?php } else { ?>
-                            <a href="./pages/signin.php" class="btn btn-primary me-3">Sign In</a>
-                        <?php } ?>
-                    </li>
-                </ul>
             </div>
-        </div>
-    </nav>
-
+        </nav>
+    </div>
 
     <section class="hero-section pt-5">
         <div class="container">
@@ -522,6 +531,7 @@ if ($sql->rowCount() > 0) {
         </button>
         <div class="helper-menu">
             <ul>
+                <li><a href="./forms/request_sample.php">Place Orders</a></li>
                 <li><a href="./forms/get_a_qoute.php">Get Quote</a></li>
                 <li><a href="./forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
@@ -549,7 +559,7 @@ if ($sql->rowCount() > 0) {
         document.getElementById('open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -566,7 +576,7 @@ if ($sql->rowCount() > 0) {
         document.getElementById('nav-open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -582,7 +592,7 @@ if ($sql->rowCount() > 0) {
         document.getElementById('footer-open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding

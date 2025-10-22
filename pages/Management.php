@@ -246,7 +246,7 @@ if (empty($managementTeam)) {
                     <div class="contact-info text-end">
                         <div>
                             <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                             </a>
                         </div>
                     </div>
@@ -280,7 +280,7 @@ if (empty($managementTeam)) {
                     <div class="contact-info text-end">
                         <div>
                             <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                             </a>
                         </div>
                     </div>
@@ -292,7 +292,7 @@ if (empty($managementTeam)) {
 
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg sticky-top position-sticky">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <div class="d-flex align-items-center">
@@ -315,6 +315,9 @@ if (empty($managementTeam)) {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./Management.php">Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../forms/request_sample.php">Place Order</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./contact-us.php">Contact Us</a>
@@ -533,6 +536,7 @@ if (empty($managementTeam)) {
       </button>
       <div class="helper-menu">
           <ul>
+            <li><a href="../forms/request_sample.php">Place Orders</a></li>
               <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
                 <li><a href="../forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
@@ -547,7 +551,7 @@ if (empty($managementTeam)) {
         document.getElementById('open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -563,7 +567,7 @@ if (empty($managementTeam)) {
         document.getElementById('footer-open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -579,7 +583,7 @@ if (empty($managementTeam)) {
         document.getElementById('nav-open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
