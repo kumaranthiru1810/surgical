@@ -176,7 +176,7 @@ function getDBConnection()
             <div class="contact-info text-end">
               <div>
                 <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
-                  <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                  <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                 </a>
               </div>
             </div>
@@ -210,7 +210,7 @@ function getDBConnection()
             <div class="contact-info text-end">
               <div>
                 <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
-                  <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                  <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                 </a>
               </div>
             </div>
@@ -566,7 +566,7 @@ function getDBConnection()
     document.getElementById('footer-open-chat').addEventListener('click', function() {
       let message = `How can I help You? %0A`;
 
-      const storeNumber = "918489089784"; // Your WhatsApp number
+      const storeNumber = "91"; // Your WhatsApp number
       const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
       // WhatsApp URL - fixed encoding

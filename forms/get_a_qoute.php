@@ -377,7 +377,7 @@ if ($sql1->rowCount() > 0) {
                     <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
                         <div class="contact-info text-end">
                             <div>
-                                <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
+                                <a href="top-whatsapp" class="phone text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
                             </div>
@@ -411,7 +411,7 @@ if ($sql1->rowCount() > 0) {
                     <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
                         <div class="contact-info text-end">
                             <div>
-                                <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
+                                <a href="top-whatsapp" class="phone1 text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
                             </div>
@@ -671,6 +671,23 @@ if ($sql1->rowCount() > 0) {
             </ul>
         </div>
     </div>
+
+    <script>
+        document.getElementById('top-whatsapp').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
 
     <script>
         // CAPTCHA functionality

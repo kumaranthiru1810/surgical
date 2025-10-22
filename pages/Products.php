@@ -283,7 +283,7 @@ try {
                         <div class="contact-info text-end">
                             <div>
                                 <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
-                                    <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                    <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
                             </div>
                         </div>
@@ -318,7 +318,7 @@ try {
                         <div class="contact-info text-end">
                             <div>
                                 <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
-                                    <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                    <i class="bi bi-whatssapp"></i><?php echo $data['phone']; ?>
                                 </a>
                             </div>
                         </div>
@@ -631,6 +631,22 @@ try {
         </div>
     </div>
 
+    <script>
+        document.getElementById('top-whatsapp').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
     <script>
         document.getElementById('top-whatsapp').addEventListener('click', function() {
             let message = `How can I help You? %0A`;

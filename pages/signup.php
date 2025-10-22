@@ -330,7 +330,7 @@ if ($sql->rowCount() > 0) {
                         <div class="contact-info text-end">
                             <div>
                                 <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
-                                    <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                    <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
                             </div>
                         </div>
@@ -364,7 +364,7 @@ if ($sql->rowCount() > 0) {
                         <div class="contact-info text-end">
                             <div>
                                 <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
-                                    <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                    <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
                             </div>
                         </div>
