@@ -23,6 +23,22 @@ if (!$data) {
     exit;
 }
 
+
+ $sess_id = $_SESSION['user_id'];
+$stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
+$stmt->execute(['id' => $sess_id]);
+$data = $stmt->fetch(PDO::FETCH_ASSOC);
+$name = $data['firm'];
+$email = $data['email'];
+$phone = $data['mobile_cc'].$data['mobile'];
+$whatsapp = $data['whatsapp_cc'].$data['whatsapp'];
+$address = $data['address'];
+$city = $data['city'];
+$country = $data['country'];
+$pin = $data['pin'];
+$gst = $data['gst'];
+
+
 try {
     // Validate required fields
     $required = ['firmName', 'address', 'city', 'pincode', 'mobileNumber', 'email', 'products'];

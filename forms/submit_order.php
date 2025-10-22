@@ -7,246 +7,328 @@ use PHPMailer\PHPMailer\Exception;
 
 require '../PHPmailer/vendor/autoload.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['name'])) {
     echo json_encode(['status' => 'error', 'message' => 'Please login to place an order.']);
     exit();
 }
 
-// Function to sanitize input data
-function sanitizeInput($data) {
-    if (is_array($data)) {
-        return array_map('sanitizeInput', $data);
-    }
-    return htmlspecialchars(strip_tags(trim($data)));
-}
-
-// Function to validate email
-function validateEmail($email) {
-    return filter_var($email, FILTER_VALIDATE_EMAIL);
-}
-
-// Function to validate mobile number
-function validateMobile($mobile) {
-    return preg_match('/^[0-9]{10}$/', $mobile);
-}
-
-// Function to validate GST number
-function validateGST($gst) {
-    return preg_match('/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/', $gst);
-}
-
-// Function to handle file upload
-function handleFileUpload($file, $uploadDir = '../uploads/') {
-    if (!file_exists($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
-    
-    $fileExtension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-    $fileName = uniqid() . '_' . md5(basename($file['name'])) . '.' . $fileExtension;
-    $targetPath = $uploadDir . $fileName;
-    
-    $allowedTypes = ['pdf', 'jpg', 'jpeg', 'png'];
-    $maxFileSize = 5 * 1024 * 1024; // 5MB
-    
-    if (!in_array($fileExtension, $allowedTypes)) {
-        throw new Exception('Invalid file type. Only PDF, JPG, JPEG, PNG files are allowed.');
-    }
-    if ($file['size'] > $maxFileSize) {
-        throw new Exception('File size too large. Maximum size is 5MB.');
-    }
-    if (!is_uploaded_file($file['tmp_name'])) {
-        throw new Exception('Invalid file upload.');
-    }
-    if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-        return $fileName;
-    }
-    throw new Exception('Failed to upload file.');
-}
+$sess_id = $_SESSION['user_id'];
+$name = $_SESSION['name'];
+$email = $_SESSION['email'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $sess_id = $_SESSION['user_id'];
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
+    $stmt->execute(['id' => $sess_id]);
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $name = $data['firm'];
+    $email = $data['email'];
+    $phone = $data['mobile_cc'] . $data['mobile'];
+    $whatsapp = $data['whatsapp_cc'] . $data['whatsapp'];
+    $address = $data['address'];
+    $city = $data['city'];
+    $country = $data['country'];
+    $pin = $data['pin'];
+    $gst = $data['gst'];
+
+    $productNames = $_POST['productName'] != '' ? $_POST['productName'] : [];
+    $quantities   = $_POST['productQuantity'] != '' ? $_POST['productQuantity'] : [];
+    $customProductNames = $_POST['customProductName'] ?? [];
+    $qualities = $_POST['quality'] ?? [];
+    $sizes = $_POST['size'] ?? [];
+    $sterilities = $_POST['sterility'] ?? [];
+    $pieces = $_POST['pieces'] ?? [];
+    $widths = $_POST['width'] ?? [];
+    $lengths = $_POST['length'] ?? [];
+    $units = $_POST['unit'] ?? [];
+    $packings = $_POST['packing'] ?? [];
+    $plies = $_POST['ply'] ?? [];
+    $weights = $_POST['weight'] ?? [];
+    $customSpecs = $_POST['custom_specifications'] ?? [];
+    $customQualities = $_POST['custom_quality'] ?? [];
+    $customSizes = $_POST['custom_size'] ?? [];
+    $customWidths = $_POST['custom_width'] ?? [];
+
+    if (!is_array($productNames) || empty($productNames[0])) {
+        echo json_encode(['status' => 'error', 'message' => 'At least one product is required.']);
+        exit();
+    }
+
     try {
         $pdo->beginTransaction();
 
-        $requiredFields = ['firmName', 'gstNo', 'city', 'country', 'pincode', 'mobileNumber', 'email'];
-        foreach ($requiredFields as $field) {
-            if (empty($_POST[$field])) {
-                throw new Exception("Required field '$field' is missing.");
-            }
-        }
-
-        $firmName = sanitizeInput($_POST['firmName']);
-        $gstNo = sanitizeInput($_POST['gstNo']);
-        $address = sanitizeInput($_POST['address'] ?? '');
-        $city = sanitizeInput($_POST['city']);
-        $country = sanitizeInput($_POST['country']);
-        $pincode = sanitizeInput($_POST['pincode']);
-        $countryCode = sanitizeInput($_POST['countryCode'] ?? '+91');
-        $mobileNumber = sanitizeInput($_POST['mobileNumber']);
-        $email = sanitizeInput($_POST['email']);
-        $customerName = $_SESSION['name'];
-        $userId = $_SESSION['user_id'] ?? null;
-
-        if (!validateEmail($email)) throw new Exception('Invalid email address.');
-        if (!validateMobile($mobileNumber)) throw new Exception('Invalid mobile number. Please enter a 10-digit number.');
-        if (!validateGST($gstNo)) throw new Exception('Invalid GST number format.');
-
-        $gstCertificatePath = null;
-        $drugLicensePath = null;
-
-        if (isset($_FILES['gstCertificate']) && $_FILES['gstCertificate']['error'] === UPLOAD_ERR_OK) {
-            $gstCertificatePath = handleFileUpload($_FILES['gstCertificate']);
-        }
-        if (isset($_FILES['drugLicense']) && $_FILES['drugLicense']['error'] === UPLOAD_ERR_OK) {
-            $drugLicensePath = handleFileUpload($_FILES['drugLicense']);
-        } else {
-            throw new Exception('Drug License is required.');
-        }
-
-        $orderNumber = 'ORD-' . date('Ymd') . '-' . strtoupper(uniqid());
-
-        $orderSql = "INSERT INTO orders (
-            user_id, order_number, customer_name, firm_name, gst_no, address, city, 
-            country, pincode, country_code, mobile_number, email, 
-            gst_certificate, drug_license, order_date, status, created_at
+        $productSql = "INSERT INTO order_products (
+            email, product_name, custom_product_name, quality, size, sterility,
+            pieces, width, length, unit, packing, ply, weight, custom_specifications,
+            custom_quality, custom_size, custom_width, quantity, created_at
         ) VALUES (
-            :user_id, :order_number, :customer_name, :firm_name, :gst_no, :address, :city, 
-            :country, :pincode, :country_code, :mobile_number, :email, 
-            :gst_certificate, :drug_license, NOW(), 'pending', NOW()
+            :email, :product_name, :custom_product_name, :quality, :size, :sterility,
+            :pieces, :width, :length, :unit, :packing, :ply, :weight, :custom_specifications,
+            :custom_quality, :custom_size, :custom_width, :quantity, NOW()
         )";
 
-        $orderStmt = $pdo->prepare($orderSql);
-        $orderStmt->execute([
-            ':user_id' => $userId,
-            ':order_number' => $orderNumber,
-            ':customer_name' => $customerName,
-            ':firm_name' => $firmName,
-            ':gst_no' => $gstNo,
-            ':address' => $address,
-            ':city' => $city,
-            ':country' => $country,
-            ':pincode' => $pincode,
-            ':country_code' => $countryCode,
-            ':mobile_number' => $mobileNumber,
-            ':email' => $email,
-            ':gst_certificate' => $gstCertificatePath,
-            ':drug_license' => $drugLicensePath
-        ]);
+        $productStmt = $pdo->prepare($productSql);
+        $productDetails = [];
 
-        $orderId = $pdo->lastInsertId();
+        foreach ($productNames as $index => $productName) {
+            if (empty($productName)) continue;
 
-        if (isset($_POST['productName']) && is_array($_POST['productName']) && !empty($_POST['productName'][0])) {
-            $productSql = "INSERT INTO order_products (
-                order_id, product_name, custom_product_name, quality, size, 
-                sterility, pieces, width, length, unit, packing, ply, 
-                custom_specifications, custom_quality, custom_size, custom_width, quantity, created_at
-            ) VALUES (
-                :order_id, :product_name, :custom_product_name, :quality, :size, 
-                :sterility, :pieces, :width, :length, :unit, :packing, :ply, 
-                :custom_specifications, :custom_quality, :custom_size, :custom_width, :quantity, NOW()
-            )";
-
-            $productStmt = $pdo->prepare($productSql);
-
-            foreach ($_POST['productName'] as $index => $productName) {
-                $productName = sanitizeInput($productName);
-                if (empty($productName)) continue;
-
-                $quality = sanitizeInput($_POST['quality'][$index] ?? '');
-                $size = sanitizeInput($_POST['size'][$index] ?? '');
-                $sterility = sanitizeInput($_POST['sterility'][$index] ?? '');
-                $pieces = !empty($_POST['pieces'][$index]) ? (int)$_POST['pieces'][$index] : null;
-                $width = sanitizeInput($_POST['width'][$index] ?? '');
-                $length = sanitizeInput($_POST['length'][$index] ?? '');
-                $unit = sanitizeInput($_POST['unit'][$index] ?? '');
-                $packing = sanitizeInput($_POST['packing'][$index] ?? '');
-                $ply = sanitizeInput($_POST['ply'][$index] ?? '');
-                $customSpecifications = sanitizeInput($_POST['custom_specifications'][$index] ?? '');
-                $customProductName = sanitizeInput($_POST['customProductName'][$index] ?? '');
-                $quantity = !empty($_POST['productQuantity'][$index]) ? (int)$_POST['productQuantity'][$index] : 1;
-
-                $customQuality = sanitizeInput($_POST['custom_quality'][$index] ?? '');
-                $customSize = sanitizeInput($_POST['custom_size'][$index] ?? '');
-                $customWidth = sanitizeInput($_POST['custom_width'][$index] ?? '');
-
-                if ($quantity < 1) throw new Exception('Quantity must be at least 1.');
-
-                $productStmt->execute([
-                    ':order_id' => $orderId,
-                    ':product_name' => $productName,
-                    ':custom_product_name' => $customProductName,
-                    ':quality' => $quality,
-                    ':size' => $size,
-                    ':sterility' => $sterility,
-                    ':pieces' => $pieces,
-                    ':width' => $width,
-                    ':length' => $length,
-                    ':unit' => $unit,
-                    ':packing' => $packing,
-                    ':ply' => $ply,
-                    ':custom_specifications' => $customSpecifications,
-                    ':custom_quality' => $customQuality,
-                    ':custom_size' => $customSize,
-                    ':custom_width' => $customWidth,
-                    ':quantity' => $quantity
-                ]);
+            $quantity = !empty($quantities[$index]) ? (int)$quantities[$index] : 1;
+            
+            // Determine actual product name
+            $actualProductName = $productName;
+            if ($productName === 'Custom Product' && !empty($customProductNames[$index])) {
+                $actualProductName = $customProductNames[$index];
             }
-        } else {
-            throw new Exception('At least one product is required.');
+
+            // Build product details array for email
+            $productDetail = [
+                'name' => $actualProductName,
+                'quantity' => $quantity,
+                'specifications' => []
+            ];
+
+            // Add all specifications
+            if (!empty($qualities[$index])) {
+                $qualityValue = $qualities[$index];
+                if (!empty($customQualities[$index]) && strpos($qualityValue, 'Custom') !== false) {
+                    $qualityValue .= " - " . $customQualities[$index];
+                }
+                $productDetail['specifications'][] = "Quality: " . $qualityValue;
+            }
+
+            if (!empty($sizes[$index])) {
+                $sizeValue = $sizes[$index];
+                if (!empty($customSizes[$index]) && strpos($sizeValue, 'Custom') !== false) {
+                    $sizeValue .= " - " . $customSizes[$index];
+                }
+                $productDetail['specifications'][] = "Size: " . $sizeValue;
+            }
+
+            if (!empty($sterilities[$index])) {
+                $productDetail['specifications'][] = "Sterility: " . $sterilities[$index];
+            }
+
+            if (!empty($pieces[$index])) {
+                $productDetail['specifications'][] = "Pieces: " . $pieces[$index];
+            }
+
+            if (!empty($widths[$index])) {
+                $widthValue = $widths[$index];
+                if (!empty($customWidths[$index]) && strpos($widthValue, 'Custom') !== false) {
+                    $widthValue .= " - " . $customWidths[$index];
+                }
+                $productDetail['specifications'][] = "Width: " . $widthValue;
+            }
+
+            if (!empty($lengths[$index])) {
+                $productDetail['specifications'][] = "Length: " . $lengths[$index];
+            }
+
+            if (!empty($units[$index])) {
+                $productDetail['specifications'][] = "Unit: " . $units[$index];
+            }
+
+            if (!empty($packings[$index])) {
+                $productDetail['specifications'][] = "Packing: " . $packings[$index];
+            }
+
+            if (!empty($plies[$index])) {
+                $productDetail['specifications'][] = "Ply: " . $plies[$index];
+            }
+
+            if (!empty($weights[$index])) {
+                $productDetail['specifications'][] = "Weight: " . $weights[$index];
+            }
+
+            if (!empty($customSpecs[$index])) {
+                $productDetail['specifications'][] = "Specifications: " . $customSpecs[$index];
+            }
+
+            $productDetails[] = $productDetail;
+
+            // Insert into database
+            $productStmt->execute([
+                ':email'                 => $email,
+                ':product_name'          => $productName,
+                ':custom_product_name'   => $customProductNames[$index] ?? '',
+                ':quality'               => $qualities[$index] ?? '',
+                ':size'                  => $sizes[$index] ?? null,
+                ':sterility'             => $sterilities[$index] ?? null,
+                ':pieces'                => $pieces[$index] ?? null,
+                ':width'                 => $widths[$index] ?? null,
+                ':length'                => $lengths[$index] ?? null,
+                ':unit'                  => $units[$index] ?? null,
+                ':packing'               => $packings[$index] ?? null,
+                ':ply'                   => $plies[$index] ?? null,
+                ':weight'                => $weights[$index] ?? null,
+                ':custom_specifications' => $customSpecs[$index] ?? null,
+                ':custom_quality'        => $customQualities[$index] ?? null,
+                ':custom_size'           => $customSizes[$index] ?? null,
+                ':custom_width'          => $customWidths[$index] ?? null,
+                ':quantity'              => $quantity,
+            ]);
         }
 
         $pdo->commit();
 
-        /** -------- SEND EMAIL -------- **/
+        /** -------- SEND EMAIL WITH PRODUCT DETAILS -------- **/
         $mail = new PHPMailer(true);
         try {
+            // Server settings
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'thirukumaran18102006@gmail.com';  // your sender email
-            $mail->Password = 'sqdi hluc nhsg sben';     // your app password (not normal password)
+            $mail->Username = 'thirukumaran18102006@gmail.com'; // Replace with your company email
+            $mail->Password = 'sqdi hluc nhsg sben'; // Replace with your app password
             $mail->SMTPSecure = 'tls';
             $mail->Port = 587;
 
-            $mail->setFrom('thirukumaran18102006@gmail.com', 'Bharathi Medical Supplies');
-            $mail->addAddress('thirukumaran18102006@gmail.com'); // Admin email
-            // $mail->addAddress(''); // Customer email
+            // Recipients
+            $mail->setFrom('thirukumaran18102006@gmail.com', 'Bharathi Surgicals');
+            $mail->addAddress('thirukumaran18102006@gmail.com'); // Replace with your order email
+            $mail->addReplyTo($email, $name);
 
+            // Content
             $mail->isHTML(true);
-            $mail->Subject = "New Order Received - {$orderNumber}";
+            $mail->Subject = "New Product Order from $name";
+            
+            // Build email body with all product details
             $mail->Body = "
-                <h3>New Order Received</h3>
-                <p><strong>Order Number:</strong> {$orderNumber}</p>
-                <p><strong>Customer:</strong> {$customerName}</p>
-                <p><strong>Firm Name:</strong> {$firmName}</p>
-                <p><strong>GST:</strong> {$gstNo}</p>
-                <p><strong>City:</strong> {$city}, {$country}</p>
-                <p><strong>Email:</strong> {$email}</p>
-                <p><strong>Mobile:</strong> {$countryCode} {$mobileNumber}</p>
-                <br>
-                <p>Thank you for your order. We will contact you shortly.</p>
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+                        .header { background: #007BFF; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }
+                        .content { background: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; }
+                        .section { margin-bottom: 20px; padding: 15px; background: white; border-radius: 5px; border-left: 4px solid #007BFF; }
+                        .product-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                        .product-table th { background: #007BFF; color: white; padding: 12px; text-align: left; }
+                        .product-table td { padding: 12px; border-bottom: 1px solid #ddd; }
+                        .product-table tr:nth-child(even) { background: #f2f2f2; }
+                        .specs-list { margin: 5px 0; padding-left: 20px; }
+                        .specs-list li { margin-bottom: 3px; }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <h1>New Product Order Received</h1>
+                            <p>Order Date: " . date('Y-m-d H:i:s') . "</p>
+                        </div>
+                        
+                        <div class='content'>
+                            <div class='section'>
+                                <h2>Customer Details</h2>
+                                <table style='width: 100%;'>
+                                    <tr><td><strong>Firm Name:</strong></td><td>$name</td></tr>
+                                    <tr><td><strong>Email:</strong></td><td>$email</td></tr>
+                                    <tr><td><strong>Phone:</strong></td><td>$phone</td></tr>
+                                    <tr><td><strong>WhatsApp:</strong></td><td>$whatsapp</td></tr>
+                                    <tr><td><strong>Address:</strong></td><td>$address</td></tr>
+                                    <tr><td><strong>City:</strong></td><td>$city</td></tr>
+                                    <tr><td><strong>Country:</strong></td><td>$country</td></tr>
+                                    <tr><td><strong>PinCode:</strong></td><td>$pin</td></tr>
+                                    <tr><td><strong>GST No:</strong></td><td>$gst</td></tr>
+                                </table>
+                            </div>
+                            
+                            <div class='section'>
+                                <h2>Order Details</h2>
+                                <table class='product-table'>
+                                    <thead>
+                                        <tr>
+                                            <th>Product #</th>
+                                            <th>Product Name</th>
+                                            <th>Quantity</th>
+                                            <th>Specifications</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>";
+
+            // Add each product with all specifications
+            foreach ($productDetails as $index => $product) {
+                $productNumber = $index + 1;
+                $specsHtml = '';
+                
+                if (!empty($product['specifications'])) {
+                    $specsHtml = "<ul class='specs-list'>";
+                    foreach ($product['specifications'] as $spec) {
+                        $specsHtml .= "<li>" . htmlspecialchars($spec) . "</li>";
+                    }
+                    $specsHtml .= "</ul>";
+                } else {
+                    $specsHtml = "No additional specifications";
+                }
+
+                $mail->Body .= "
+                    <tr>
+                        <td><strong>$productNumber</strong></td>
+                        <td><strong>" . htmlspecialchars($product['name']) . "</strong></td>
+                        <td><strong>" . $product['quantity'] . "</strong></td>
+                        <td>$specsHtml</td>
+                    </tr>";
+            }
+
+            $mail->Body .= "
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div class='section'>
+                                <h3>Order Summary</h3>
+                                <p><strong>Total Products:</strong> " . count($productDetails) . "</p>
+                                <p><strong>Total Items:</strong> " . array_sum(array_column($productDetails, 'quantity')) . "</p>
+                                <p>This order was placed through the website order form.</p>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>
             ";
 
+            // Alternative plain text version
+            $plainText = "NEW PRODUCT ORDER\n";
+            $plainText .= "================\n\n";
+            $plainText .= "Customer: $name\n";
+            $plainText .= "Email: $email\n";
+            $plainText .= "Phone: $phone\n";
+            $plainText .= "Date: " . date('Y-m-d H:i:s') . "\n\n";
+            $plainText .= "PRODUCTS:\n";
+            $plainText .= "---------\n";
+            
+            foreach ($productDetails as $index => $product) {
+                $productNumber = $index + 1;
+                $plainText .= "$productNumber. {$product['name']} (Qty: {$product['quantity']})\n";
+                if (!empty($product['specifications'])) {
+                    foreach ($product['specifications'] as $spec) {
+                        $plainText .= "   - $spec\n";
+                    }
+                }
+                $plainText .= "\n";
+            }
+            
+            $plainText .= "Total Products: " . count($productDetails) . "\n";
+            $plainText .= "Total Items: " . array_sum(array_column($productDetails, 'quantity')) . "\n";
+
+            $mail->AltBody = $plainText;
+
             $mail->send();
+            
         } catch (Exception $e) {
             error_log("Email sending failed: " . $mail->ErrorInfo);
+            // Continue even if email fails
         }
 
-        echo json_encode([
-            'status' => 'success',
-            'message' => 'Order placed successfully! Your order number is: ' . $orderNumber . '. A confirmation email has been sent.',
-            'order_number' => $orderNumber
-        ]);
-
+        echo "<script>alert('Order placed successfully! We will contact you shortly.');window.location.href='request_sample.php';</script>";
+        
     } catch (Exception $e) {
-        if ($pdo->inTransaction()) {
-            $pdo->rollBack();
-        }
-        error_log("Order submission error: " . $e->getMessage());
-        echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
+        if ($pdo->inTransaction()) $pdo->rollBack();
+        echo "<script>alert('Submission failed: " . addslashes($e->getMessage()) . "');window.location.href='request_sample.php';</script>";
     }
-} else {
-    http_response_code(405);
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request method. Only POST requests are allowed.']);
 }
 ?>

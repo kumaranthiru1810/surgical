@@ -142,6 +142,7 @@ if ($sql->rowCount() > 0) {
 <body>
   <!-- Navigation -->
 
+  <!-- Top Navigation -->
   <div style="position: sticky; top:0; z-index:9999; background-color:white;">
     <!-- Navigation -->
     <nav class="respon2">
@@ -154,10 +155,9 @@ if ($sql->rowCount() > 0) {
                   <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
                 </a>
               </div>
-            </div>
+          </div>
           </div>
           <?php
-
           $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
           if ($sql1->rowCount() > 0) {
             $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
@@ -216,53 +216,52 @@ if ($sql->rowCount() > 0) {
         </div>
       </div>
     </nav>
-
-
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg">
-      <div class="container">
-        <a class="navbar-brand" href="#">
-          <div class="d-flex align-items-center">
-            <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
-          </div>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="../index.php">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./about.php">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./Products.php">Products</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./Management.php">Management</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./contact-us.php">Contact Us</a>
-            </li>
-            <li class="nav-item">
-              <?php if (isset($_SESSION['name'])) { ?>
-                <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
-              <?php } else { ?>
-                <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
-              <?php } ?>
-            </li>
-            <li class="nav-item">
-              <?php if (isset($_SESSION['name'])) { ?>
-                <a href="./logout.php" class="btn btn-primary me-3">Logout</a>
-              <?php } else { ?>
-                <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
-              <?php } ?>
-            </li>
-          </ul>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="#">
+        <div class="d-flex align-items-center">
+          <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
         </div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="../index.php">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./about.php">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./Products.php">Products</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./Management.php">Management</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../forms/request_sample.php">Place Order</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="./contact-us.php">Contact Us</a>
+          </li>
+          <li class="nav-item">
+            <?php if (isset($_SESSION['name'])) { ?>
+              <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
+            <?php } else { ?>
+              <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
+            <?php } ?>
+          </li>
+          <li class="nav-item">
+            <?php if (isset($_SESSION['name'])) { ?>
+              <a href="./logout.php" class="btn btn-primary me-3">Logout</a>
+            <?php } else { ?>
+              <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
+            <?php } ?>
+          </li>
+        </ul>
       </div>
     </nav>
   </div>
@@ -538,7 +537,8 @@ if ($sql->rowCount() > 0) {
             <div class="social-icons text-center">
               <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
               <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a> 
+              <a href="#" id="footer-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+
             </div>
           </div>
 
@@ -554,7 +554,7 @@ if ($sql->rowCount() > 0) {
                 <a href="mailto:<?php echo $data['email']; ?>" class="text-decoration-none text-dark">
                   <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
                 </a>
-
+              </div>
                 <div>
                   <a href="https://www.google.com/maps/search/<?php echo $data['address']; ?>" target="_blank" class="text-decoration-none text-dark">
                     <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
@@ -590,6 +590,7 @@ if ($sql->rowCount() > 0) {
       </button>
       <div class="helper-menu">
         <ul>
+          <li><a href="../forms/request_sample.php">Place Orders</a></li>
           <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
           <li><a href="../forms/request_sample.php">Request Samples</a></li>
           <li><a href="#brochure">Download Brochure</a></li>
@@ -639,7 +640,7 @@ if ($sql->rowCount() > 0) {
       document.getElementById('open-chat').addEventListener('click', function() {
         let message = `How can I help You? %0A`;
 
-        const storeNumber = "918489089784"; // Your WhatsApp number
+        const storeNumber = "919790972432"; // Your WhatsApp number
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
         // WhatsApp URL - fixed encoding
@@ -653,9 +654,10 @@ if ($sql->rowCount() > 0) {
     </script>
     <script>
       document.getElementById('nav-open-chat').addEventListener('click', function() {
+
         let message = `How can I help You? %0A`;
 
-        const storeNumber = "918489089784"; // Your WhatsApp number
+        const storeNumber = "919790972432"; // Your WhatsApp number
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
         // WhatsApp URL - fixed encoding
@@ -669,9 +671,11 @@ if ($sql->rowCount() > 0) {
     </script>
     <script>
       document.getElementById('footer-open-chat').addEventListener('click', function() {
+
         let message = `How can I help You? %0A`;
 
-        const storeNumber = "918489089784"; // Your WhatsApp number
+        const storeNumber = "919790972432"; // Your WhatsApp number
+
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
         // WhatsApp URL - fixed encoding
@@ -706,7 +710,7 @@ if ($sql->rowCount() > 0) {
     document.getElementById('nav-open-chat').addEventListener('onclick', function() {
       let message = `How can i help You? %0A%0A`;
 
-      const storeNumber = "918489089784"; // Your WhatsApp number
+      const storeNumber = "919790972432"; // Your WhatsApp number
       const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
       // WhatsApp URL - fixed encoding

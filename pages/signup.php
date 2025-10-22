@@ -39,6 +39,71 @@ if ($sql->rowCount() > 0) {
     <link rel="stylesheet" href="../index.css" />
 
     <style>
+        .captcha-container {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .captcha-display {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            background: linear-gradient(45deg, #333, #666);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-align: center;
+            margin-bottom: 10px;
+            user-select: none;
+        }
+
+        .captcha-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .captcha-input {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .captcha-refresh {
+            background: none;
+            border: none;
+            color: #0d6efd;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .captcha-refresh:hover {
+            color: #0a58ca;
+        }
+
+        .captcha-error {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .captcha-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .captcha-input {
+                margin-right: 0;
+                width: 100%;
+            }
+        }
+
         .card {
             padding: 16px;
             border: 1px solid #ddd;
@@ -149,6 +214,19 @@ if ($sql->rowCount() > 0) {
                 font-size: 13px;
             }
         }
+
+        /* .sig-btn {
+            padding: 0.75rem 5rem;
+            min-width: 160px;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .sig-btn {
+                width: 100%;
+                padding: 0.75rem 2rem;
+            }
+        } */
     </style>
 </head>
 
@@ -221,137 +299,141 @@ if ($sql->rowCount() > 0) {
     ?>
 
     <!-- Top Navigation -->
-    <nav class="respon2">
-        <div class="container">
-            <div class="row">
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-start">
-                        <div>
-                            <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-                            </a>
+    <div style="position: sticky; top:0; z-index:9999; background-color:white;">
+        <nav class="respon2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-start">
+                            <div>
+                                <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
+                                    <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php
+                    <?php
 
-                $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
-                if ($sql1->rowCount() > 0) {
-                    $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
-                }
-                ?>
-                <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
-                    <div class="social-icons text-center">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-end">
-                        <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
-                            </a>
+                    $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
+                    if ($sql1->rowCount() > 0) {
+                        $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
+                    <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
+                        <div class="social-icons text-center">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <nav class="respon">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
-                    <div class="social-icons">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-start">
-                        <div>
-                            <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-end">
-                        <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
-                            </a>
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-end">
+                            <div>
+                                <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
+                                    <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg sticky-top position-sticky">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <div class="d-flex align-items-center">
-                    <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+        <nav class="respon">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="social-icons">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        </div>
+                    </div>
                 </div>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="./index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./about.php">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Products.php">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Management.php">Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./contact-us.php">Contact Us</a>
-                    </li>
+                <div class="row">
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                        <div class="contact-info text-start">
+                            <div>
+                                <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
+                                    <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                        <div class="contact-info text-end">
+                            <div>
+                                <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
+                                    <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <div class="d-flex align-items-center">
+                        <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+                    </div>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="./index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/about.php">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/Products.php">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/Management.php">Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../forms/request_sample.php">Place Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/contact-us.php">Contact Us</a>
+                        </li>
+                        <ul class="navbar-nav ms-auto">
 
-                        <?php if (!isset($_SESSION['user_name'])): ?>
-                            <!-- Not logged in -->
-                            <li class="nav-item">
-                                <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
-                            </li>
-                        <?php else: ?>
-                            <!-- Logged in -->
-                            <li class="nav-item">
-                                <span class="btn btn-success me-3">
-                                    <?php echo htmlspecialchars($_SESSION['user_name']); ?>
-                                </span>
-                            </li>
-                            <li class="nav-item">
-                                <a href="./logout.php" class="btn btn-danger me-3">Logout</a>
-                            </li>
-                        <?php endif; ?>
+                            <?php if (!isset($_SESSION['user_name'])): ?>
+                                <!-- Not logged in -->
+                                <li class="nav-item">
+                                    <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
+                                </li>
+                            <?php else: ?>
+                                <!-- Logged in -->
+                                <li class="nav-item">
+                                    <span class="btn btn-success me-3">
+                                        <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                                    </span>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="./logout.php" class="btn btn-danger me-3">Logout</a>
+                                </li>
+                            <?php endif; ?>
 
+                        </ul>
                     </ul>
-                </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-
+        </nav>
+    </div>
     <style>
         body {
             background: #f8f9fa;
@@ -375,10 +457,6 @@ if ($sql->rowCount() > 0) {
         .form-label {
             font-weight: 500;
             margin-bottom: 0.5rem;
-        }
-
-        .btn-primary {
-            padding: 0.5rem 2rem;
         }
 
         /* Mobile optimizations */
@@ -541,121 +619,138 @@ if ($sql->rowCount() > 0) {
                                 </div>
 
                             </div>
-
-                            <!-- Submit Button -->
-                            <div class="row mt-4">
-                                <div class="col-12">
-                                    <div class="d-grid d-md-flex justify-content-md-end">
-                                        <button type="submit" class="btn btn-primary px-4" name="register">
-                                            Register
+                            <!-- CAPTCHA Section -->
+                            <div class="col-12 mt-4">
+                                <div class="captcha-container">
+                                    <label class="form-label">Enter the text shown below <span class="text-danger">*</span></label>
+                                    <div class="captcha-display" id="captchaDisplay"></div>
+                                    <div class="captcha-controls">
+                                        <input type="text" class="form-control captcha-input" id="captchaInput" placeholder="Type the characters above" required>
+                                        <button type="button" class="captcha-refresh" id="refreshCaptcha" title="Refresh CAPTCHA">
+                                            <i class="bi bi-arrow-clockwise"></i>
                                         </button>
                                     </div>
+                                    <div class="captcha-error" id="captchaError">CAPTCHA verification failed. Please try again.</div>
                                 </div>
                             </div>
 
-                            <div id="formMsg" class="mt-3 text-center text-md-start"></div>
-                        </form>
+                    </div>
 
-                        <!-- Login Link -->
-                        <div class="row mt-4">
-                            <div class="col-12 text-center">
-                                <p class="mb-0">Already have an account?
-                                    <a href="./signin.php" class="text-decoration-none">Sign In</a>
-                                </p>
-                            </div>
+                    <!-- Submit Button -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <!-- <div class="d-grid d-md-flex justify-content-md-end"> -->
+                            <button type="submit" class="btn btn-primary px-4 sig-btn" id="submitButton" name="register" style="width:100%;" disabled>
+                                Register
+                            </button>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+
+                    <div id="formMsg" class="mt-3 text-center text-md-start"></div>
+                    </form>
+
+                    <!-- Login Link -->
+                    <div class="row mt-4">
+                        <div class="col-12 text-center">
+                            <p class="mb-0">Already have an account?
+                                <a href="./signin.php" class="text-decoration-none">Sign In</a>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 
     <?php
-// Include your database connection
-include('../db.php');
+    // Include your database connection
+    include('../db.php');
 
-// Check if form is submitted
-if (isset($_POST['register'])) {
+    // Check if form is submitted
+    if (isset($_POST['register'])) {
 
-    // Get POST data and sanitize
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-    $firm = trim($_POST['firm']);
-    $gst = trim($_POST['gst']);
-    $drug = trim($_POST['drug']);
-    $mobile_cc = trim($_POST['mobile_cc']);
-    $mobile = trim($_POST['mobile']);
-    $whatsapp_cc = trim($_POST['whatsapp_cc']);
-    $whatsapp = trim($_POST['whatsapp']);
-    $address = trim($_POST['address']);
-    $city = trim($_POST['city']);
-    $country = trim($_POST['country']);
-    $pin = trim($_POST['pin']);
-    $state = trim($_POST['state']);
-    $district = trim($_POST['district']);
+        // Get POST data and sanitize
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
+        $firm = trim($_POST['firm']);
+        $gst = trim($_POST['gst']);
+        $drug = trim($_POST['drug']);
+        $mobile_cc = trim($_POST['mobile_cc']);
+        $mobile = trim($_POST['mobile']);
+        $whatsapp_cc = trim($_POST['whatsapp_cc']);
+        $whatsapp = trim($_POST['whatsapp']);
+        $address = trim($_POST['address']);
+        $city = trim($_POST['city']);
+        $country = trim($_POST['country']);
+        $pin = trim($_POST['pin']);
+        $state = trim($_POST['state']);
+        $district = trim($_POST['district']);
 
-    // Hash the password for security
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        // Hash the password for security
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    // ✅ Step 1: Check if email already exists
-    $check = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
-    $check->bindParam(':email', $email);
-    $check->execute();
-    $count = $check->fetchColumn();
+        // ✅ Step 1: Check if email already exists
+        $check = $pdo->prepare("SELECT COUNT(*) FROM users WHERE email = :email");
+        $check->bindParam(':email', $email);
+        $check->execute();
+        $count = $check->fetchColumn();
 
-    if ($count > 0) {
-        echo "<script>alert('Email already registered! Please use another email.');window.location.href='./signup.php';</script>";
-        exit;
-    }
+        if ($count > 0) {
+            echo "<script>alert('Email already registered! Please use another email.');window.location.href='./signup.php';</script>";
+            exit;
+        }
 
-    // ✅ Step 2: Insert the new record
-    $sql = "INSERT INTO users 
+        // ✅ Step 2: Insert the new record
+        $sql = "INSERT INTO users 
         (email, password, firm, gst, drug, mobile_cc, mobile, whatsapp_cc, whatsapp, address, city, country, pin, state, district) 
         VALUES 
         (:email, :password, :firm, :gst, :drug, :mobile_cc, :mobile, :whatsapp_cc, :whatsapp, :address, :city, :country, :pin, :state, :district)";
 
-    $stmt = $pdo->prepare($sql);
+        $stmt = $pdo->prepare($sql);
 
-    // Bind parameters
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $hashed_password);
-    $stmt->bindParam(':firm', $firm);
-    $stmt->bindParam(':gst', $gst);
-    $stmt->bindParam(':drug', $drug);
-    $stmt->bindParam(':mobile_cc', $mobile_cc);
-    $stmt->bindParam(':mobile', $mobile);
-    $stmt->bindParam(':whatsapp_cc', $whatsapp_cc);
-    $stmt->bindParam(':whatsapp', $whatsapp);
-    $stmt->bindParam(':address', $address);
-    $stmt->bindParam(':city', $city);
-    $stmt->bindParam(':country', $country);
-    $stmt->bindParam(':pin', $pin);
-    $stmt->bindParam(':state', $state);
-    $stmt->bindParam(':district', $district);
+        // Bind parameters
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $hashed_password);
+        $stmt->bindParam(':firm', $firm);
+        $stmt->bindParam(':gst', $gst);
+        $stmt->bindParam(':drug', $drug);
+        $stmt->bindParam(':mobile_cc', $mobile_cc);
+        $stmt->bindParam(':mobile', $mobile);
+        $stmt->bindParam(':whatsapp_cc', $whatsapp_cc);
+        $stmt->bindParam(':whatsapp', $whatsapp);
+        $stmt->bindParam(':address', $address);
+        $stmt->bindParam(':city', $city);
+        $stmt->bindParam(':country', $country);
+        $stmt->bindParam(':pin', $pin);
+        $stmt->bindParam(':state', $state);
+        $stmt->bindParam(':district', $district);
 
-    // Execute the query
-    if ($stmt->execute()) {
-        echo "<script>alert('Registration successful!');window.location.href='./signin.php';</script>";
-    } else {
-        echo "<script>alert('Error! Please try again.');window.location.href='./signup.php';</script>";
+        // Execute the query
+        if ($stmt->execute()) {
+            echo "<script>alert('Registration successful!');window.location.href='./signin.php';</script>";
+        } else {
+            echo "<script>alert('Error! Please try again.');window.location.href='./signup.php';</script>";
+        }
     }
-}
-?>
+    ?>
 
-<div class="helper-widget">
-      <button class="helper-toggle">
-          <i class="bi bi-question-circle-fill"></i>
-      </button>
-      <div class="helper-menu">
-          <ul>
-              <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
+    <div class="helper-widget">
+        <button class="helper-toggle">
+            <i class="bi bi-question-circle-fill"></i>
+        </button>
+        <div class="helper-menu">
+            <ul>
+                <li><a href="../forms/request_sample.php">Place Orders</a></li>
+                <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
                 <li><a href="../forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
                 <li><a href="../forms/raise_of_complaint.php">Raise a Complaint</a></li>
                 <li><a href="../forms/suggestions.php">Suggestions</a></li>
                 <li><a href="#chat" id="open-chat">Chat with us</a></li>
-          </ul>
-      </div>
+            </ul>
+        </div>
     </div>
 
     <script>
@@ -675,9 +770,75 @@ if (isset($_POST['register'])) {
         });
     </script>
 
+    <script>
+        // CAPTCHA functionality
+        let currentCaptcha = '';
 
+        // Generate random CAPTCHA text
+        function generateCaptcha() {
+            const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+            let result = '';
+            const length = 6; // CAPTCHA length
 
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
 
+            currentCaptcha = result;
+            document.getElementById('captchaDisplay').textContent = result;
+
+            // Clear input and disable submit button
+            document.getElementById('captchaInput').value = '';
+            document.getElementById('submitButton').disabled = true;
+            document.getElementById('captchaError').style.display = 'none';
+        }
+
+        // Validate CAPTCHA input
+        function validateCaptcha() {
+            const input = document.getElementById('captchaInput').value;
+            const submitButton = document.getElementById('submitButton');
+            const errorElement = document.getElementById('captchaError');
+
+            if (input === currentCaptcha) {
+                submitButton.disabled = false;
+                errorElement.style.display = 'none';
+                return true;
+            } else {
+                submitButton.disabled = true;
+                if (input.length >= currentCaptcha.length) {
+                    errorElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'none';
+                }
+                return false;
+            }
+        }
+
+        // Initialize CAPTCHA
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCaptcha();
+
+            // Add event listeners
+            document.getElementById('refreshCaptcha').addEventListener('click', generateCaptcha);
+            document.getElementById('captchaInput').addEventListener('input', validateCaptcha);
+
+            // Form validation
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                if (!validateCaptcha()) {
+                    e.preventDefault();
+                    document.getElementById('captchaError').style.display = 'block';
+                    return;
+                }
+
+                // Continue with form submission if CAPTCHA is valid
+                const form = e.target;
+                if (!form.checkValidity()) {
+                    e.preventDefault();
+                    form.classList.add('was-validated');
+                }
+            });
+        });
+    </script>
 
     <script>
         // --- Country List ---

@@ -313,6 +313,7 @@ try {
                             </div>
                         </div>
                     </div>
+
                     <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
                         <div class="contact-info text-end">
                             <div>
@@ -328,34 +329,38 @@ try {
 
 
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <div class="d-flex align-items-center">
-                        <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
-                    </div>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="../index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./about.php">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./Products.php">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./Management.php">Management</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./contact-us.php">Contact Us</a>
-                        </li>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <div class="d-flex align-items-center">
+                    <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+                </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./about.php">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./Products.php">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./Management.php">Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../forms/request_sample.php">Place Order</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./contact-us.php">Contact Us</a>
+                    </li>
                         <li class="nav-item">
                             <?php if (isset($_SESSION['name'])) { ?>
                                 <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
@@ -610,12 +615,13 @@ try {
     </footer>
 
     <div class="helper-widget">
-        <button class="helper-toggle">
-            <i class="bi bi-question-circle-fill"></i>
-        </button>
-        <div class="helper-menu">
-            <ul>
-                <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
+      <button class="helper-toggle">
+          <i class="bi bi-question-circle-fill"></i>
+      </button>
+      <div class="helper-menu">
+          <ul>
+            <li><a href="../forms/request_sample.php">Place Orders</a></li>
+              <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
                 <li><a href="../forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
                 <li><a href="../forms/raise_of_complaint.php">Raise a Complaint</a></li>
@@ -646,7 +652,7 @@ try {
         document.getElementById('open-chat').addEventListener('click', function() {
             let message = `How can I help You? %0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -662,7 +668,7 @@ try {
         document.getElementById('footer-open-chat').addEventListener('click', function() {
             let message = `How can I help You? %0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -678,7 +684,7 @@ try {
         document.getElementById('nav-open-chat').addEventListener('click', function() {
             let message = `How can I help You? %0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding

@@ -256,21 +256,6 @@ if ($sql->rowCount() > 0) {
             max-height: 60px;
         }
 
-        .social-icons {
-            margin: 20px 0;
-        }
-
-        .social-icon {
-            font-size: 22px;
-            margin: 0 10px;
-            color: #333;
-            transition: color 0.3s;
-        }
-
-        .social-icon:hover {
-            color: #007BFF;
-        }
-
         .footer-links a {
             margin-left: 15px;
             color: #333;
@@ -359,135 +344,206 @@ if ($sql->rowCount() > 0) {
                 font-size: 13px;
             }
         }
+
+        /* CAPTCHA Styles */
+        .captcha-container {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .captcha-display {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            background: linear-gradient(45deg, #333, #666);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-align: center;
+            margin-bottom: 10px;
+            user-select: none;
+        }
+
+        .captcha-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .captcha-input {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .captcha-refresh {
+            background: none;
+            border: none;
+            color: #0d6efd;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .captcha-refresh:hover {
+            color: #0a58ca;
+        }
+
+        .captcha-error {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .captcha-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .captcha-input {
+                margin-right: 0;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-
-    <nav class="respon2">
-        <div class="container">
-            <div class="row">
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-start">
-                        <div>
-                            <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-                            </a>
+    <div style="position: sticky; top:0; z-index:9999; background-color:white;">
+        <nav class="respon2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-start">
+                            <div>
+                                <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
+                                    <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php
+                    <?php
 
-                $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
-                if ($sql1->rowCount() > 0) {
-                    $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
-                }
-                ?>
-                <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
-                    <div class="social-icons text-center">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                        
-                    </div>
-                </div>
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-end">
-                        <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
-                            </a>
+                    $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
+                    if ($sql1->rowCount() > 0) {
+                        $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
+                    <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
+                        <div class="social-icons text-center">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <nav class="respon">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
-                    <div class="social-icons">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-start">
-                        <div>
-                            <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-end">
-                        <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
-                            </a>
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-end">
+                            <div>
+                                <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
+                                    <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg sticky-top position-sticky">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <div class="d-flex align-items-center">
-                    <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+        <nav class="respon">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="social-icons">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        </div>
+                    </div>
                 </div>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../pages/about.php">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../pages/Products.php">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../pages/Management.php">Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../pages/contact-us.php">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <?php if (isset($_SESSION['name'])) { ?>
-                            <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
-                        <?php } else { ?>
-                            <a href="../pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
-                        <?php } ?>
-                    </li>
-                    <li class="nav-item">
-                        <?php if (isset($_SESSION['name'])) { ?>
-                            <a href="../pages/logout.php" class="btn btn-primary me-3">Logout</a>
-                        <?php } else { ?>
-                            <a href="../pages/signin.php" class="btn btn-primary me-3">Sign In</a>
-                        <?php } ?>
-                    </li>
-                </ul>
+                <div class="row">
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                        <div class="contact-info text-start">
+                            <div>
+                                <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
+                                    <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                        <div class="contact-info text-end">
+                            <div>
+                                <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
+                                    <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <div class="d-flex align-items-center">
+                        <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+                    </div>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/about.php">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/Products.php">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/Management.php">Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./request_sample.php">Place Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../pages/contact-us.php">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <?php if (isset($_SESSION['name'])) { ?>
+                                <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
+                            <?php } else { ?>
+                                <a href="../pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
+                            <?php } ?>
+                        </li>
+                        <li class="nav-item">
+                            <?php if (isset($_SESSION['name'])) { ?>
+                                <a href="../pages/logout.php" class="btn btn-primary me-3">Logout</a>
+                            <?php } else { ?>
+                                <a href="../pages/signin.php" class="btn btn-primary me-3">Sign In</a>
+                            <?php } ?>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+    </div>
     <div class="container suggestion-form">
         <div class="row mb-3">
             <div class="col-12 text-center page-header">
@@ -499,8 +555,8 @@ if ($sql->rowCount() > 0) {
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="form-container">
-                    <form id="suggestionForm" method="POST">
-                        <div class="mb-3">
+                    <form id="suggestionForm" method="POST" action="./submit_suggestions.php">
+                        <!-- <div class="mb-3">
                             <label class="form-label">Firm Name *</label>
                             <input type="text" name="firmName" id="firmName" class="form-control" required pattern="[A-Za-z0-9\s]+" title="Alphanumeric only">
                         </div>
@@ -530,16 +586,32 @@ if ($sql->rowCount() > 0) {
                                     <label class="form-check-label" for="sameWhatsapp">Same as Mobile Number</label>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="mb-3">
                             <label class="form-label">Your Suggestions *</label>
                             <textarea name="suggestion" id="suggestionDescription" class="form-control" rows="5" required></textarea>
                         </div>
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary px-4 sugg-btn"> <i class="bi bi-send"></i> Submit</button>
+                        <!-- CAPTCHA Section -->
+                        <div class="col-12">
+                            <div class="captcha-container">
+                                <label class="form-label">Enter the text shown below <span class="text-danger">*</span></label>
+                                <div class="captcha-display" id="captchaDisplay"></div>
+                                <div class="captcha-controls">
+                                    <input type="text" class="form-control captcha-input" id="captchaInput" placeholder="Type the characters above" required>
+                                    <button type="button" class="captcha-refresh" id="refreshCaptcha" title="Refresh CAPTCHA">
+                                        <i class="bi bi-arrow-clockwise"></i>
+                                    </button>
+                                </div>
+                                <div class="captcha-error" id="captchaError">CAPTCHA verification failed. Please try again.</div>
+                            </div>
                         </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary px-4 sugg-btn" id="submitButton" disabled><i class="bi bi-send"></i> Submit</button>
+                        </div>
+                        <div id="formMsg" class="mt-3 text-center text-md-start"></div>
                     </form>
                 </div>
             </div>
@@ -548,66 +620,66 @@ if ($sql->rowCount() > 0) {
 
     <!-- Footer -->
     <footer class="mt-5">
-      <div class="container">
-          <div class="row">
-              <div class="col-md-4">
-                  <div class="footer-logo d-flex align-items-center mb-3">
-                      <img src="../assets/logo.jpeg" alt="Bharathi Surgicals Logo" class="me-2">
-                  </div>
-                  <div class="opening-time">
-                      <?php echo $data['opening_time']; ?>
-                  </div>
-              </div>
-              
-              <div class="col-md-4">
-                  <div class="social-icons text-center">
-                      <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                      <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                      <a href="#" id="footer-open-chat" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                  </div>
-              </div>
-              
-              <div class="col-md-4">
-                  <div class="contact-info">
-                      <div>
-                          <a href="tel:<?php echo $data['phone']; ?>" class="text-decoration-none text-dark">
-                              <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
-                          </a>
-                      </div>
-                      
-                      <div>
-                          <a href="mailto:<?php echo $data['email']; ?>" class="text-decoration-none text-dark">
-                              <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
-                          </a>
-                      </div>
-                      
-                      <div>
-                          <a href="https://www.google.com/maps/search/<?php echo $data['address']; ?>" target="_blank" class="text-decoration-none text-dark">
-                              <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
-                          </a>
-                      </div>
-                      
-                  </div>
-              </div>
-          </div>
-    
-          <div class="footer-bottom">
-              <div class="row">
-                  <div class="col-md-4">
-                      <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
-                  </div>
-                  <div class="col-md-4 text-center">
-                      <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
-                  </div>
-                  <div class="col-md-4">
-                      <div class="footer-links text-end">
-                          <a href="#">Terms & Conditions</a>
-                          <a href="#">Privacy Policy</a>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="footer-logo d-flex align-items-center mb-3">
+                        <img src="../assets/logo.jpeg" alt="Bharathi Surgicals Logo" class="me-2">
+                    </div>
+                    <div class="opening-time">
+                        <?php echo $data['opening_time']; ?>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="social-icons text-center">
+                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" id="footer-open-chat" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="contact-info">
+                        <div>
+                            <a href="tel:<?php echo $data['phone']; ?>" class="text-decoration-none text-dark">
+                                <i class="bi bi-telephone-fill"></i> <?php echo $data['phone']; ?>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="mailto:<?php echo $data['email']; ?>" class="text-decoration-none text-dark">
+                                <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
+                            </a>
+                        </div>
+
+                        <div>
+                            <a href="https://www.google.com/maps/search/<?php echo $data['address']; ?>" target="_blank" class="text-decoration-none text-dark">
+                                <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="footer-links text-end">
+                            <a href="#">Terms & Conditions</a>
+                            <a href="#">Privacy Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </footer>
 
 
@@ -617,6 +689,7 @@ if ($sql->rowCount() > 0) {
         </button>
         <div class="helper-menu">
             <ul>
+                <li><a href="./request_sample.php">Place Order</a></li>
                 <li><a href="./get_a_qoute.php">Get Quote</a></li>
                 <li><a href="./request_sample.php   ">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
@@ -628,10 +701,80 @@ if ($sql->rowCount() > 0) {
     </div>
 
     <script>
+        // CAPTCHA functionality
+        let currentCaptcha = '';
+
+        // Generate random CAPTCHA text
+        function generateCaptcha() {
+            const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+            let result = '';
+            const length = 6; // CAPTCHA length
+
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+
+            currentCaptcha = result;
+            document.getElementById('captchaDisplay').textContent = result;
+
+            // Clear input and disable submit button
+            document.getElementById('captchaInput').value = '';
+            document.getElementById('submitButton').disabled = true;
+            document.getElementById('captchaError').style.display = 'none';
+        }
+
+        // Validate CAPTCHA input
+        function validateCaptcha() {
+            const input = document.getElementById('captchaInput').value;
+            const submitButton = document.getElementById('submitButton');
+            const errorElement = document.getElementById('captchaError');
+
+            if (input === currentCaptcha) {
+                submitButton.disabled = false;
+                errorElement.style.display = 'none';
+                return true;
+            } else {
+                submitButton.disabled = true;
+                if (input.length >= currentCaptcha.length) {
+                    errorElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'none';
+                }
+                return false;
+            }
+        }
+
+        // Initialize CAPTCHA
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCaptcha();
+
+            // Add event listeners
+            document.getElementById('refreshCaptcha').addEventListener('click', generateCaptcha);
+            document.getElementById('captchaInput').addEventListener('input', validateCaptcha);
+
+            // Form validation
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                if (!validateCaptcha()) {
+                    e.preventDefault();
+                    document.getElementById('captchaError').style.display = 'block';
+                    return;
+                }
+
+                // Continue with form submission if CAPTCHA is valid
+                const form = e.target;
+                if (!form.checkValidity()) {
+                    e.preventDefault();
+                    form.classList.add('was-validated');
+                }
+            });
+        });
+    </script>
+
+    <script>
         document.getElementById('open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -650,7 +793,19 @@ if ($sql->rowCount() > 0) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
-
+    <?php
+    $sess_id = $_SESSION['user_id'];
+    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = :id");
+    $stmt->execute(['id' => $sess_id]);
+    $suggdata = $stmt->fetch(PDO::FETCH_ASSOC);
+    $name = $suggdata['firm'];
+    $email = $suggdata['email'];
+    $phone = $suggdata['mobile_cc'] . $suggdata['mobile'];
+    $whatsapp = $suggdata['whatsapp_cc'] . $suggdata['whatsapp'];
+    $address = $suggdata['address'];
+    $city = $suggdata['city'];
+    $country = $suggdata['country']
+    ?>
     <script>
         // Toggle the helper menu
         const toggleButton = document.querySelector('.helper-toggle');
@@ -669,1011 +824,89 @@ if ($sql->rowCount() > 0) {
     </script>
     <script>
         document.getElementById('suggestionForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+            event.preventDefault();
 
-    const formData = new FormData(this);
-    const submitButton = document.querySelector('.sugg-btn');
-    const originalText = submitButton.innerHTML;
+            const formData = new FormData(this);
 
-    // Show spinner and disable button
-    submitButton.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Submitting...`;
-    submitButton.disabled = true;
+            // const submitButton = document.querySelector('.sugg-btn');
+            // const originalText = submitButton.innerHTML;
 
-    // Basic form validation
-    let isValid = true;
-    const requiredFields = this.querySelectorAll('[required]');
+            // // Show spinner and disable button
+            // submitButton.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Submitting...`;
+            // submitButton.disabled = true;
 
-    requiredFields.forEach(field => {
-        if (!field.value.trim()) {
-            isValid = false;
-            field.classList.add('is-invalid');
-        } else {
-            field.classList.remove('is-invalid');
-        }
-    });
+            // Basic form validation
+            let isValid = true;
+            const requiredFields = this.querySelectorAll('[required]');
 
-    if (!isValid) {
-        alert('Please fill in all required fields.');
-        submitButton.innerHTML = originalText;
-        submitButton.disabled = false;
-        return;
-    }
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('is-invalid');
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
 
-    const suggestionDetails = {
-        firmName: formData.get('firmName'),
-        email: formData.get('email'),
-        countryCode: formData.get('countryCode'),
-        mobileNumber: formData.get('mobileNumber'),
-        whatsappCC: formData.get('waCountryCode'),
-        whatsappNumber: formData.get('whatsappNumber'),
-        suggestionDescription: formData.get('suggestion')
-    };
-
-    let message = `New suggestion Received%0A%0A`;
-    message += `Company Details :%0A`;
-    message += `Firm Name : ${suggestionDetails.firmName}%0A`;
-    message += `Email : ${suggestionDetails.email}%0A`;
-    message += `Phone : ${suggestionDetails.countryCode} ${suggestionDetails.mobileNumber}%0A%0A`;
-    message += `WhatsApp : ${suggestionDetails.whatsappCC} ${suggestionDetails.whatsappNumber}%0A%0A`;
-    message += `*Suggestion Details:*%0A`;
-    message += `⚠️ ${suggestionDetails.suggestionDescription}%0A%0A`;
-    message += `%0AThank you!.`;
-
-    const storeNumber = "918489089784";
-    const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
-    const whatsappURL = isMobile ?
-        `https://wa.me/${storeNumber}?text=${message}` :
-        `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
-
-    // Open WhatsApp in new tab
-    window.open(whatsappURL, '_blank');
-
-
-    // Submit via AJAX
-    fetch('submit_suggestions.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message);
-        if (data.status === 'success') {
-             document.querySelector('form').reset();
-        }
-    })
-    .catch(err => {
-        console.error('Error:', err);
-        alert('Something went wrong. Please try again.');
-    })
-    .finally(() => {
-        // Restore button text and state
-        submitButton.innerHTML = originalText;
-        submitButton.disabled = false;
-    });
-});
-
-
-    
-    </script>
-    <script>
-        const countryCodes = [{
-                code: "+93",
-                country: "Afghanistan"
-            },
-            {
-                code: "+355",
-                country: "Albania"
-            },
-            {
-                code: "+213",
-                country: "Algeria"
-            },
-            {
-                code: "+376",
-                country: "Andorra"
-            },
-            {
-                code: "+244",
-                country: "Angola"
-            },
-            {
-                code: "+1-264",
-                country: "Anguilla"
-            },
-            {
-                code: "+1-268",
-                country: "Antigua and Barbuda"
-            },
-            {
-                code: "+54",
-                country: "Argentina"
-            },
-            {
-                code: "+374",
-                country: "Armenia"
-            },
-            {
-                code: "+297",
-                country: "Aruba"
-            },
-            {
-                code: "+61",
-                country: "Australia"
-            },
-            {
-                code: "+43",
-                country: "Austria"
-            },
-            {
-                code: "+994",
-                country: "Azerbaijan"
-            },
-            {
-                code: "+1-242",
-                country: "Bahamas"
-            },
-            {
-                code: "+973",
-                country: "Bahrain"
-            },
-            {
-                code: "+880",
-                country: "Bangladesh"
-            },
-            {
-                code: "+1-246",
-                country: "Barbados"
-            },
-            {
-                code: "+375",
-                country: "Belarus"
-            },
-            {
-                code: "+32",
-                country: "Belgium"
-            },
-            {
-                code: "+501",
-                country: "Belize"
-            },
-            {
-                code: "+229",
-                country: "Benin"
-            },
-            {
-                code: "+1-441",
-                country: "Bermuda"
-            },
-            {
-                code: "+975",
-                country: "Bhutan"
-            },
-            {
-                code: "+591",
-                country: "Bolivia"
-            },
-            {
-                code: "+387",
-                country: "Bosnia and Herzegovina"
-            },
-            {
-                code: "+267",
-                country: "Botswana"
-            },
-            {
-                code: "+55",
-                country: "Brazil"
-            },
-            {
-                code: "+246",
-                country: "British Indian Ocean Territory"
-            },
-            {
-                code: "+1-284",
-                country: "British Virgin Islands"
-            },
-            {
-                code: "+673",
-                country: "Brunei"
-            },
-            {
-                code: "+359",
-                country: "Bulgaria"
-            },
-            {
-                code: "+226",
-                country: "Burkina Faso"
-            },
-            {
-                code: "+257",
-                country: "Burundi"
-            },
-            {
-                code: "+855",
-                country: "Cambodia"
-            },
-            {
-                code: "+237",
-                country: "Cameroon"
-            },
-            {
-                code: "+1-345",
-                country: "Cayman Islands"
-            },
-            {
-                code: "+236",
-                country: "Central African Republic"
-            },
-            {
-                code: "+56",
-                country: "Chile"
-            },
-            {
-                code: "+86",
-                country: "China"
-            },
-            {
-                code: "+61",
-                country: "Christmas Island"
-            },
-            {
-                code: "+61",
-                country: "Cocos (Keeling) Islands"
-            },
-            {
-                code: "+57",
-                country: "Colombia"
-            },
-            {
-                code: "+269",
-                country: "Comoros"
-            },
-            {
-                code: "+242",
-                country: "Congo (Republic)"
-            },
-            {
-                code: "+243",
-                country: "Congo (Democratic Republic)"
-            },
-            {
-                code: "+682",
-                country: "Cook Islands"
-            },
-            {
-                code: "+506",
-                country: "Costa Rica"
-            },
-            {
-                code: "+225",
-                country: "Côte d'Ivoire"
-            },
-            {
-                code: "+385",
-                country: "Croatia"
-            },
-            {
-                code: "+53",
-                country: "Cuba"
-            },
-            {
-                code: "+599",
-                country: "Curaçao"
-            },
-            {
-                code: "+357",
-                country: "Cyprus"
-            },
-            {
-                code: "+420",
-                country: "Czech Republic"
-            },
-            {
-                code: "+45",
-                country: "Denmark"
-            },
-            {
-                code: "+253",
-                country: "Djibouti"
-            },
-            {
-                code: "+1-767",
-                country: "Dominica"
-            },
-            {
-                code: "+1-809",
-                country: "Dominican Republic"
-            },
-            {
-                code: "+670",
-                country: "East Timor"
-            },
-            {
-                code: "+593",
-                country: "Ecuador"
-            },
-            {
-                code: "+20",
-                country: "Egypt"
-            },
-            {
-                code: "+503",
-                country: "El Salvador"
-            },
-            {
-                code: "+240",
-                country: "Equatorial Guinea"
-            },
-            {
-                code: "+291",
-                country: "Eritrea"
-            },
-            {
-                code: "+372",
-                country: "Estonia"
-            },
-            {
-                code: "+251",
-                country: "Ethiopia"
-            },
-            {
-                code: "+500",
-                country: "Falkland Islands"
-            },
-            {
-                code: "+298",
-                country: "Faroe Islands"
-            },
-            {
-                code: "+679",
-                country: "Fiji"
-            },
-            {
-                code: "+358",
-                country: "Finland"
-            },
-            {
-                code: "+33",
-                country: "France"
-            },
-            {
-                code: "+594",
-                country: "French Guiana"
-            },
-            {
-                code: "+689",
-                country: "French Polynesia"
-            },
-            {
-                code: "+241",
-                country: "Gabon"
-            },
-            {
-                code: "+220",
-                country: "Gambia"
-            },
-            {
-                code: "+995",
-                country: "Georgia"
-            },
-            {
-                code: "+49",
-                country: "Germany"
-            },
-            {
-                code: "+233",
-                country: "Ghana"
-            },
-            {
-                code: "+350",
-                country: "Gibraltar"
-            },
-            {
-                code: "+30",
-                country: "Greece"
-            },
-            {
-                code: "+299",
-                country: "Greenland"
-            },
-            {
-                code: "+1-473",
-                country: "Grenada"
-            },
-            {
-                code: "+1-671",
-                country: "Guam"
-            },
-            {
-                code: "+502",
-                country: "Guatemala"
-            },
-            {
-                code: "+224",
-                country: "Guinea"
-            },
-            {
-                code: "+245",
-                country: "Guinea-Bissau"
-            },
-            {
-                code: "+595",
-                country: "Guyana"
-            },
-            {
-                code: "+509",
-                country: "Haiti"
-            },
-            {
-                code: "+504",
-                country: "Honduras"
-            },
-            {
-                code: "+852",
-                country: "Hong Kong"
-            },
-            {
-                code: "+36",
-                country: "Hungary"
-            },
-            {
-                code: "+354",
-                country: "Iceland"
-            },
-            {
-                code: "+91",
-                country: "India"
-            },
-            {
-                code: "+62",
-                country: "Indonesia"
-            },
-            {
-                code: "+98",
-                country: "Iran"
-            },
-            {
-                code: "+964",
-                country: "Iraq"
-            },
-            {
-                code: "+353",
-                country: "Ireland"
-            },
-            {
-                code: "+972",
-                country: "Israel"
-            },
-            {
-                code: "+39",
-                country: "Italy"
-            },
-            {
-                code: "+1-876",
-                country: "Jamaica"
-            },
-            {
-                code: "+81",
-                country: "Japan"
-            },
-            {
-                code: "+962",
-                country: "Jordan"
-            },
-            {
-                code: "+7",
-                country: "Kazakhstan"
-            },
-            {
-                code: "+254",
-                country: "Kenya"
-            },
-            {
-                code: "+686",
-                country: "Kiribati"
-            },
-            {
-                code: "+965",
-                country: "Kuwait"
-            },
-            {
-                code: "+996",
-                country: "Kyrgyzstan"
-            },
-            {
-                code: "+856",
-                country: "Laos"
-            },
-            {
-                code: "+371",
-                country: "Latvia"
-            },
-            {
-                code: "+961",
-                country: "Lebanon"
-            },
-            {
-                code: "+266",
-                country: "Lesotho"
-            },
-            {
-                code: "+231",
-                country: "Liberia"
-            },
-            {
-                code: "+218",
-                country: "Libya"
-            },
-            {
-                code: "+423",
-                country: "Liechtenstein"
-            },
-            {
-                code: "+370",
-                country: "Lithuania"
-            },
-            {
-                code: "+352",
-                country: "Luxembourg"
-            },
-            {
-                code: "+853",
-                country: "Macau"
-            },
-            {
-                code: "+261",
-                country: "Madagascar"
-            },
-            {
-                code: "+265",
-                country: "Malawi"
-            },
-            {
-                code: "+60",
-                country: "Malaysia"
-            },
-            {
-                code: "+960",
-                country: "Maldives"
-            },
-            {
-                code: "+223",
-                country: "Mali"
-            },
-            {
-                code: "+356",
-                country: "Malta"
-            },
-            {
-                code: "+692",
-                country: "Marshall Islands"
-            },
-            {
-                code: "+596",
-                country: "Martinique"
-            },
-            {
-                code: "+222",
-                country: "Mauritania"
-            },
-            {
-                code: "+230",
-                country: "Mauritius"
-            },
-            {
-                code: "+262",
-                country: "Mayotte"
-            },
-            {
-                code: "+52",
-                country: "Mexico"
-            },
-            {
-                code: "+691",
-                country: "Micronesia"
-            },
-            {
-                code: "+373",
-                country: "Moldova"
-            },
-            {
-                code: "+377",
-                country: "Monaco"
-            },
-            {
-                code: "+976",
-                country: "Mongolia"
-            },
-            {
-                code: "+382",
-                country: "Montenegro"
-            },
-            {
-                code: "+1-664",
-                country: "Montserrat"
-            },
-            {
-                code: "+212",
-                country: "Morocco"
-            },
-            {
-                code: "+258",
-                country: "Mozambique"
-            },
-            {
-                code: "+95",
-                country: "Myanmar"
-            },
-            {
-                code: "+264",
-                country: "Namibia"
-            },
-            {
-                code: "+674",
-                country: "Nauru"
-            },
-            {
-                code: "+977",
-                country: "Nepal"
-            },
-            {
-                code: "+31",
-                country: "Netherlands"
-            },
-            {
-                code: "+687",
-                country: "New Caledonia"
-            },
-            {
-                code: "+64",
-                country: "New Zealand"
-            },
-            {
-                code: "+505",
-                country: "Nicaragua"
-            },
-            {
-                code: "+227",
-                country: "Niger"
-            },
-            {
-                code: "+234",
-                country: "Nigeria"
-            },
-            {
-                code: "+683",
-                country: "Niue"
-            },
-            {
-                code: "+672",
-                country: "Norfolk Island"
-            },
-            {
-                code: "+850",
-                country: "North Korea"
-            },
-            {
-                code: "+1-670",
-                country: "Northern Mariana Islands"
-            },
-            {
-                code: "+47",
-                country: "Norway"
-            },
-            {
-                code: "+968",
-                country: "Oman"
-            },
-            {
-                code: "+92",
-                country: "Pakistan"
-            },
-            {
-                code: "+680",
-                country: "Palau"
-            },
-            {
-                code: "+970",
-                country: "Palestine"
-            },
-            {
-                code: "+507",
-                country: "Panama"
-            },
-            {
-                code: "+675",
-                country: "Papua New Guinea"
-            },
-            {
-                code: "+595",
-                country: "Paraguay"
-            },
-            {
-                code: "+51",
-                country: "Peru"
-            },
-            {
-                code: "+63",
-                country: "Philippines"
-            },
-            {
-                code: "+48",
-                country: "Poland"
-            },
-            {
-                code: "+351",
-                country: "Portugal"
-            },
-            {
-                code: "+1-787",
-                country: "Puerto Rico"
-            },
-            {
-                code: "+974",
-                country: "Qatar"
-            },
-            {
-                code: "+262",
-                country: "Réunion"
-            },
-            {
-                code: "+40",
-                country: "Romania"
-            },
-            {
-                code: "+7",
-                country: "Russia"
-            },
-            {
-                code: "+250",
-                country: "Rwanda"
-            },
-            {
-                code: "+590",
-                country: "Saint Barthélemy"
-            },
-            {
-                code: "+1-869",
-                country: "Saint Kitts and Nevis"
-            },
-            {
-                code: "+1-758",
-                country: "Saint Lucia"
-            },
-            {
-                code: "+590",
-                country: "Saint Martin"
-            },
-            {
-                code: "+1-721",
-                country: "Sint Maarten"
-            },
-            {
-                code: "+685",
-                country: "Samoa"
-            },
-            {
-                code: "+378",
-                country: "San Marino"
-            },
-            {
-                code: "+239",
-                country: "São Tomé and Príncipe"
-            },
-            {
-                code: "+966",
-                country: "Saudi Arabia"
-            },
-            {
-                code: "+221",
-                country: "Senegal"
-            },
-            {
-                code: "+381",
-                country: "Serbia"
-            },
-            {
-                code: "+248",
-                country: "Seychelles"
-            },
-            {
-                code: "+232",
-                country: "Sierra Leone"
-            },
-            {
-                code: "+65",
-                country: "Singapore"
-            },
-            {
-                code: "+421",
-                country: "Slovakia"
-            },
-            {
-                code: "+386",
-                country: "Slovenia"
-            },
-            {
-                code: "+677",
-                country: "Solomon Islands"
-            },
-            {
-                code: "+252",
-                country: "Somalia"
-            },
-            {
-                code: "+27",
-                country: "South Africa"
-            },
-            {
-                code: "+82",
-                country: "South Korea"
-            },
-            {
-                code: "+211",
-                country: "South Sudan"
-            },
-            {
-                code: "+34",
-                country: "Spain"
-            },
-            {
-                code: "+94",
-                country: "Sri Lanka"
-            },
-            {
-                code: "+249",
-                country: "Sudan"
-            },
-            {
-                code: "+597",
-                country: "Suriname"
-            },
-            {
-                code: "+268",
-                country: "Eswatini"
-            },
-            {
-                code: "+46",
-                country: "Sweden"
-            },
-            {
-                code: "+41",
-                country: "Switzerland"
-            },
-            {
-                code: "+963",
-                country: "Syria"
-            },
-            {
-                code: "+886",
-                country: "Taiwan"
-            },
-            {
-                code: "+992",
-                country: "Tajikistan"
-            },
-            {
-                code: "+255",
-                country: "Tanzania"
-            },
-            {
-                code: "+66",
-                country: "Thailand"
-            },
-            {
-                code: "+670",
-                country: "Timor-Leste"
-            },
-            {
-                code: "+228",
-                country: "Togo"
-            },
-            {
-                code: "+690",
-                country: "Tokelau"
-            },
-            {
-                code: "+676",
-                country: "Tonga"
-            },
-            {
-                code: "+1-868",
-                country: "Trinidad and Tobago"
-            },
-            {
-                code: "+216",
-                country: "Tunisia"
-            },
-            {
-                code: "+90",
-                country: "Turkey"
-            },
-            {
-                code: "+993",
-                country: "Turkmenistan"
-            },
-            {
-                code: "+1-649",
-                country: "Turks and Caicos Islands"
-            },
-            {
-                code: "+688",
-                country: "Tuvalu"
-            },
-            {
-                code: "+256",
-                country: "Uganda"
-            },
-            {
-                code: "+380",
-                country: "Ukraine"
-            },
-            {
-                code: "+971",
-                country: "United Arab Emirates"
-            },
-            {
-                code: "+44",
-                country: "United Kingdom"
-            },
-            {
-                code: "+1",
-                country: "United States"
-            },
-            {
-                code: "+598",
-                country: "Uruguay"
-            },
-            {
-                code: "+998",
-                country: "Uzbekistan"
-            },
-            {
-                code: "+678",
-                country: "Vanuatu"
-            },
-            {
-                code: "+379",
-                country: "Vatican City"
-            },
-            {
-                code: "+58",
-                country: "Venezuela"
-            },
-            {
-                code: "+84",
-                country: "Vietnam"
-            },
-            {
-                code: "+681",
-                country: "Wallis and Futuna"
-            },
-            {
-                code: "+967",
-                country: "Yemen"
-            },
-            {
-                code: "+260",
-                country: "Zambia"
-            },
-            {
-                code: "+263",
-                country: "Zimbabwe"
+            if (!isValid) {
+                alert('Please fill in all required fields.');
+                submitButton.innerHTML = originalText;
+                submitButton.disabled = false;
+                return;
             }
-        ];
 
-        const mobileCC = document.getElementById("mobile_cc");
-        const whatsappCC = document.getElementById("whatsapp_cc");
-        countryCodes.forEach(c => {
-            mobileCC.add(new Option(`${c.country} (${c.code})`, c.code, c.code === "+91", c.code === "+91"));
-            whatsappCC.add(new Option(`${c.country} (${c.code})`, c.code, c.code === "+91", c.code === "+91"));
+            const suggestionDetails = {
+                suggestionDescription: formData.get('suggestion')
+            };
+
+
+
+            let message = `New suggestion Received%0A%0A`;
+            message += `Company Details :%0A`;
+            message += `Firm Name : <?php echo $name; ?>`;
+            message += `Email : <?php echo $email; ?> %0A`;
+            message += `Phone : <?php echo '+' . $phone; ?> %0A%0A`;
+            message += `WhatsApp : <?php echo '+' . $whatsapp; ?> %0A%0A`;
+            message += `Address : <?php echo $address; ?>%0A%0A`;
+            message += `City : <?php echo $city; ?>%0A%0A`;
+            message += `Country : <?php echo $country; ?>%0A%0A`;
+
+            message += `*Suggestion Details:*%0A`;
+            message += `⚠️ ${suggestionDetails.suggestionDescription}%0A%0A`;
+            message += `%0AThank you!.`;
+
+            const storeNumber = "919790972432";
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in new tab
+            window.open(whatsappURL, '_blank');
+
+            // fetch('submit_suggestions.php', {
+            //         method: 'POST',
+            //         body: formData
+            //     })
+            //     .then(res => res.json())
+            //     .then(data => {
+            //         alert(data.message);
+            //         if (data.status === 'success') {
+            //             window.location.href = 'suggestions.php';
+            //         }
+            //     })
+            //     .catch(err => {
+            //         alert('Error submitting suggestion.');
+            //     });
+
+            this.submit();
         });
     </script>
     <script>
         document.getElementById('open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -1685,11 +918,11 @@ if ($sql->rowCount() > 0) {
             window.open(whatsappURL, '_blank');
         });
     </script>
-        <script>
+    <script>
         document.getElementById('footer-open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -1701,11 +934,11 @@ if ($sql->rowCount() > 0) {
             window.open(whatsappURL, '_blank');
         });
     </script>
-        <script>
+    <script>
         document.getElementById('nav-open-chat').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
-            const storeNumber = "918489089784"; // Your WhatsApp number
+            const storeNumber = "919790972432"; // Your WhatsApp number
             const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
             // WhatsApp URL - fixed encoding
@@ -1717,7 +950,8 @@ if ($sql->rowCount() > 0) {
             window.open(whatsappURL, '_blank');
         });
     </script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js">
+    </script>
 
 </body>
 

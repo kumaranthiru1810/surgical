@@ -107,6 +107,73 @@ if ($sql->rowCount() > 0) {
                 font-size: 13px;
             }
         }
+
+
+        .captcha-container {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .captcha-display {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            background: linear-gradient(45deg, #333, #666);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-align: center;
+            margin-bottom: 10px;
+            user-select: none;
+        }
+
+        .captcha-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .captcha-input {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .captcha-refresh {
+            background: none;
+            border: none;
+            color: #0d6efd;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .captcha-refresh:hover {
+            color: #0a58ca;
+        }
+
+        .captcha-error {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .captcha-controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .captcha-input {
+                margin-right: 0;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -179,6 +246,7 @@ if ($sql->rowCount() > 0) {
     ?>
 
     <!-- Top Navigation -->
+     <div style="position: sticky; top:0; z-index:9999; background-color:white;">
     <nav class="respon2">
         <div class="container">
             <div class="row">
@@ -255,7 +323,7 @@ if ($sql->rowCount() > 0) {
 
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg sticky-top position-sticky">
+    <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <div class="d-flex align-items-center">
@@ -280,6 +348,9 @@ if ($sql->rowCount() > 0) {
                         <a class="nav-link" href="./Management.php">Management</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="../forms/request_sample.php">Place Order</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="./contact-us.php">Contact Us</a>
                     </li>
                     <li class="nav-item">
@@ -291,16 +362,16 @@ if ($sql->rowCount() > 0) {
                     </li>
                     <li class="nav-item">
                         <?php if (isset($_SESSION['name'])) { ?>
-                        <a href="./logout.php" class="btn btn-primary me-3">Logout</a>
+                            <a href="./logout.php" class="btn btn-primary me-3">Logout</a>
                         <?php } else { ?>
-                        <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
+                            <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
                         <?php } ?>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-
+                        </div>
 
     <style>
         /* body {
@@ -406,7 +477,7 @@ if ($sql->rowCount() > 0) {
     </style>
 
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center align-item-center mt-5">
             <div class="col-md-6 col-lg-5">
                 <div class="card">
                     <div class="card-header text-center">
@@ -437,6 +508,21 @@ if ($sql->rowCount() > 0) {
                                     </span>
                                 </div>
                             </div>
+                            <!-- CAPTCHA Section -->
+                            <div class="col-12">
+                                <div class="captcha-container">
+                                    <label class="form-label">Enter the text shown below <span class="text-danger">*</span></label>
+                                    <div class="captcha-display" id="captchaDisplay"></div>
+                                    <div class="captcha-controls">
+                                        <input type="text" class="form-control captcha-input" id="captchaInput" placeholder="Type the characters above" required>
+                                        <button type="button" class="captcha-refresh" id="refreshCaptcha" title="Refresh CAPTCHA">
+                                            <i class="bi bi-arrow-clockwise"></i>
+                                        </button>
+                                    </div>
+                                    <div class="captcha-error" id="captchaError">CAPTCHA verification failed. Please try again.</div>
+                                </div>
+                            </div>
+
 
 
                             <!-- Sign In Button -->
@@ -444,8 +530,9 @@ if ($sql->rowCount() > 0) {
                                 <!-- <button type="submit" class="btn btn-primary btn-lg" name="signin">
                                     <i class="fas fa-sign-in-alt me-2"></i>Sign In
                                 </button> -->
-                                <input type="submit" value="Sign In" class="btn btn-primary btn-lg" name="signin">
+                                <input type="submit" value="Sign In" class="btn btn-primary btn-lg" id="submitButton" name="signin" disabled>
                             </div>
+                            <div id="formMsg" class="mt-3 text-center text-md-start"></div>
                         </form>
 
                         <!-- Additional Options -->
@@ -496,20 +583,91 @@ if ($sql->rowCount() > 0) {
     ?>
 
     <div class="helper-widget">
-      <button class="helper-toggle">
-          <i class="bi bi-question-circle-fill"></i>
-      </button>
-      <div class="helper-menu">
-          <ul>
-              <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
+        <button class="helper-toggle">
+            <i class="bi bi-question-circle-fill"></i>
+        </button>
+        <div class="helper-menu">
+            <ul>
+                <li><a href="../forms/request_sample.php">Place Orders</a></li>
+                <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
                 <li><a href="../forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
                 <li><a href="../forms/raise_of_complaint.php">Raise a Complaint</a></li>
                 <li><a href="../forms/suggestions.php">Suggestions</a></li>
                 <li><a href="#chat" id="open-chat">Chat with us</a></li>
-          </ul>
-      </div>
+            </ul>
+        </div>
     </div>
+
+     <script>
+        // CAPTCHA functionality
+        let currentCaptcha = '';
+
+        // Generate random CAPTCHA text
+        function generateCaptcha() {
+            const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+            let result = '';
+            const length = 6; // CAPTCHA length
+            
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            
+            currentCaptcha = result;
+            document.getElementById('captchaDisplay').textContent = result;
+            
+            // Clear input and disable submit button
+            document.getElementById('captchaInput').value = '';
+            document.getElementById('submitButton').disabled = true;
+            document.getElementById('captchaError').style.display = 'none';
+        }
+
+        // Validate CAPTCHA input
+        function validateCaptcha() {
+            const input = document.getElementById('captchaInput').value;
+            const submitButton = document.getElementById('submitButton');
+            const errorElement = document.getElementById('captchaError');
+            
+            if (input === currentCaptcha) {
+                submitButton.disabled = false;
+                errorElement.style.display = 'none';
+                return true;
+            } else {
+                submitButton.disabled = true;
+                if (input.length >= currentCaptcha.length) {
+                    errorElement.style.display = 'block';
+                } else {
+                    errorElement.style.display = 'none';
+                }
+                return false;
+            }
+        }
+
+        // Initialize CAPTCHA
+        document.addEventListener('DOMContentLoaded', function() {
+            generateCaptcha();
+            
+            // Add event listeners
+            document.getElementById('refreshCaptcha').addEventListener('click', generateCaptcha);
+            document.getElementById('captchaInput').addEventListener('input', validateCaptcha);
+            
+            // Form validation
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                if (!validateCaptcha()) {
+                    e.preventDefault();
+                    document.getElementById('captchaError').style.display = 'block';
+                    return;
+                }
+                
+                // Continue with form submission if CAPTCHA is valid
+                const form = e.target;
+                if (!form.checkValidity()) {
+                    e.preventDefault();
+                    form.classList.add('was-validated');
+                }
+            });
+        });
+        </script>
 
     <script>
         // Toggle the helper menu
