@@ -119,19 +119,19 @@ if ($sql->rowCount() > 0) {
       }
     }
 
-    @media(max-width:425px) {
+    @media(min-width:425px) and (max-width:767px) {
       #map {
         width: 400px;
       }
     }
 
-    @media(max-width:375px) {
+    @media(min-width:375px) and (max-width:424px) {
       #map {
         width: 350px;
       }
     }
 
-    @media(max-width:320px) {
+    @media(min-width:320px) and (max-width:374px) {
       #map {
         width: 300px;
       }
@@ -173,7 +173,7 @@ if ($sql->rowCount() > 0) {
           <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
             <div class="contact-info text-end">
               <div>
-                <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
+                <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
                   <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
                 </a>
               </div>
@@ -207,7 +207,7 @@ if ($sql->rowCount() > 0) {
           <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
             <div class="contact-info text-end">
               <div>
-                <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
+                <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
                   <i class="bi bi-telephone-fill"></i><?php echo $data['phone']; ?>
                 </a>
               </div>
@@ -600,11 +600,29 @@ if ($sql->rowCount() > 0) {
       </div>
     </div>
 
+
+    <script>
+        document.getElementById('top-whatsapp').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+
     <script>
       document.getElementById('whatsapp').addEventListener('click', function() {
         let message = ``;
 
-        const storeNumber = "9363282100"; // Your WhatsApp number
+        const storeNumber = "919790972432"; // Your WhatsApp number
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
         // WhatsApp URL - fixed encoding
@@ -619,7 +637,7 @@ if ($sql->rowCount() > 0) {
 
     <script>
       document.getElementById('open-chat').addEventListener('click', function() {
-        let message = `How can i help You? %0A%0A`;
+        let message = `How can I help You? %0A`;
 
         const storeNumber = "918489089784"; // Your WhatsApp number
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -635,7 +653,7 @@ if ($sql->rowCount() > 0) {
     </script>
     <script>
       document.getElementById('nav-open-chat').addEventListener('click', function() {
-        let message = `How can i help You? %0A%0A`;
+        let message = `How can I help You? %0A`;
 
         const storeNumber = "918489089784"; // Your WhatsApp number
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
@@ -651,7 +669,7 @@ if ($sql->rowCount() > 0) {
     </script>
     <script>
       document.getElementById('footer-open-chat').addEventListener('click', function() {
-        let message = `How can i help You? %0A%0A`;
+        let message = `How can I help You? %0A`;
 
         const storeNumber = "918489089784"; // Your WhatsApp number
         const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
