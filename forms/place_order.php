@@ -246,7 +246,7 @@ if ($sql1->rowCount() > 0) {
 
         @media(min-width:425px) and (max-width:454px) {
             .phone {
-                font-size: 12px;
+                font-size: 11px;
             }
         }
 
@@ -493,7 +493,7 @@ if ($sql1->rowCount() > 0) {
         "Patient Gown",
         "Surgeon Gown",
         "Bed Sheet & Pillow Cover",
-        'Custom Product'
+        "Custom Product"
     ];
     ?>
 
@@ -662,12 +662,12 @@ if ($sql1->rowCount() > 0) {
         </button>
         <div class="helper-menu">
             <ul>
-                <li><a href="./request_sample.php">Place Order</a></li>
-                <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
-                <li><a href="../forms/request_sample.php">Request Samples</a></li>
+                <li><a href="./place_order.php">Place Order</a></li>
+                <li><a href="./get_a_qoute.php">Get Quote</a></li>
+                <li><a href="./request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
-                <li><a href="../forms/raise_of_complaint.php">Raise a Complaint</a></li>
-                <li><a href="../forms/suggestions.php">Suggestions</a></li>
+                <li><a href="./raise_of_complaint.php">Raise a Complaint</a></li>
+                <li><a href="./suggestions.php">Suggestions</a></li>
                 <li><a href="#chat" id="open-chat">Chat with us</a></li>
             </ul>
         </div>
@@ -840,6 +840,22 @@ if ($sql1->rowCount() > 0) {
     </script>
     <script>
         document.getElementById('top-whatsapp2').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+    <script>
+        document.getElementById('nav-open-chat2').addEventListener('click', function() {
             let message = `How can I help You? %0A`;
 
             const storeNumber = "919790972432"; // Your WhatsApp number
@@ -2853,22 +2869,6 @@ if ($sql1->rowCount() > 0) {
     </script>
     <script>
         document.getElementById('nav-open-chat').addEventListener('click', function() {
-            let message = `How can i help You? %0A%0A`;
-
-            const storeNumber = "919790972432"; // Your WhatsApp number
-            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
-
-            // WhatsApp URL - fixed encoding
-            const whatsappURL = isMobile ?
-                `https://wa.me/${storeNumber}?text=${message}` :
-                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
-
-            // Open WhatsApp in a new tab
-            window.open(whatsappURL, '_blank');
-        });
-    </script>
-    <script>
-        document.getElementById('nav-open-chat2').addEventListener('click', function() {
             let message = `How can i help You? %0A%0A`;
 
             const storeNumber = "919790972432"; // Your WhatsApp number

@@ -281,7 +281,7 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
                     <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
                         <div class="contact-info text-end">
                             <div>
-                                <a href="top-whatsapp" class="phone text-decoration-none text-dark">
+                                <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
                             </div>
@@ -298,12 +298,12 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
                         <div class="social-icons">
                             <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                             <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                            <a href="#" id="nav-open-chat2" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                    <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
                         <div class="contact-info text-start">
                             <div>
                                 <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
@@ -312,10 +312,10 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
                             </div>
                         </div>
                     </div>
-                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                    <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
                         <div class="contact-info text-end">
                             <div>
-                                <a href="top-whatsapp" class="phone1 text-decoration-none text-dark">
+                                <a href="#" id="top-whatsapp2" class="phone1 text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
                             </div>
@@ -353,21 +353,21 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
                             <a class="nav-link" href="../pages/Management.php">Management</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./request_sample.php">Place Order</a>
+                            <a class="nav-link" href="./place_order.php">Place Order</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../pages/contact-us.php">Contact Us</a>
                         </li>
                         <li class="nav-item">
                             <?php if (isset($_SESSION['name'])) { ?>
-                                <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
+                                <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
                             <?php } else { ?>
                                 <a href="../pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
                             <?php } ?>
                         </li>
                         <li class="nav-item">
                             <?php if (isset($_SESSION['name'])) { ?>
-                                <a href="../pages/logout.php" class="btn btn-primary me-3">Logout</a>
+                                <a href="../pages/logout.php" onclick="return confirm('Are you sure you want to logout?');" class="btn btn-primary me-3">Logout</a>
                             <?php } else { ?>
                                 <a href="../pages/signin.php" class="btn btn-primary me-3">Sign In</a>
                             <?php } ?>
@@ -454,12 +454,12 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
         </button>
         <div class="helper-menu">
             <ul>
-                <li><a href="../forms/request_sample.php">Place Order</a></li>
-                <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
-                <li><a href="../forms/request_sample.php">Request Samples</a></li>
+                <li><a href="./place_order.php">Place Order</a></li>
+                <li><a href="./get_a_qoute.php">Get Quote</a></li>
+                <li><a href="./request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
-                <li><a href="../forms/raise_of_complaint.php">Raise a Complaint</a></li>
-                <li><a href="../forms/suggestions.php">Suggestions</a></li>
+                <li><a href="./raise_of_complaint.php">Raise a Complaint</a></li>
+                <li><a href="./suggestions.php">Suggestions</a></li>
                 <li><a href="#chat" id="open-chat">Chat with us</a></li>
             </ul>
         </div>
@@ -634,6 +634,39 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
 
     <script>
         document.getElementById('top-whatsapp').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+    <script>
+        document.getElementById('top-whatsapp2').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+
+<script>
+        document.getElementById('nav-open-chat2').addEventListener('click', function() {
             let message = `How can I help You? %0A`;
 
             const storeNumber = "919790972432"; // Your WhatsApp number

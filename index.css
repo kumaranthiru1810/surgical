@@ -95,6 +95,24 @@ body {
     height: 65px;
 }
 
+@media(min-width:422px) and (max-width:472px) {
+    .navbar-brand img {
+        height: 60px;
+    }
+}
+
+@media(min-width:371px) and (max-width:421px) {
+    .navbar-brand img {
+        height: 55px;
+    }
+}
+
+@media(min-width:320px) and (max-width:370px) {
+    .navbar-brand img {
+        height: 45px;
+    }
+}
+
 .navbar-brand {
     cursor: pointer;
     z-index: 10 !important;
@@ -341,7 +359,7 @@ footer {
 }
 
 .contact-info div {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .contact-info i {
@@ -394,11 +412,11 @@ footer {
 @media (max-width: 768px) {
     .contact-info {
         text-align: left;
-        margin-top: 30px;
+        margin-top: 0px;
     }
 
     .social-icons {
-        margin: 20px 0;
+        margin: 0px 0;
         text-align: center;
         display: flex;
         justify-content: flex-start;
@@ -1254,7 +1272,7 @@ label {
 
     .management-image-container {
         margin-bottom: 25px;
-        height: 300px;
+        height: 350px;
     }
 
     .order-md-1 {
@@ -1277,7 +1295,7 @@ label {
     }
 
     .management-image-container {
-        height: 250px;
+        height: 285px;
     }
 }
 
@@ -1291,7 +1309,134 @@ label {
     }
 }
 
-.image img{
+@media (min-width: 481px) and (max-width: 500px) {
+    .management-image-container {
+        height: 390px;
+    }
+
+    .management-name {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 451px) and (max-width: 480px) {
+    .management-image-container {
+        height: 380px;
+    }
+
+    .management-name {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 426px) and (max-width: 450px) {
+    .management-image-container {
+        height: 340px;
+    }
+
+    .management-name {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 425px) {
+    .management-image-container {
+        height: 290px;
+    }
+
+    .management-name {
+        font-size: 1.5rem;
+    }
+}
+
+@media (min-width: 370px) and (max-width: 400px) {
+    .management-image-container {
+        height: 290px;
+    }
+
+    .management-name {
+        font-size: 1.5rem;
+    }
+}
+
+
+
+.image img {
+    height: 100%;
+}
+
+.image img {
     height: 100%;
 
+}
+
+/* Flash Message Styles */
+
+#flash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    /* hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+}
+
+/* Message box */
+#flash-box {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.4s ease;
+}
+
+#flash-box h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+#flash-box p {
+    color: #444;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+#flash-ok {
+    margin-top: 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#flash-ok:hover {
+    background-color: #2980b9;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 991px) {
+    .offcanvas {
+        background-color: blue !important;
+    }
 }
