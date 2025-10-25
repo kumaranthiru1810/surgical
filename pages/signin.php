@@ -246,114 +246,114 @@ if ($sql->rowCount() > 0) {
     ?>
 
     <!-- Top Navigation -->
-     <div style="position: sticky; top:0; z-index:9999; background-color:white;">
-    <nav class="respon2">
-        <div class="container">
-            <div class="row">
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-start">
-                        <div>
-                            <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-                            </a>
+    <div style="position: sticky; top:0; z-index:9999; background-color:white;">
+        <nav class="respon2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-start">
+                            <div>
+                                <a href="mailto:<?php echo $data['email']; ?>" class="phone text-decoration-none text-dark">
+                                    <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php
+                    <?php
 
-                $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
-                if ($sql1->rowCount() > 0) {
-                    $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
-                }
-                ?>
-                <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
-                    <div class="social-icons text-center">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-end">
-                        <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
-                            </a>
+                    $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
+                    if ($sql1->rowCount() > 0) {
+                        $data1 = $sql1->fetch(PDO::FETCH_ASSOC);
+                    }
+                    ?>
+                    <div class="col-4 col-md-4 col-lg-4 mt-1 col-sm-4 col-xs-6">
+                        <div class="social-icons text-center">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <nav class="respon">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
-                    <div class="social-icons">
-                        <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="<?php echo $social_links['whatsapp']; ?>" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-start">
-                        <div>
-                            <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-end">
-                        <div>
-                            <a href="tel:<?php echo preg_replace('/[^0-9+]/', '', $data['phone']); ?>" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
-                            </a>
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-end">
+                            <div>
+                                <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
+                                    <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <div class="d-flex align-items-center">
-                    <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+        <nav class="respon">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-md-4 col-lg-4 mt-1 col-sm-6 col-xs-6" style="display: flex; justify-content: center; align-items: center;">
+                        <div class="social-icons">
+                            <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
+                            <a id="nav-open-chat2" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                        </div>
+                    </div>
                 </div>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./about.php">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Products.php">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Management.php">Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../forms/request_sample.php">Place Order</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./contact-us.php">Contact Us</a>
-                    </li>
-                    <li class="nav-item">
+                <div class="row">
+                    <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
+                        <div class="contact-info text-start">
+                            <div>
+                                <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
+                                    <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
+                        <div class="contact-info text-end">
+                            <div>
+                                <a href="#" id="top-whatsapp2" class="phone1 text-decoration-none text-dark">
+                                    <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <div class="d-flex align-items-center">
+                        <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+                    </div>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./about.php">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Products.php">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Management.php">Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../forms/place_order.php">Place Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./contact-us.php">Contact Us</a>
+                        </li>
+                        <!-- <li class="nav-item">
                         <?php if (isset($_SESSION['name'])) { ?>
                             <a class="btn btn-primary me-3" href="#"><?php echo $_SESSION['name']; ?></a>
                         <?php } else { ?>
@@ -362,16 +362,35 @@ if ($sql->rowCount() > 0) {
                     </li>
                     <li class="nav-item">
                         <?php if (isset($_SESSION['name'])) { ?>
-                            <a href="./logout.php" class="btn btn-primary me-3">Logout</a>
+                            <a href="./logout.php" onclick="return confirm('Are you sure you want to logout?');" class="btn btn-primary me-3">Logout</a>
                         <?php } else { ?>
                             <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
                         <?php } ?>
-                    </li>
-                </ul>
+                    </li> -->
+                        <?php if (!isset($_SESSION['user_name'])): ?>
+                            <!-- Not logged in -->
+                            <li class="nav-item">
+                                <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
+                            </li>
+                        <?php else: ?>
+                            <!-- Logged in -->
+                            <li class="nav-item">
+                                <span class="btn btn-success me-3">
+                                    <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./logout.php" onclick="return confirm('Are you sure you want to logout?');" class="btn btn-danger me-3">Logout</a>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-                        </div>
+        </nav>
+    </div>
 
     <style>
         /* body {
@@ -588,7 +607,7 @@ if ($sql->rowCount() > 0) {
         </button>
         <div class="helper-menu">
             <ul>
-                <li><a href="../forms/request_sample.php">Place Orders</a></li>
+                <li><a href="../forms/place_order.php">Place Orders</a></li>
                 <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
                 <li><a href="../forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
@@ -599,7 +618,38 @@ if ($sql->rowCount() > 0) {
         </div>
     </div>
 
+    <script>
+        document.getElementById('nav-open-chat2').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
 
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+    <script>
+        document.getElementById('top-whatsapp2').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
     <script>
         document.getElementById('top-whatsapp').addEventListener('click', function() {
             let message = `How can I help You? %0A`;
@@ -616,7 +666,7 @@ if ($sql->rowCount() > 0) {
             window.open(whatsappURL, '_blank');
         });
     </script>
-     <script>
+    <script>
         // CAPTCHA functionality
         let currentCaptcha = '';
 
@@ -625,14 +675,14 @@ if ($sql->rowCount() > 0) {
             const characters = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
             let result = '';
             const length = 6; // CAPTCHA length
-            
+
             for (let i = 0; i < length; i++) {
                 result += characters.charAt(Math.floor(Math.random() * characters.length));
             }
-            
+
             currentCaptcha = result;
             document.getElementById('captchaDisplay').textContent = result;
-            
+
             // Clear input and disable submit button
             document.getElementById('captchaInput').value = '';
             document.getElementById('submitButton').disabled = true;
@@ -644,7 +694,7 @@ if ($sql->rowCount() > 0) {
             const input = document.getElementById('captchaInput').value;
             const submitButton = document.getElementById('submitButton');
             const errorElement = document.getElementById('captchaError');
-            
+
             if (input === currentCaptcha) {
                 submitButton.disabled = false;
                 errorElement.style.display = 'none';
@@ -663,11 +713,11 @@ if ($sql->rowCount() > 0) {
         // Initialize CAPTCHA
         document.addEventListener('DOMContentLoaded', function() {
             generateCaptcha();
-            
+
             // Add event listeners
             document.getElementById('refreshCaptcha').addEventListener('click', generateCaptcha);
             document.getElementById('captchaInput').addEventListener('input', validateCaptcha);
-            
+
             // Form validation
             document.getElementById('signupForm').addEventListener('submit', function(e) {
                 if (!validateCaptcha()) {
@@ -675,7 +725,7 @@ if ($sql->rowCount() > 0) {
                     document.getElementById('captchaError').style.display = 'block';
                     return;
                 }
-                
+
                 // Continue with form submission if CAPTCHA is valid
                 const form = e.target;
                 if (!form.checkValidity()) {
@@ -684,7 +734,7 @@ if ($sql->rowCount() > 0) {
                 }
             });
         });
-        </script>
+    </script>
 
     <script>
         // Toggle the helper menu

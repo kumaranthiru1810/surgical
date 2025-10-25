@@ -190,12 +190,12 @@ if ($sql->rowCount() > 0) {
             <div class="social-icons">
               <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
               <a href="<?php echo $data1['instagram']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+              <a href="#" id="nav-open-chat2" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+          <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
             <div class="contact-info text-start">
               <div>
                 <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
@@ -204,10 +204,10 @@ if ($sql->rowCount() > 0) {
               </div>
             </div>
           </div>
-          <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+          <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
             <div class="contact-info text-end">
               <div>
-                <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
+                <a href="#" id="top-whatsapp2" class="phone1 text-decoration-none text-dark">
                   <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                 </a>
               </div>
@@ -242,7 +242,7 @@ if ($sql->rowCount() > 0) {
             <a class="nav-link" href="./Management.php">Management</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="../forms/request_sample.php">Place Order</a>
+            <a class="nav-link" href="../forms/place_order.php">Place Order</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="./contact-us.php">Contact Us</a>
@@ -256,7 +256,7 @@ if ($sql->rowCount() > 0) {
           </li>
           <li class="nav-item">
             <?php if (isset($_SESSION['name'])) { ?>
-              <a href="./logout.php" class="btn btn-primary me-3">Logout</a>
+              <a href="./logout.php" onclick="return confirm('Are you sure you want to logout?');" class="btn btn-primary me-3">Logout</a>
             <?php } else { ?>
               <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
             <?php } ?>
@@ -590,7 +590,7 @@ if ($sql->rowCount() > 0) {
       </button>
       <div class="helper-menu">
         <ul>
-          <li><a href="../forms/request_sample.php">Place Orders</a></li>
+          <li><a href="../forms/place_order.php">Place Orders</a></li>
           <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
           <li><a href="../forms/request_sample.php">Request Samples</a></li>
           <li><a href="#brochure">Download Brochure</a></li>
@@ -604,6 +604,22 @@ if ($sql->rowCount() > 0) {
 
     <script>
         document.getElementById('top-whatsapp').addEventListener('click', function() {
+            let message = `How can I help You? %0A`;
+
+            const storeNumber = "919790972432"; // Your WhatsApp number
+            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+            // WhatsApp URL - fixed encoding
+            const whatsappURL = isMobile ?
+                `https://wa.me/${storeNumber}?text=${message}` :
+                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+            // Open WhatsApp in a new tab
+            window.open(whatsappURL, '_blank');
+        });
+    </script>
+    <script>
+        document.getElementById('top-whatsapp2').addEventListener('click', function() {
             let message = `How can I help You? %0A`;
 
             const storeNumber = "919790972432"; // Your WhatsApp number
@@ -654,6 +670,23 @@ if ($sql->rowCount() > 0) {
     </script>
     <script>
       document.getElementById('nav-open-chat').addEventListener('click', function() {
+
+        let message = `How can I help You? %0A`;
+
+        const storeNumber = "919790972432"; // Your WhatsApp number
+        const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+
+        // WhatsApp URL - fixed encoding
+        const whatsappURL = isMobile ?
+          `https://wa.me/${storeNumber}?text=${message}` :
+          `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+
+        // Open WhatsApp in a new tab
+        window.open(whatsappURL, '_blank');
+      });
+    </script>
+    <script>
+      document.getElementById('nav-open-chat2').addEventListener('click', function() {
 
         let message = `How can I help You? %0A`;
 
