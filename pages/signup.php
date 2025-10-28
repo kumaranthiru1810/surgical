@@ -3,6 +3,19 @@ $sql = $pdo->query("SELECT * FROM company_info WHERE id = 1");
 if ($sql->rowCount() > 0) {
     $data = $sql->fetch(PDO::FETCH_ASSOC);
 }
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../PHPmailer/vendor/phpmailer/phpmailer/src/Exception.php';
+require '../PHPmailer/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+require '../PHPmailer/vendor/phpmailer/phpmailer/src/SMTP.php';
+
+require '../PHPmailer/vendor/autoload.php';
+
+$mail = new PHPMailer(true);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -389,7 +402,7 @@ if ($sql->rowCount() > 0) {
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="./index.php">Home</a>
+                            <a class="nav-link" href="../index.php">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="../pages/about.php">About Us</a>
@@ -542,7 +555,7 @@ if ($sql->rowCount() > 0) {
                                 <!-- GST -->
                                 <div class="col-12 col-md-6">
                                     <label class="form-label">GST No (India)</label>
-                                    <input type="text" class="form-control" name="gst"
+                                    <input style="text-transform: uppercase;" type="text" class="form-control" name="gst"
                                         minlength="15" maxlength="15" pattern="[0-9A-Z]{15}">
                                     <div class="note mt-1">15 characters (letters and numbers)</div>
                                     <div class="invalid-feedback">Please enter a valid 15-character GST number.</div>
@@ -550,7 +563,7 @@ if ($sql->rowCount() > 0) {
 
                                 <!-- Licence -->
                                 <div class="col-12 col-md-6">
-                                    <label class="form-label">Drug/Manufacturing Licence</label>
+                                    <label class="form-label">Drug/Manufacturing Licence/IE Code</label>
                                     <input type="text" class="form-control" name="drug" pattern="[A-Za-z0-9\-\/ ]+">
                                     <div class="invalid-feedback">Please enter a valid licence number.</div>
                                 </div>
@@ -688,6 +701,82 @@ if ($sql->rowCount() > 0) {
         $state = trim($_POST['state']);
         $district = trim($_POST['district']);
 
+
+        try {
+            // Server settings
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'thirukumaran18102006@gmail.com'; // Replace with your company email
+            $mail->Password = 'sqdi hluc nhsg sben'; // Replace with your app password
+            $mail->SMTPSecure = 'tls';
+            $mail->Port = 587;
+
+            // Recipients
+            $mail->setFrom('thirukumaran18102006@gmail.com', 'Bharathi Surgicals');
+            $mail->addAddress('thirukumaran18102006@gmail.com'); // Replace with your order email
+            $mail->addReplyTo($email, $name);
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = "New User Registration from $name";
+            
+            // Build email body with all product details
+            $mail->Body = "
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+                        .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+                        .header { background: #007BFF; color: white; padding: 20px; text-align: center; border-radius: 5px 5px 0 0; }
+                        .content { background: #f9f9f9; padding: 20px; border-radius: 0 0 5px 5px; }
+                        .section { margin-bottom: 20px; padding: 15px; background: white; border-radius: 5px; border-left: 4px solid #007BFF; }
+                        .product-table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+                        .product-table th { background: #007BFF; color: white; padding: 12px; text-align: left; }
+                        .product-table td { padding: 12px; border-bottom: 1px solid #ddd; }
+                        .product-table tr:nth-child(even) { background: #f2f2f2; }
+                        .specs-list { margin: 5px 0; padding-left: 20px; }
+                        .specs-list li { margin-bottom: 3px; }
+                    </style>
+                </head>
+                <body>
+                    <div class='container'>
+                        <div class='header'>
+                            <h1>New Product Order Received</h1>
+                            <p>Order Date: " . date('Y-m-d H:i:s') . "</p>
+                        </div>
+                        
+                        <div class='content'>
+                            <div class='section'>
+                                <h2>Customer Details</h2>
+                                <table style='width: 100%;'>
+                                    <tr><td><strong>Firm Name:</strong></td><td>$firm</td></tr>
+                                    <tr><td><strong>Email:</strong></td><td>$email</td></tr>
+                                    <tr><td><strong>Phone:</strong></td><td>$mobile_cc.$mobile</td></tr>
+                                    <tr><td><strong>WhatsApp:</strong></td><td>$whatsapp_cc.$whatsapp</td></tr>
+                                    <tr><td><strong>Address:</strong></td><td>$address</td></tr>
+                                    <tr><td><strong>City:</strong></td><td>$city</td></tr>
+                                    <tr><td><strong>Country:</strong></td><td>$country</td></tr>
+                                    <tr><td><strong>PinCode:</strong></td><td>$pin</td></tr>
+                                    <tr><td><strong>GST No:</strong></td><td>$gst</td></tr>
+                                    <tr><td><strong>Drug License No:</strong></td><td>$drug</td></tr>
+                                    <tr><td><strong>State:</strong></td><td>$state</td></tr>
+                                    <tr><td><strong>District:</strong></td><td>$district</td></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            ";
+             $mail->send();
+
+        } catch (Exception $e) {
+            // Handle email sending error
+            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+        }
+
         // Hash the password for security
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -726,6 +815,8 @@ if ($sql->rowCount() > 0) {
         $stmt->bindParam(':pin', $pin);
         $stmt->bindParam(':state', $state);
         $stmt->bindParam(':district', $district);
+
+        
 
         // Execute the query
         if ($stmt->execute()) {

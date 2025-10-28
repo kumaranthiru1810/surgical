@@ -350,6 +350,12 @@ if ($sql1->rowCount() > 0) {
                 width: 100%;
             }
         }
+        .another-btn{
+            display: none;
+        }
+        input{
+            border: 1px solid #000;
+        }
     </style>
 </head>
 
@@ -474,8 +480,7 @@ if ($sql1->rowCount() > 0) {
     <?php
     $products = [
         'Absorbent Gauze',
-        'FII Gauze',
-        'Bandage Cloth FII',
+        'Bandage Cloth', 
         'Gauze Swabs',
         'Roller Bandage',
         'Jumbo Roll Starched',
@@ -499,8 +504,8 @@ if ($sql1->rowCount() > 0) {
     <div class="container place_order">
         <div class="row mb-3">
             <div class="col-12 text-center page-header">
-                <h3><i class="bi bi-cart-check me-2"></i> Place Order</h3>
-                <p class="lead mb-0">Fill out the form below to place an order for our products</p>
+                <h3><i class="bi bi-cart-check me-2"></i> GET QUOTE</h3>
+                <p class="lead mb-0">Fill out the form below to get a quote for our products</p>
             </div>
         </div>
 
@@ -585,13 +590,14 @@ if ($sql1->rowCount() > 0) {
                                             <!-- Quantity -->
                                             <div class="col-md-12 mb-3">
                                                 <label class="form-label required-field">Quantity</label>
-                                                <input type="number" class="form-control product-quantity" name="productQuantity[]" placeholder="Enter quantity" min="1" required>
+                                                <input type="number" class="form-control product-quantity" name="productQuantity[]" placeholder="Enter quantity" onkeyup="disbtn()" min="1" required>
+                                                <div class="note mt-1"><small> Quantity must fill</small></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-12 text-center mt-3 mb-3">
+                                <div class="col-12 text-center mt-3 mb-3 another-btn">
                                     <button type="button" id="addProductBtn" class="btn btn-success btn-sm">
                                         <i class="bi bi-plus-circle me-2"></i>Add Another Product
                                     </button>
@@ -615,7 +621,7 @@ if ($sql1->rowCount() > 0) {
                                     </div>
 
                                     <div class="col-md-4 mb-3">
-                                        <label for="drugLicense" class="form-label required-field">Drug License</label>
+                                        <label for="drugLicense" class="form-label required-field">Drug License / Manufacturing License / IE Code</label>
                                         <div class="file-upload">
                                             <label for="drugLicense" class="file-upload-label">
                                                 <i class="bi bi-upload me-2"></i>Choose File
@@ -633,7 +639,7 @@ if ($sql1->rowCount() > 0) {
                                     <label class="form-label">Enter the text shown below <span class="text-danger">*</span></label>
                                     <div class="captcha-display" id="captchaDisplay"></div>
                                     <div class="captcha-controls">
-                                        <input type="text" class="form-control captcha-input" id="captchaInput" placeholder="Type the characters above" required>
+                                        <input type="text" class="form-control captcha-input" id="captchaInput" placeholder="Type the characters above" style="border:1px solid #000" required>
                                         <button type="button" class="captcha-refresh" id="refreshCaptcha" title="Refresh CAPTCHA">
                                             <i class="bi bi-arrow-clockwise"></i>
                                         </button>
@@ -644,7 +650,7 @@ if ($sql1->rowCount() > 0) {
 
                             <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-primary btn-md submit-btn comp-btn" id="submitButton" disabled>
-                                    <i class="bi bi-cart-check-fill me-2"></i>Place Order
+                                    <i class="bi bi-cart-check-fill me-2"></i>GET QUOTE
                                 </button>
                             </div>
                         </div>
@@ -891,949 +897,13 @@ if ($sql1->rowCount() > 0) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // const countries = [
-        //     "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
-        //     "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin",
-        //     "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
-        //     "Cambodia", "Cameroon", "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia",
-        //     "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica",
-        //     "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini",
-        //     "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada",
-        //     "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia",
-        //     "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait",
-        //     "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
-        //     "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico",
-        //     "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru",
-        //     "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway",
-        //     "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
-        //     "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent", "Samoa", "San Marino",
-        //     "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands",
-        //     "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland",
-        //     "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey",
-        //     "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay",
-        //     "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-        // ];
-
-        // const countrySel = document.getElementById("country");
-        // countries.forEach(c => {
-        //     let opt = new Option(c, c, c === "India", c === "India");
-        //     countrySel.add(opt);
-        // });
-
-
-        // const countryCodes = [{
-        //         code: "+93",
-        //         country: "Afghanistan"
-        //     },
-        //     {
-        //         code: "+355",
-        //         country: "Albania"
-        //     },
-        //     {
-        //         code: "+213",
-        //         country: "Algeria"
-        //     },
-        //     {
-        //         code: "+376",
-        //         country: "Andorra"
-        //     },
-        //     {
-        //         code: "+244",
-        //         country: "Angola"
-        //     },
-        //     {
-        //         code: "+1-264",
-        //         country: "Anguilla"
-        //     },
-        //     {
-        //         code: "+1-268",
-        //         country: "Antigua and Barbuda"
-        //     },
-        //     {
-        //         code: "+54",
-        //         country: "Argentina"
-        //     },
-        //     {
-        //         code: "+374",
-        //         country: "Armenia"
-        //     },
-        //     {
-        //         code: "+297",
-        //         country: "Aruba"
-        //     },
-        //     {
-        //         code: "+61",
-        //         country: "Australia"
-        //     },
-        //     {
-        //         code: "+43",
-        //         country: "Austria"
-        //     },
-        //     {
-        //         code: "+994",
-        //         country: "Azerbaijan"
-        //     },
-        //     {
-        //         code: "+1-242",
-        //         country: "Bahamas"
-        //     },
-        //     {
-        //         code: "+973",
-        //         country: "Bahrain"
-        //     },
-        //     {
-        //         code: "+880",
-        //         country: "Bangladesh"
-        //     },
-        //     {
-        //         code: "+1-246",
-        //         country: "Barbados"
-        //     },
-        //     {
-        //         code: "+375",
-        //         country: "Belarus"
-        //     },
-        //     {
-        //         code: "+32",
-        //         country: "Belgium"
-        //     },
-        //     {
-        //         code: "+501",
-        //         country: "Belize"
-        //     },
-        //     {
-        //         code: "+229",
-        //         country: "Benin"
-        //     },
-        //     {
-        //         code: "+1-441",
-        //         country: "Bermuda"
-        //     },
-        //     {
-        //         code: "+975",
-        //         country: "Bhutan"
-        //     },
-        //     {
-        //         code: "+591",
-        //         country: "Bolivia"
-        //     },
-        //     {
-        //         code: "+387",
-        //         country: "Bosnia and Herzegovina"
-        //     },
-        //     {
-        //         code: "+267",
-        //         country: "Botswana"
-        //     },
-        //     {
-        //         code: "+55",
-        //         country: "Brazil"
-        //     },
-        //     {
-        //         code: "+246",
-        //         country: "British Indian Ocean Territory"
-        //     },
-        //     {
-        //         code: "+1-284",
-        //         country: "British Virgin Islands"
-        //     },
-        //     {
-        //         code: "+673",
-        //         country: "Brunei"
-        //     },
-        //     {
-        //         code: "+359",
-        //         country: "Bulgaria"
-        //     },
-        //     {
-        //         code: "+226",
-        //         country: "Burkina Faso"
-        //     },
-        //     {
-        //         code: "+257",
-        //         country: "Burundi"
-        //     },
-        //     {
-        //         code: "+855",
-        //         country: "Cambodia"
-        //     },
-        //     {
-        //         code: "+237",
-        //         country: "Cameroon"
-        //     },
-        //     {
-        //         code: "+1-345",
-        //         country: "Cayman Islands"
-        //     },
-        //     {
-        //         code: "+236",
-        //         country: "Central African Republic"
-        //     },
-        //     {
-        //         code: "+56",
-        //         country: "Chile"
-        //     },
-        //     {
-        //         code: "+86",
-        //         country: "China"
-        //     },
-        //     {
-        //         code: "+61",
-        //         country: "Christmas Island"
-        //     },
-        //     {
-        //         code: "+61",
-        //         country: "Cocos (Keeling) Islands"
-        //     },
-        //     {
-        //         code: "+57",
-        //         country: "Colombia"
-        //     },
-        //     {
-        //         code: "+269",
-        //         country: "Comoros"
-        //     },
-        //     {
-        //         code: "+242",
-        //         country: "Congo (Republic)"
-        //     },
-        //     {
-        //         code: "+243",
-        //         country: "Congo (Democratic Republic)"
-        //     },
-        //     {
-        //         code: "+682",
-        //         country: "Cook Islands"
-        //     },
-        //     {
-        //         code: "+506",
-        //         country: "Costa Rica"
-        //     },
-        //     {
-        //         code: "+225",
-        //         country: "Côte d'Ivoire"
-        //     },
-        //     {
-        //         code: "+385",
-        //         country: "Croatia"
-        //     },
-        //     {
-        //         code: "+53",
-        //         country: "Cuba"
-        //     },
-        //     {
-        //         code: "+599",
-        //         country: "Curaçao"
-        //     },
-        //     {
-        //         code: "+357",
-        //         country: "Cyprus"
-        //     },
-        //     {
-        //         code: "+420",
-        //         country: "Czech Republic"
-        //     },
-        //     {
-        //         code: "+45",
-        //         country: "Denmark"
-        //     },
-        //     {
-        //         code: "+253",
-        //         country: "Djibouti"
-        //     },
-        //     {
-        //         code: "+1-767",
-        //         country: "Dominica"
-        //     },
-        //     {
-        //         code: "+1-809",
-        //         country: "Dominican Republic"
-        //     },
-        //     {
-        //         code: "+670",
-        //         country: "East Timor"
-        //     },
-        //     {
-        //         code: "+593",
-        //         country: "Ecuador"
-        //     },
-        //     {
-        //         code: "+20",
-        //         country: "Egypt"
-        //     },
-        //     {
-        //         code: "+503",
-        //         country: "El Salvador"
-        //     },
-        //     {
-        //         code: "+240",
-        //         country: "Equatorial Guinea"
-        //     },
-        //     {
-        //         code: "+291",
-        //         country: "Eritrea"
-        //     },
-        //     {
-        //         code: "+372",
-        //         country: "Estonia"
-        //     },
-        //     {
-        //         code: "+251",
-        //         country: "Ethiopia"
-        //     },
-        //     {
-        //         code: "+500",
-        //         country: "Falkland Islands"
-        //     },
-        //     {
-        //         code: "+298",
-        //         country: "Faroe Islands"
-        //     },
-        //     {
-        //         code: "+679",
-        //         country: "Fiji"
-        //     },
-        //     {
-        //         code: "+358",
-        //         country: "Finland"
-        //     },
-        //     {
-        //         code: "+33",
-        //         country: "France"
-        //     },
-        //     {
-        //         code: "+594",
-        //         country: "French Guiana"
-        //     },
-        //     {
-        //         code: "+689",
-        //         country: "French Polynesia"
-        //     },
-        //     {
-        //         code: "+241",
-        //         country: "Gabon"
-        //     },
-        //     {
-        //         code: "+220",
-        //         country: "Gambia"
-        //     },
-        //     {
-        //         code: "+995",
-        //         country: "Georgia"
-        //     },
-        //     {
-        //         code: "+49",
-        //         country: "Germany"
-        //     },
-        //     {
-        //         code: "+233",
-        //         country: "Ghana"
-        //     },
-        //     {
-        //         code: "+350",
-        //         country: "Gibraltar"
-        //     },
-        //     {
-        //         code: "+30",
-        //         country: "Greece"
-        //     },
-        //     {
-        //         code: "+299",
-        //         country: "Greenland"
-        //     },
-        //     {
-        //         code: "+1-473",
-        //         country: "Grenada"
-        //     },
-        //     {
-        //         code: "+1-671",
-        //         country: "Guam"
-        //     },
-        //     {
-        //         code: "+502",
-        //         country: "Guatemala"
-        //     },
-        //     {
-        //         code: "+224",
-        //         country: "Guinea"
-        //     },
-        //     {
-        //         code: "+245",
-        //         country: "Guinea-Bissau"
-        //     },
-        //     {
-        //         code: "+595",
-        //         country: "Guyana"
-        //     },
-        //     {
-        //         code: "+509",
-        //         country: "Haiti"
-        //     },
-        //     {
-        //         code: "+504",
-        //         country: "Honduras"
-        //     },
-        //     {
-        //         code: "+852",
-        //         country: "Hong Kong"
-        //     },
-        //     {
-        //         code: "+36",
-        //         country: "Hungary"
-        //     },
-        //     {
-        //         code: "+354",
-        //         country: "Iceland"
-        //     },
-        //     {
-        //         code: "+91",
-        //         country: "India"
-        //     },
-        //     {
-        //         code: "+62",
-        //         country: "Indonesia"
-        //     },
-        //     {
-        //         code: "+98",
-        //         country: "Iran"
-        //     },
-        //     {
-        //         code: "+964",
-        //         country: "Iraq"
-        //     },
-        //     {
-        //         code: "+353",
-        //         country: "Ireland"
-        //     },
-        //     {
-        //         code: "+972",
-        //         country: "Israel"
-        //     },
-        //     {
-        //         code: "+39",
-        //         country: "Italy"
-        //     },
-        //     {
-        //         code: "+1-876",
-        //         country: "Jamaica"
-        //     },
-        //     {
-        //         code: "+81",
-        //         country: "Japan"
-        //     },
-        //     {
-        //         code: "+962",
-        //         country: "Jordan"
-        //     },
-        //     {
-        //         code: "+7",
-        //         country: "Kazakhstan"
-        //     },
-        //     {
-        //         code: "+254",
-        //         country: "Kenya"
-        //     },
-        //     {
-        //         code: "+686",
-        //         country: "Kiribati"
-        //     },
-        //     {
-        //         code: "+965",
-        //         country: "Kuwait"
-        //     },
-        //     {
-        //         code: "+996",
-        //         country: "Kyrgyzstan"
-        //     },
-        //     {
-        //         code: "+856",
-        //         country: "Laos"
-        //     },
-        //     {
-        //         code: "+371",
-        //         country: "Latvia"
-        //     },
-        //     {
-        //         code: "+961",
-        //         country: "Lebanon"
-        //     },
-        //     {
-        //         code: "+266",
-        //         country: "Lesotho"
-        //     },
-        //     {
-        //         code: "+231",
-        //         country: "Liberia"
-        //     },
-        //     {
-        //         code: "+218",
-        //         country: "Libya"
-        //     },
-        //     {
-        //         code: "+423",
-        //         country: "Liechtenstein"
-        //     },
-        //     {
-        //         code: "+370",
-        //         country: "Lithuania"
-        //     },
-        //     {
-        //         code: "+352",
-        //         country: "Luxembourg"
-        //     },
-        //     {
-        //         code: "+853",
-        //         country: "Macau"
-        //     },
-        //     {
-        //         code: "+261",
-        //         country: "Madagascar"
-        //     },
-        //     {
-        //         code: "+265",
-        //         country: "Malawi"
-        //     },
-        //     {
-        //         code: "+60",
-        //         country: "Malaysia"
-        //     },
-        //     {
-        //         code: "+960",
-        //         country: "Maldives"
-        //     },
-        //     {
-        //         code: "+223",
-        //         country: "Mali"
-        //     },
-        //     {
-        //         code: "+356",
-        //         country: "Malta"
-        //     },
-        //     {
-        //         code: "+692",
-        //         country: "Marshall Islands"
-        //     },
-        //     {
-        //         code: "+596",
-        //         country: "Martinique"
-        //     },
-        //     {
-        //         code: "+222",
-        //         country: "Mauritania"
-        //     },
-        //     {
-        //         code: "+230",
-        //         country: "Mauritius"
-        //     },
-        //     {
-        //         code: "+262",
-        //         country: "Mayotte"
-        //     },
-        //     {
-        //         code: "+52",
-        //         country: "Mexico"
-        //     },
-        //     {
-        //         code: "+691",
-        //         country: "Micronesia"
-        //     },
-        //     {
-        //         code: "+373",
-        //         country: "Moldova"
-        //     },
-        //     {
-        //         code: "+377",
-        //         country: "Monaco"
-        //     },
-        //     {
-        //         code: "+976",
-        //         country: "Mongolia"
-        //     },
-        //     {
-        //         code: "+382",
-        //         country: "Montenegro"
-        //     },
-        //     {
-        //         code: "+1-664",
-        //         country: "Montserrat"
-        //     },
-        //     {
-        //         code: "+212",
-        //         country: "Morocco"
-        //     },
-        //     {
-        //         code: "+258",
-        //         country: "Mozambique"
-        //     },
-        //     {
-        //         code: "+95",
-        //         country: "Myanmar"
-        //     },
-        //     {
-        //         code: "+264",
-        //         country: "Namibia"
-        //     },
-        //     {
-        //         code: "+674",
-        //         country: "Nauru"
-        //     },
-        //     {
-        //         code: "+977",
-        //         country: "Nepal"
-        //     },
-        //     {
-        //         code: "+31",
-        //         country: "Netherlands"
-        //     },
-        //     {
-        //         code: "+687",
-        //         country: "New Caledonia"
-        //     },
-        //     {
-        //         code: "+64",
-        //         country: "New Zealand"
-        //     },
-        //     {
-        //         code: "+505",
-        //         country: "Nicaragua"
-        //     },
-        //     {
-        //         code: "+227",
-        //         country: "Niger"
-        //     },
-        //     {
-        //         code: "+234",
-        //         country: "Nigeria"
-        //     },
-        //     {
-        //         code: "+683",
-        //         country: "Niue"
-        //     },
-        //     {
-        //         code: "+672",
-        //         country: "Norfolk Island"
-        //     },
-        //     {
-        //         code: "+850",
-        //         country: "North Korea"
-        //     },
-        //     {
-        //         code: "+1-670",
-        //         country: "Northern Mariana Islands"
-        //     },
-        //     {
-        //         code: "+47",
-        //         country: "Norway"
-        //     },
-        //     {
-        //         code: "+968",
-        //         country: "Oman"
-        //     },
-        //     {
-        //         code: "+92",
-        //         country: "Pakistan"
-        //     },
-        //     {
-        //         code: "+680",
-        //         country: "Palau"
-        //     },
-        //     {
-        //         code: "+970",
-        //         country: "Palestine"
-        //     },
-        //     {
-        //         code: "+507",
-        //         country: "Panama"
-        //     },
-        //     {
-        //         code: "+675",
-        //         country: "Papua New Guinea"
-        //     },
-        //     {
-        //         code: "+595",
-        //         country: "Paraguay"
-        //     },
-        //     {
-        //         code: "+51",
-        //         country: "Peru"
-        //     },
-        //     {
-        //         code: "+63",
-        //         country: "Philippines"
-        //     },
-        //     {
-        //         code: "+48",
-        //         country: "Poland"
-        //     },
-        //     {
-        //         code: "+351",
-        //         country: "Portugal"
-        //     },
-        //     {
-        //         code: "+1-787",
-        //         country: "Puerto Rico"
-        //     },
-        //     {
-        //         code: "+974",
-        //         country: "Qatar"
-        //     },
-        //     {
-        //         code: "+262",
-        //         country: "Réunion"
-        //     },
-        //     {
-        //         code: "+40",
-        //         country: "Romania"
-        //     },
-        //     {
-        //         code: "+7",
-        //         country: "Russia"
-        //     },
-        //     {
-        //         code: "+250",
-        //         country: "Rwanda"
-        //     },
-        //     {
-        //         code: "+590",
-        //         country: "Saint Barthélemy"
-        //     },
-        //     {
-        //         code: "+1-869",
-        //         country: "Saint Kitts and Nevis"
-        //     },
-        //     {
-        //         code: "+1-758",
-        //         country: "Saint Lucia"
-        //     },
-        //     {
-        //         code: "+590",
-        //         country: "Saint Martin"
-        //     },
-        //     {
-        //         code: "+1-721",
-        //         country: "Sint Maarten"
-        //     },
-        //     {
-        //         code: "+685",
-        //         country: "Samoa"
-        //     },
-        //     {
-        //         code: "+378",
-        //         country: "San Marino"
-        //     },
-        //     {
-        //         code: "+239",
-        //         country: "São Tomé and Príncipe"
-        //     },
-        //     {
-        //         code: "+966",
-        //         country: "Saudi Arabia"
-        //     },
-        //     {
-        //         code: "+221",
-        //         country: "Senegal"
-        //     },
-        //     {
-        //         code: "+381",
-        //         country: "Serbia"
-        //     },
-        //     {
-        //         code: "+248",
-        //         country: "Seychelles"
-        //     },
-        //     {
-        //         code: "+232",
-        //         country: "Sierra Leone"
-        //     },
-        //     {
-        //         code: "+65",
-        //         country: "Singapore"
-        //     },
-        //     {
-        //         code: "+421",
-        //         country: "Slovakia"
-        //     },
-        //     {
-        //         code: "+386",
-        //         country: "Slovenia"
-        //     },
-        //     {
-        //         code: "+677",
-        //         country: "Solomon Islands"
-        //     },
-        //     {
-        //         code: "+252",
-        //         country: "Somalia"
-        //     },
-        //     {
-        //         code: "+27",
-        //         country: "South Africa"
-        //     },
-        //     {
-        //         code: "+82",
-        //         country: "South Korea"
-        //     },
-        //     {
-        //         code: "+211",
-        //         country: "South Sudan"
-        //     },
-        //     {
-        //         code: "+34",
-        //         country: "Spain"
-        //     },
-        //     {
-        //         code: "+94",
-        //         country: "Sri Lanka"
-        //     },
-        //     {
-        //         code: "+249",
-        //         country: "Sudan"
-        //     },
-        //     {
-        //         code: "+597",
-        //         country: "Suriname"
-        //     },
-        //     {
-        //         code: "+268",
-        //         country: "Eswatini"
-        //     },
-        //     {
-        //         code: "+46",
-        //         country: "Sweden"
-        //     },
-        //     {
-        //         code: "+41",
-        //         country: "Switzerland"
-        //     },
-        //     {
-        //         code: "+963",
-        //         country: "Syria"
-        //     },
-        //     {
-        //         code: "+886",
-        //         country: "Taiwan"
-        //     },
-        //     {
-        //         code: "+992",
-        //         country: "Tajikistan"
-        //     },
-        //     {
-        //         code: "+255",
-        //         country: "Tanzania"
-        //     },
-        //     {
-        //         code: "+66",
-        //         country: "Thailand"
-        //     },
-        //     {
-        //         code: "+670",
-        //         country: "Timor-Leste"
-        //     },
-        //     {
-        //         code: "+228",
-        //         country: "Togo"
-        //     },
-        //     {
-        //         code: "+690",
-        //         country: "Tokelau"
-        //     },
-        //     {
-        //         code: "+676",
-        //         country: "Tonga"
-        //     },
-        //     {
-        //         code: "+1-868",
-        //         country: "Trinidad and Tobago"
-        //     },
-        //     {
-        //         code: "+216",
-        //         country: "Tunisia"
-        //     },
-        //     {
-        //         code: "+90",
-        //         country: "Turkey"
-        //     },
-        //     {
-        //         code: "+993",
-        //         country: "Turkmenistan"
-        //     },
-        //     {
-        //         code: "+1-649",
-        //         country: "Turks and Caicos Islands"
-        //     },
-        //     {
-        //         code: "+688",
-        //         country: "Tuvalu"
-        //     },
-        //     {
-        //         code: "+256",
-        //         country: "Uganda"
-        //     },
-        //     {
-        //         code: "+380",
-        //         country: "Ukraine"
-        //     },
-        //     {
-        //         code: "+971",
-        //         country: "United Arab Emirates"
-        //     },
-        //     {
-        //         code: "+44",
-        //         country: "United Kingdom"
-        //     },
-        //     {
-        //         code: "+1",
-        //         country: "United States"
-        //     },
-        //     {
-        //         code: "+598",
-        //         country: "Uruguay"
-        //     },
-        //     {
-        //         code: "+998",
-        //         country: "Uzbekistan"
-        //     },
-        //     {
-        //         code: "+678",
-        //         country: "Vanuatu"
-        //     },
-        //     {
-        //         code: "+379",
-        //         country: "Vatican City"
-        //     },
-        //     {
-        //         code: "+58",
-        //         country: "Venezuela"
-        //     },
-        //     {
-        //         code: "+84",
-        //         country: "Vietnam"
-        //     },
-        //     {
-        //         code: "+681",
-        //         country: "Wallis and Futuna"
-        //     },
-        //     {
-        //         code: "+967",
-        //         country: "Yemen"
-        //     },
-        //     {
-        //         code: "+260",
-        //         country: "Zambia"
-        //     },
-        //     {
-        //         code: "+263",
-        //         country: "Zimbabwe"
-        //     }
-        // ];
-
-        // const mobileCC = document.getElementById("mobile_cc");
-        // // const whatsappCC = document.getElementById("whatsapp_cc");
-        // countryCodes.forEach(c => {
-        //     mobileCC.add(new Option(`${c.country} (${c.code})`, c.code, c.code === "+91", c.code === "+91"));
-        //     // whatsappCC.add(new Option(`${c.country} (${c.code})`, c.code, c.code === "+91", c.code === "+91"));
-        // });
-
+        function disbtn(){
+            document.querySelectorAll('.another-btn').forEach(btn => {
+                btn.style.display = 'block';
+            });
+        }
+    </script>
+    <script>
         // Product configuration data
         const productConfig = {
             "Absorbent Gauze": {
@@ -1944,30 +1014,26 @@ if ($sql1->rowCount() > 0) {
                                 "120 CM X 10 Yards",
                                 "120 CM X 18 Meters",
                                 "120 CM X 20 Meters",
-                                "120 CM X 20 Yards", , "Custom Size"
+                                "120 CM X 20 Yards", "Custom Size"
                             ],
-                            "FII Gauze": ["Standard Sizes", "Custom Size"],
+                            "FII Gauze": ["100 CM X 10 M", "100 CM X 20 M", "90 CM X 10 M", "90 CM X 20 M", "Custom Size"],
                             "Custom TPI": ["Custom Size"]
                         },
                         required: true
                     }
                 ]
             },
-            "FII Gauze": {
+            "Bandage Cloth" : {
                 fields: [{
-                    name: "size",
+                    name : "size",
                     label: "Size",
                     type: "select",
-                    options: ["100 CM X 10 M", "100 CM X 20 M", "90 CM X 10 M", "90 CM X 20 M", "Custom Size"],
-                    required: true
-                }]
-            },
-            "Bandage Cloth FII": {
-                fields: [{
-                    name: "size",
-                    label: "Size",
-                    type: "select",
-                    options: ["100 CM X 10 Meter", "100 CM X 20 Meter", "90 CM X 10 Meter", "90 CM X 20 Meter", "Custom Size"],
+                    options: ["100 CM X 10 Meter",
+                              "100 CM X 20 Meter",
+                              "90 CM X 10 Meter",
+                              "90 CM X 20 Meter",
+                              "Custom Size"
+                    ],
                     required: true
                 }]
             },
@@ -1977,6 +1043,56 @@ if ($sql1->rowCount() > 0) {
                         label: "Quality",
                         type: "select",
                         options: ["Type-13", "Type-17"],
+                        required: true
+                    },
+                    {
+                        name: "folding",
+                        label: "Folding Type",
+                        type: "select",
+                        options: ["French", "American"],
+                        required: true
+                    },
+                    {
+                        name: "size",
+                        label: "Size",
+                        type: "select",
+                        options: [],
+                        dynamicOptions: {
+                            dependsOn: ["quality", "folding"],
+                            values: {
+                                "Type-13_French": [
+                                    "10 CM  X 10 CM X 8 PLY PLAIN",
+                                    "7.5 CM  X 7.5 CM X 8 PLY PLAIN",
+                                    "5 CM  X 5 CM X 8 PLY PLAIN",
+                                    "10 CM  X 10 CM X 12 PLY PLAIN",
+                                    "7.5 CM  X 7.5 CM X 12 PLY PLAIN",
+                                    "5 CM  X 5 CM X 12 PLY PLAIN",
+                                    "10 CM  X 10 CM X 16 PLY PLAIN",
+                                    "7.5 CM  X 7.5 CM X 16 PLY PLAIN",
+                                    "5 CM  X 5 CM X 16 PLY PLAIN"
+                                ],
+                                "Type-17_French": [
+                                    "10 CM  X 10 CM X 8 PLY PLAIN",
+                                    "7.5 CM  X 7.5 CM X 8 PLY PLAIN",
+                                    "5 CM  X 5 CM X 8 PLY PLAIN",
+                                    "10 CM  X 10 CM X 12 PLY PLAIN",
+                                    "7.5 CM  X 7.5 CM X 12 PLY PLAIN",
+                                    "5 CM  X 5 CM X 12 PLY PLAIN",
+                                    "10 CM  X 10 CM X 16 PLY PLAIN",
+                                    "7.5 CM  X 7.5 CM X 16 PLY PLAIN",
+                                    "5 CM  X 5 CM X 16 PLY PLAIN",
+                                    "10 CM  X 10 CM X 12 PLY X-RAY",
+                                    "7.5 CM  X 7.5 CM X 12 PLY X-RAY"
+                                ],
+                                "Type-17_American": [
+                                    "10 CM X 10 CM X 12 PLY PLAIN",
+                                    "7.5 CM X 7.5 CM X 12 PLY PLAIN",
+                                    "5 CM X 5 CM X 12 PLY PLAIN",
+                                    "10 CM X 10 CM X 12 PLY X-RAY",
+                                    "7.5 CM X 7.5 CM X 12 PLY X-RAY"
+                                ]
+                            }
+                        },
                         required: true
                     },
                     {
@@ -1995,39 +1111,7 @@ if ($sql1->rowCount() > 0) {
                         showIf: {
                             field: "sterility",
                             value: "Sterile"
-                        }
-                    },
-                    {
-                        name: "size",
-                        label: "Size",
-                        type: "select",
-                        options: [
-                            "10 CM  X 10 CM X 8 PLY PLAIN French Folding",
-                            "7.5 CM  X 7.5 CM X 8 PLY PLAIN French Folding",
-                            "5 CM  X 5 CM X 8 PLY PLAIN French Folding",
-                            "10 CM  X 10 CM X 12 PLY PLAIN French Folding",
-                            "7.5 CM  X 7.5 CM X 12 PLY PLAIN French Folding",
-                            "5 CM  X 5 CM X 12 PLY PLAIN French Folding",
-                            "10 CM  X 10 CM X 16 PLY PLAIN French Folding",
-                            "7.5 CM  X 7.5 CM X 16 PLY PLAIN French Folding",
-                            "5 CM  X 5 CM X 16 PLY PLAIN French Folding",
-                            "10 CM  X 10 CM X 8 PLY PLAIN French Folding",
-                            "7.5 CM  X 7.5 CM X 8 PLY PLAIN French Folding",
-                            "5 CM  X 5 CM X 8 PLY PLAIN French Folding",
-                            "10 CM  X 10 CM X 12 PLY PLAIN French Folding",
-                            "7.5 CM  X 7.5 CM X 12 PLY PLAIN French Folding",
-                            "5 CM  X 5 CM X 12 PLY PLAIN French Folding",
-                            "10 CM  X 10 CM X 16 PLY PLAIN French Folding",
-                            "7.5 CM  X 7.5 CM X 16 PLY PLAIN French Folding",
-                            "5 CM  X 5 CM X 16 PLY PLAIN French Folding",
-                            "10 CM  X 10 CM X 12 PLY X-RAY French Folding",
-                            "7.5 CM  X 7.5 CM X 12 PLY X-RAY French Folding",
-                            "10 CM X 10 CM X 12 PLY PLAIN American Folding",
-                            "7.5 CM X 7.5 CM X 12 PLY PLAIN American Folding",
-                            "5 CM X 5 CM X 12 PLY PLAIN American Folding",
-                            "10 CM X 10 CM X 12 PLY X-RAY American Folding",
-                            "7.5 CM X 7.5 CM X 12 PLY X-RAY American Folding"
-                        ],
+                        },
                         required: true
                     }
                 ]
@@ -2250,6 +1334,13 @@ if ($sql1->rowCount() > 0) {
                         required: true
                     },
                     {
+                        name: "x-ray",
+                        label: "X-Ray Detectable",
+                        type: "select",
+                        options: ["Yes", "No"],
+                        required: true
+                    },
+                    {
                         name: "sterility",
                         label: "Sterility",
                         type: "select",
@@ -2299,7 +1390,7 @@ if ($sql1->rowCount() > 0) {
             "Cotton Balls": {
                 fields: [{
                     name: "size",
-                    label: "Width",
+                    label: "Weight",
                     type: "select",
                     options: ["½ Gram", "1 Gram"],
                     required: true
@@ -2308,7 +1399,7 @@ if ($sql1->rowCount() > 0) {
             "Gauze Balls": {
                 fields: [{
                     name: "size",
-                    label: "Width",
+                    label: "Weight",
                     type: "select",
                     options: ["½ Gram", "1 Gram"],
                     required: true
@@ -2336,16 +1427,16 @@ if ($sql1->rowCount() > 0) {
                     name: "weight",
                     label: "Weight",
                     type: "select",
-                    options: ["300 Gross", "400 Net"],
+                    options: ["300 Net / 400 Gross"],
                     required: true
                 }]
             },
             "Pre-Operative Kit": {
                 fields: [{
-                    name: "size",
-                    label: "Size",
+                    name: "contents",
+                    label: "Contents",
                     type: "select",
-                    options: ["XL"],
+                    options: ["1 Pair Leggin / 1 Piece Bouffant Cap / 1 Piece Patient Gown", "Custom Contents"],
                     required: true
                 }]
             },
@@ -2371,7 +1462,7 @@ if ($sql1->rowCount() > 0) {
                     name: "size",
                     label: "Size",
                     type: "select",
-                    options: ["210 CM X 160 CM", "75 CM X 55 CM", "Custom Size"],
+                    options: ["210 CM X 160 CM & 75 CM X 55 CM", "Custom Size"],
                     required: true
                 }]
             },
@@ -2386,6 +1477,8 @@ if ($sql1->rowCount() > 0) {
                 }]
             }
         };
+        </script>
+        <script>
 
         // Update product fields based on selection
         function updateProductFields(selectElement) {
@@ -2431,7 +1524,6 @@ if ($sql1->rowCount() > 0) {
                 addFieldEventListeners(productRow, productName);
             }
         }
-
         // Create HTML for a field
         function createFieldHtml(field, productName) {
             let html = '';
@@ -2446,9 +1538,9 @@ if ($sql1->rowCount() > 0) {
                 html += `<option value="" selected disabled>Select ${field.label}</option>`;
 
                 // For Absorbent Gauze size field, show a default message
-                if (productName === 'Absorbent Gauze' && field.name === 'size') {
+                if (productName === 'Absorbent Gauze' && field.name === 'size' && (!field.options || field.options.length === 0)) {
                     html += `<option value="" disabled>Please select quality first</option>`;
-                } else if (field.options) {
+                } else if (field.options && field.options.length > 0) {
                     // For static options
                     field.options.forEach(option => {
                         const isCustomOption = option.toLowerCase().includes('custom');
@@ -2458,13 +1550,13 @@ if ($sql1->rowCount() > 0) {
 
                 html += `</select>`;
 
-                // Add custom input for specific options
-                if (field.options && field.options.some(opt => opt.toLowerCase().includes('custom'))) {
-                    const customPlaceholder = `Enter custom ${field.label.toLowerCase()}`;
-                    html += `<input type="text" class="form-control mt-2 custom-input" 
-                     name="custom_${field.name}[]" 
-                     placeholder="${customPlaceholder}" style="display: none;">`;
-                }
+                // Add custom input for ALL select fields that might have custom options
+                // This ensures custom inputs are available when needed
+                const customPlaceholder = `Enter custom ${field.label.toLowerCase()}`;
+                html += `<input type="text" class="form-control mt-2 custom-input" 
+                 name="custom_${field.name}[]" 
+                 placeholder="${customPlaceholder}" style="display: none;">`;
+
             } else if (field.type === 'number' || field.type === 'text') {
                 html += `<input type="${field.type}" class="form-control" name="${nameAttr}" 
                  placeholder="${field.placeholder || 'Enter ' + field.label.toLowerCase()}" ${requiredAttr}>`;
@@ -2476,13 +1568,14 @@ if ($sql1->rowCount() > 0) {
             return html;
         }
 
+        // Create HTML for a field
         // Handle field changes for dynamic updates
         function handleFieldChange(selectElement, productName, fieldName) {
             const productRow = selectElement.closest('.product-row');
             const value = selectElement.value;
 
             // Show/hide custom inputs
-            if (value && (value.includes('Custom') || value === 'custom PLY' || value === 'Custom width')) {
+            if (value && (value.includes('Custom') || value === 'Custom Size' || value === 'Custom TPI' || value === 'Custom width' || value === 'custom PLY' || value === 'Custom Contents' || value === 'Custom Quality' || value === 'Custom size')) {
                 const customInput = productRow.querySelector(`input[name="custom_${fieldName}[]"]`);
                 if (customInput) {
                     customInput.style.display = 'block';
@@ -2508,6 +1601,7 @@ if ($sql1->rowCount() > 0) {
         }
 
         // Update size options for Absorbent Gauze based on quality
+        // Update size options for Absorbent Gauze based on quality
         function updateSizeOptions(productRow, quality) {
             const sizeSelect = productRow.querySelector('select[name="size[]"]');
 
@@ -2525,6 +1619,9 @@ if ($sql1->rowCount() > 0) {
                         const option = document.createElement('option');
                         option.value = size;
                         option.textContent = size;
+                        if (size === 'Custom Size') {
+                            option.setAttribute('data-custom', 'true');
+                        }
                         sizeSelect.appendChild(option);
                     });
 
@@ -2532,6 +1629,9 @@ if ($sql1->rowCount() > 0) {
                     if (currentValue && sizeField.mapping[quality].includes(currentValue)) {
                         sizeSelect.value = currentValue;
                     }
+
+                    // Trigger change event to handle custom inputs
+                    sizeSelect.dispatchEvent(new Event('change'));
                 } else {
                     sizeSelect.innerHTML = '<option value="" selected disabled>No sizes available for this quality</option>';
                 }
@@ -2614,9 +1714,10 @@ if ($sql1->rowCount() > 0) {
                 </div>
                 <div class="col-md-8 mb-3 product-fields"></div>
                 <div class="col-md-12 mb-3">
-                    <label class="form-label required-field">Quantity</label>
-                    <input type="number" class="form-control product-quantity" name="productQuantity[]" placeholder="Enter quantity" min="1" required>
-                </div>
+                                                <label class="form-label required-field">Quantity</label>
+                                                <input type="number" class="form-control product-quantity" name="productQuantity[]" placeholder="Enter quantity" onkeyup="disbtn()" min="1" required>
+                                                <div class="note mt-1"><small> Quantity must fill</small></div>
+                                            </div>
             </div>
         `;
             productsContainer.appendChild(newProductRow);
@@ -2707,6 +1808,8 @@ if ($sql1->rowCount() > 0) {
                 const unitSelect = row.querySelector('select[name="unit[]"]');
                 const packingSelect = row.querySelector('select[name="packing[]"]');
                 const plySelect = row.querySelector('select[name="ply[]"]');
+                const xraySelect = row.querySelector('select[name="x-ray[]"]');
+                const contentsSelect = row.querySelector('select[name="contents[]"]');
                 const weightSelect = row.querySelector('select[name="weight[]"]');
                 const customSpecTextarea = row.querySelector('textarea[name="custom_specifications[]"]');
 
@@ -2747,6 +1850,12 @@ if ($sql1->rowCount() > 0) {
                 if (plySelect && plySelect.value) {
                     details.push(`Ply: ${plySelect.value}`);
                 }
+                if(xraySelect && xraySelect.value) {
+                    details.push(`X-Ray Detectable: ${xraySelect.value}`);
+                }
+                if (contentsSelect && contentsSelect.value) {
+                    details.push(`Contents: ${contentsSelect.value}`);
+                }
                 if (weightSelect && weightSelect.value) {
                     details.push(`Weight: ${weightSelect.value}`);
                 }
@@ -2759,6 +1868,428 @@ if ($sql1->rowCount() > 0) {
                     productText += `${productNumber}. ${details.join(" | ")}%0A`;
                 }
             });
+
+            // Product configuration data (keep your existing productConfig object as is)
+            const productConfig = {
+                // ... your existing productConfig object remains the same ...
+            };
+
+            // Global product counter
+            let productCount = 1;
+
+            // Update product fields based on selection
+            function updateProductFields(selectElement) {
+                const productRow = selectElement.closest('.product-row');
+                const productName = selectElement.value;
+                const fieldsContainer = productRow.querySelector('.product-fields');
+                const customProductInput = productRow.querySelector('.custom-product-name');
+
+                // Show/hide custom product input
+                if (productName === 'Custom Product') {
+                    customProductInput.style.display = 'block';
+                    customProductInput.required = true;
+                } else {
+                    customProductInput.style.display = 'none';
+                    customProductInput.required = false;
+                    customProductInput.value = '';
+                }
+
+                // Clear existing fields
+                fieldsContainer.innerHTML = '';
+
+                if (productName && productConfig[productName]) {
+                    const fields = productConfig[productName].fields;
+
+                    // Calculate column size based on number of fields
+                    const colSize = fields.length > 2 ? 'col-md-6' : 'col-md-12';
+
+                    fields.forEach((field, index) => {
+                        const fieldHtml = createFieldHtml(field, productName);
+                        const fieldContainer = document.createElement('div');
+                        fieldContainer.className = `${colSize} mb-3`;
+                        fieldContainer.innerHTML = fieldHtml;
+
+                        // Add conditional display class if needed
+                        if (field.showIf) {
+                            fieldContainer.classList.add('conditional-field');
+                            fieldContainer.style.display = 'none';
+                        }
+
+                        fieldsContainer.appendChild(fieldContainer);
+                    });
+
+                    // Add event listeners for dynamic fields
+                    addFieldEventListeners(productRow, productName);
+                }
+            }
+
+            // Create HTML for a field
+            function createFieldHtml(field, productName) {
+                let html = '';
+                const nameAttr = `${field.name}[]`;
+                const requiredAttr = field.required ? 'required' : '';
+                const requiredClass = field.required ? 'required-field' : '';
+
+                html += `<label class="form-label ${requiredClass}">${field.label}</label>`;
+
+                if (field.type === 'select') {
+                    html += `<select class="form-select" name="${nameAttr}" ${requiredAttr}>`;
+                    html += `<option value="" selected disabled>Select ${field.label}</option>`;
+
+                    // For Absorbent Gauze size field, show a default message
+                    if (productName === 'Absorbent Gauze' && field.name === 'size' && (!field.options || field.options.length === 0)) {
+                        html += `<option value="" disabled>Please select quality first</option>`;
+                    } else if (field.options && field.options.length > 0) {
+                        // For static options
+                        field.options.forEach(option => {
+                            const isCustomOption = option.toLowerCase().includes('custom');
+                            html += `<option value="${option}" ${isCustomOption ? 'data-custom="true"' : ''}>${option}</option>`;
+                        });
+                    }
+
+                    html += `</select>`;
+
+                    // Add custom input for ALL select fields that might have custom options
+                    const customPlaceholder = `Enter custom ${field.label.toLowerCase()}`;
+                    html += `<input type="text" class="form-control mt-2 custom-input" 
+                     name="custom_${field.name}[]" 
+                     placeholder="${customPlaceholder}" style="display: none;">`;
+
+                } else if (field.type === 'number' || field.type === 'text') {
+                    html += `<input type="${field.type}" class="form-control" name="${nameAttr}" 
+                     placeholder="${field.placeholder || 'Enter ' + field.label.toLowerCase()}" ${requiredAttr}>`;
+                } else if (field.type === 'textarea') {
+                    html += `<textarea class="form-control" name="${nameAttr}" 
+                     rows="3" placeholder="${field.placeholder || 'Enter ' + field.label.toLowerCase()}" ${requiredAttr}></textarea>`;
+                }
+
+                return html;
+            }
+
+            // Handle field changes for dynamic updates
+            function handleFieldChange(selectElement, productName, fieldName) {
+                const productRow = selectElement.closest('.product-row');
+                const value = selectElement.value;
+
+                // Show/hide custom inputs
+                if (value && (value.includes('Custom') || value === 'Custom Size' || value === 'Custom TPI' || value === 'Custom width' || value === 'custom PLY' || value === 'Custom Contents' || value === 'Custom Quality' || value === 'Custom size')) {
+                    const customInput = productRow.querySelector(`input[name="custom_${fieldName}[]"]`);
+                    if (customInput) {
+                        customInput.style.display = 'block';
+                        customInput.required = true;
+                    }
+                } else {
+                    const customInput = productRow.querySelector(`input[name="custom_${fieldName}[]"]`);
+                    if (customInput) {
+                        customInput.style.display = 'none';
+                        customInput.required = false;
+                        customInput.value = '';
+                    }
+                }
+
+                // Handle dynamic field dependencies for Absorbent Gauze
+                if (productName === 'Absorbent Gauze' && fieldName === 'quality') {
+                    updateSizeOptions(productRow, value);
+                }
+
+                // Handle conditional fields (like pieces for sterile gauze swabs)
+                if (productName === 'Gauze Swabs' && fieldName === 'sterility') {
+                    updatePiecesFieldVisibility(productRow, value);
+                }
+            }
+
+            // Update size options for Absorbent Gauze based on quality
+            function updateSizeOptions(productRow, quality) {
+                const sizeSelect = productRow.querySelector('select[name="size[]"]');
+
+                if (sizeSelect && productConfig['Absorbent Gauze']) {
+                    const sizeField = productConfig['Absorbent Gauze'].fields.find(f => f.name === 'size');
+
+                    if (sizeField && sizeField.mapping && sizeField.mapping[quality]) {
+                        // Store the current value to restore it if possible
+                        const currentValue = sizeSelect.value;
+
+                        // Clear and repopulate options
+                        sizeSelect.innerHTML = '<option value="" selected disabled>Select Size</option>';
+
+                        sizeField.mapping[quality].forEach(size => {
+                            const option = document.createElement('option');
+                            option.value = size;
+                            option.textContent = size;
+                            if (size === 'Custom Size') {
+                                option.setAttribute('data-custom', 'true');
+                            }
+                            sizeSelect.appendChild(option);
+                        });
+
+                        // Try to restore previous selection if it exists in new options
+                        if (currentValue && sizeField.mapping[quality].includes(currentValue)) {
+                            sizeSelect.value = currentValue;
+                        }
+
+                        // Trigger change event to handle custom inputs
+                        sizeSelect.dispatchEvent(new Event('change'));
+                    } else {
+                        sizeSelect.innerHTML = '<option value="" selected disabled>No sizes available for this quality</option>';
+                    }
+                }
+            }
+
+            // Update pieces field visibility for Gauze Swabs
+            function updatePiecesFieldVisibility(productRow, sterility) {
+                const piecesField = productRow.querySelector('.conditional-field');
+                if (piecesField) {
+                    if (sterility === 'Sterile') {
+                        piecesField.style.display = 'block';
+                        // Make the pieces field required when visible
+                        const piecesInput = piecesField.querySelector('input');
+                        if (piecesInput) {
+                            piecesInput.required = true;
+                        }
+                    } else {
+                        piecesField.style.display = 'none';
+                        const piecesInput = piecesField.querySelector('input');
+                        if (piecesInput) {
+                            piecesInput.value = '';
+                            piecesInput.required = false;
+                        }
+                    }
+                }
+            }
+
+            // Add event listeners for dynamic field behavior
+            function addFieldEventListeners(productRow, productName) {
+                const selects = productRow.querySelectorAll('select');
+
+                selects.forEach(select => {
+                    // Remove existing event listeners to avoid duplicates
+                    select.replaceWith(select.cloneNode(true));
+                });
+
+                // Get fresh references after cloning
+                const freshSelects = productRow.querySelectorAll('select');
+
+                freshSelects.forEach(select => {
+                    select.addEventListener('change', function() {
+                        const productNameSelect = productRow.querySelector('.product-name');
+                        const currentProductName = productNameSelect ? productNameSelect.value : productName;
+                        const fieldName = this.name.replace('[]', '');
+
+                        if (currentProductName) {
+                            handleFieldChange(this, currentProductName, fieldName);
+                        }
+                    });
+                });
+
+                // If it's Absorbent Gauze and quality is already selected, trigger size update
+                if (productName === 'Absorbent Gauze') {
+                    const qualitySelect = productRow.querySelector('select[name="quality[]"]');
+                    if (qualitySelect && qualitySelect.value) {
+                        updateSizeOptions(productRow, qualitySelect.value);
+                    }
+                }
+            }
+
+            // Add product functionality
+            document.getElementById('addProductBtn').addEventListener('click', function() {
+                productCount++;
+                const productsContainer = document.getElementById('productsContainer');
+                const newProductRow = document.createElement('div');
+                newProductRow.className = 'product-row';
+                newProductRow.id = `product-${productCount}`;
+
+                // Create product options HTML
+                let productOptions = '';
+                const products = <?php echo json_encode($products); ?>;
+                products.forEach(product => {
+                    productOptions += `<option value="${product}">${product}</option>`;
+                });
+
+                newProductRow.innerHTML = `
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5>Product #${productCount}</h5>
+                <button type="button" class="btn btn-danger btn-sm remove-product">
+                    <i class="bi bi-trash me-1"></i>Remove
+                </button>
+            </div>
+            <input type="hidden" name="order_id" value="<?php echo uniqid('ORD-'); ?>">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label required-field">Product Name</label>
+                    <select class="form-select product-name" name="productName[]" required>
+                        <option value="" selected disabled>Select Product</option>
+                        ${productOptions}
+                    </select>
+                    <input type="text" class="form-control mt-2 custom-product-name" name="customProductName[]" placeholder="Enter custom product name" style="display: none;">
+                </div>
+                <div class="col-md-8 mb-3 product-fields"></div>
+                <div class="col-md-12 mb-3">
+                    <label class="form-label required-field">Quantity</label>
+                    <input type="number" class="form-control product-quantity" name="productQuantity[]" placeholder="Enter quantity" min="1" required>
+                </div>
+            </div>
+        `;
+
+                productsContainer.appendChild(newProductRow);
+
+                // Add event listeners to the new product row
+                const productNameSelect = newProductRow.querySelector('.product-name');
+                productNameSelect.addEventListener('change', function() {
+                    updateProductFields(this);
+                });
+
+                // Add remove functionality
+                const removeBtn = newProductRow.querySelector('.remove-product');
+                removeBtn.addEventListener('click', function() {
+                    removeProduct(productCount);
+                });
+
+                // Scroll to the new product
+                newProductRow.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest'
+                });
+            });
+
+            // Remove product functionality
+            function removeProduct(productId) {
+                if (productCount > 1) {
+                    const productRow = document.getElementById(`product-${productId}`);
+                    if (productRow) {
+                        productRow.remove();
+                        productCount--;
+
+                        // Update product numbers
+                        const productRows = document.querySelectorAll('.product-row');
+                        productRows.forEach((row, index) => {
+                            const productNumber = index + 1;
+                            row.id = `product-${productNumber}`;
+                            row.querySelector('h5').textContent = `Product #${productNumber}`;
+                        });
+                    }
+                } else {
+                    alert('You must have at least one product in your order.');
+                }
+            }
+
+            // Initialize the first product row
+            document.addEventListener('DOMContentLoaded', function() {
+                // Add event listeners to the first product row
+                const firstProductRow = document.getElementById('product-1');
+                if (firstProductRow) {
+                    const productNameSelect = firstProductRow.querySelector('.product-name');
+                    if (productNameSelect) {
+                        productNameSelect.addEventListener('change', function() {
+                            updateProductFields(this);
+                        });
+                    }
+
+                    // Add remove functionality to first product's remove button
+                    const removeBtn = firstProductRow.querySelector('.remove-product');
+                    if (removeBtn) {
+                        removeBtn.addEventListener('click', function() {
+                            removeProduct(1);
+                        });
+                    }
+                }
+
+                // Initialize file upload previews
+                document.querySelectorAll('input[type="file"]').forEach(input => {
+                    input.addEventListener('change', function() {
+                        const label = this.previousElementSibling;
+                        if (this.files.length > 0) {
+                            label.innerHTML = `<i class="bi bi-check-circle-fill me-2"></i>${this.files[0].name}`;
+                            label.classList.add('text-success');
+                        } else {
+                            label.innerHTML = `<i class="bi bi-upload me-2"></i>Choose File`;
+                            label.classList.remove('text-success');
+                        }
+                    });
+                });
+            });
+
+            // Form validation and submission
+            const form = document.getElementById('orderForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Validate all required fields
+                let isValid = true;
+                const requiredFields = form.querySelectorAll('[required]');
+
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        field.classList.add('is-invalid');
+
+                        // Add error message if not exists
+                        if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('invalid-feedback')) {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'invalid-feedback';
+                            errorDiv.textContent = 'This field is required';
+                            field.parentNode.appendChild(errorDiv);
+                        }
+                    } else {
+                        field.classList.remove('is-invalid');
+                        // Remove error message if exists
+                        const errorDiv = field.nextElementSibling;
+                        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                            errorDiv.remove();
+                        }
+                    }
+                });
+
+                // Validate quantity fields specifically
+                const quantityFields = form.querySelectorAll('.product-quantity');
+                quantityFields.forEach(field => {
+                    if (!field.value || field.value < 1) {
+                        isValid = false;
+                        field.classList.add('is-invalid');
+
+                        if (!field.nextElementSibling || !field.nextElementSibling.classList.contains('invalid-feedback')) {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'invalid-feedback';
+                            errorDiv.textContent = 'Please enter a valid quantity (minimum 1)';
+                            field.parentNode.appendChild(errorDiv);
+                        }
+                    } else {
+                        field.classList.remove('is-invalid');
+                        const errorDiv = field.nextElementSibling;
+                        if (errorDiv && errorDiv.classList.contains('invalid-feedback')) {
+                            errorDiv.remove();
+                        }
+                    }
+                });
+
+                if (!isValid) {
+                    alert('Please fill in all required fields with valid values.');
+                    return;
+                }
+
+                // If validation passes, proceed with form submission
+                const formData = new FormData(this);
+                const submitButton = document.querySelector('.comp-btn');
+
+                if (submitButton) {
+                    const originalText = submitButton.innerHTML;
+                    submitButton.innerHTML = `<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...`;
+                    submitButton.disabled = true;
+
+                    // Simulate form processing (replace with actual AJAX call if needed)
+                    setTimeout(() => {
+                        // For demonstration - in real scenario, you'd use AJAX or let the form submit normally
+                        alert('Form submitted successfully!');
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
+
+                        // Uncomment the line below to actually submit the form
+                        // this.submit();
+                    }, 2000);
+                }
+            });
+
+            // CAPTCHA functionality (keep your existing CAPTCHA code)
+            // ... your existing CAPTCHA code ...
 
             // Construct WhatsApp message
             let message = `New Order Request%0A%0A`;
