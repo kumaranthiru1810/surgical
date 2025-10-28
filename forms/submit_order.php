@@ -45,6 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $units = $_POST['unit'] ?? [];
     $packings = $_POST['packing'] ?? [];
     $plies = $_POST['ply'] ?? [];
+    $exrays = $_POST['x-ray'] ?? [];
+    $contents = $_POST['contents'] ?? [];
     $weights = $_POST['weight'] ?? [];
     $customSpecs = $_POST['custom_specifications'] ?? [];
     $customQualities = $_POST['custom_quality'] ?? [];
@@ -61,11 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $productSql = "INSERT INTO order_products (
             email, product_name, custom_product_name, quality, size, sterility,
-            pieces, width, length, unit, packing, ply, weight, custom_specifications,
+            pieces, width, length, unit, packing, ply, x_ray, contents, weight, custom_specifications,
             custom_quality, custom_size, custom_width, quantity, created_at
         ) VALUES (
             :email, :product_name, :custom_product_name, :quality, :size, :sterility,
-            :pieces, :width, :length, :unit, :packing, :ply, :weight, :custom_specifications,
+            :pieces, :width, :length, :unit, :packing, :ply, :x_ray, :contents, :weight, :custom_specifications,
             :custom_quality, :custom_size, :custom_width, :quantity, NOW()
         )";
 
@@ -142,6 +144,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!empty($weights[$index])) {
                 $productDetail['specifications'][] = "Weight: " . $weights[$index];
             }
+            if (!empty($exrays[$index])) {
+                $productDetail['specifications'][] = "X-Ray Detectable: " . $exrays[$index];
+            }
+
+            if (!empty($contents[$index])) {
+                $productDetail['specifications'][] = "Contents: " . $contents[$index];
+            }   
 
             if (!empty($customSpecs[$index])) {
                 $productDetail['specifications'][] = "Specifications: " . $customSpecs[$index];
@@ -150,26 +159,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $productDetails[] = $productDetail;
 
             // Insert into database
-            $productStmt->execute([
-                ':email'                 => $email,
-                ':product_name'          => $productName,
-                ':custom_product_name'   => $customProductNames[$index] ?? '',
-                ':quality'               => $qualities[$index] ?? '',
-                ':size'                  => $sizes[$index] ?? null,
-                ':sterility'             => $sterilities[$index] ?? null,
-                ':pieces'                => $pieces[$index] ?? null,
-                ':width'                 => $widths[$index] ?? null,
-                ':length'                => $lengths[$index] ?? null,
-                ':unit'                  => $units[$index] ?? null,
-                ':packing'               => $packings[$index] ?? null,
-                ':ply'                   => $plies[$index] ?? null,
-                ':weight'                => $weights[$index] ?? null,
-                ':custom_specifications' => $customSpecs[$index] ?? null,
-                ':custom_quality'        => $customQualities[$index] ?? null,
-                ':custom_size'           => $customSizes[$index] ?? null,
-                ':custom_width'          => $customWidths[$index] ?? null,
-                ':quantity'              => $quantity,
-            ]);
+            // Insert into database
+$productStmt->execute([
+    ':email'                 => $email,
+    ':product_name'          => $productName,
+    ':custom_product_name'   => $customProductNames[$index] ?? '',
+    ':quality'               => $qualities[$index] ?? '',
+    ':size'                  => $sizes[$index] ?? '',
+    ':sterility'             => $sterilities[$index] ?? '',
+    ':pieces'                => $pieces[$index] ?? '',
+    ':width'                 => $widths[$index] ?? '',
+    ':length'                => $lengths[$index] ?? '',
+    ':unit'                  => $units[$index] ?? '',
+    ':packing'               => $packings[$index] ?? '',
+    ':ply'                   => $plies[$index] ?? '',
+    ':x_ray'                 => $exrays[$index] ?? '',
+    ':contents'              => !empty($contents[$index]) ? $contents[$index] : '', // Fixed line
+    ':weight'                => $weights[$index] ?? '',
+    ':custom_specifications' => $customSpecs[$index] ?? '',
+    ':custom_quality'        => $customQualities[$index] ?? '',
+    ':custom_size'           => $customSizes[$index] ?? '',
+    ':custom_width'          => $customWidths[$index] ?? '',
+    ':quantity'              => $quantity,
+]);
         }
 
         $pdo->commit();
