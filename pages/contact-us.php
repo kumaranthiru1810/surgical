@@ -251,14 +251,14 @@ if ($sql->rowCount() > 0) {
           </li>
           <li class="nav-item">
             <?php if (isset($_SESSION['name'])) { ?>
-              <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
+              <a class="btn btn-primary2 me-3">HI, <?php echo $_SESSION['name']; ?></a>
             <?php } else { ?>
               <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
             <?php } ?>
           </li>
           <li class="nav-item">
             <?php if (isset($_SESSION['name'])) { ?>
-              <a href="./logout.php" onclick="return confirm('Are you sure you want to logout?');" class="btn btn-primary me-3">Logout</a>
+              <a href="./logout.php" onclick="return confirm('Are you sure you want to logout?');" class="btn btn-primary2 me-3">Logout</a>
             <?php } else { ?>
               <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
             <?php } ?>
