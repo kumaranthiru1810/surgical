@@ -330,7 +330,7 @@ $data = ($sql->rowCount() > 0) ? $sql->fetch(PDO::FETCH_ASSOC) : [];
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="../index.php">
                     <div class="d-flex align-items-center">
                         <img src="../assets/logo.jpeg" alt="Logo" class="me-2">
                     </div>

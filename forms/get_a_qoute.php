@@ -168,10 +168,10 @@ if ($sql1->rowCount() > 0) {
             border-radius: 5px;
         }
 
-        .remove-product {
+        /* .remove-product {
             cursor: pointer;
             color: #dc3545;
-        }
+        } */
 
         .place_order {
             margin-top: 100px !important;
@@ -350,10 +350,12 @@ if ($sql1->rowCount() > 0) {
                 width: 100%;
             }
         }
-        .another-btn{
+
+        .another-btn {
             display: none;
         }
-        input{
+
+        input {
             border: 1px solid #000;
         }
     </style>
@@ -383,6 +385,7 @@ if ($sql1->rowCount() > 0) {
                     <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
                         <div class="contact-info text-end">
                             <div>
+                                <a href="tel:+919790972432" class="phone text-decoration-none text-dark"><i class="bi bi-telephone"></i></a>
                                 <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
@@ -417,6 +420,7 @@ if ($sql1->rowCount() > 0) {
                     <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
                         <div class="contact-info text-end">
                             <div>
+                                <a href="tel:+919790972432" class="phone1 text-decoration-none text-dark"><i class="bi bi-telephone"></i></a>
                                 <a href="#" id="top-whatsapp2" class="phone1 text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
@@ -480,7 +484,7 @@ if ($sql1->rowCount() > 0) {
     <?php
     $products = [
         'Absorbent Gauze',
-        'Bandage Cloth', 
+        'Bandage Cloth',
         'Gauze Swabs',
         'Roller Bandage',
         'Jumbo Roll Starched',
@@ -504,7 +508,7 @@ if ($sql1->rowCount() > 0) {
     <div class="container place_order">
         <div class="row mb-3">
             <div class="col-12 text-center page-header">
-                <h3><i class="bi bi-cart-check me-2"></i> GET QUOTE</h3>
+                <h3><i class="bi bi-cart-check me-2"></i> GET A QUOTE</h3>
                 <p class="lead mb-0">Fill out the form below to get a quote for our products</p>
             </div>
         </div>
@@ -650,7 +654,7 @@ if ($sql1->rowCount() > 0) {
 
                             <div class="col-12 text-center">
                                 <button type="submit" class="btn btn-primary btn-md submit-btn comp-btn" id="submitButton" disabled>
-                                    <i class="bi bi-cart-check-fill me-2"></i>GET QUOTE
+                                    <i class="bi bi-cart-check-fill me-2"></i>Get a Quote
                                 </button>
                             </div>
                         </div>
@@ -897,7 +901,7 @@ if ($sql1->rowCount() > 0) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        function disbtn(){
+        function disbtn() {
             document.querySelectorAll('.another-btn').forEach(btn => {
                 btn.style.display = 'block';
             });
@@ -1023,16 +1027,16 @@ if ($sql1->rowCount() > 0) {
                     }
                 ]
             },
-            "Bandage Cloth" : {
+            "Bandage Cloth": {
                 fields: [{
-                    name : "size",
+                    name: "size",
                     label: "Size",
                     type: "select",
                     options: ["100 CM X 10 Meter",
-                              "100 CM X 20 Meter",
-                              "90 CM X 10 Meter",
-                              "90 CM X 20 Meter",
-                              "Custom Size"
+                        "100 CM X 20 Meter",
+                        "90 CM X 10 Meter",
+                        "90 CM X 20 Meter",
+                        "Custom Size"
                     ],
                     required: true
                 }]
@@ -1057,41 +1061,44 @@ if ($sql1->rowCount() > 0) {
                         label: "Size",
                         type: "select",
                         options: [],
-                        dynamicOptions: {
-                            dependsOn: ["quality", "folding"],
-                            values: {
-                                "Type-13_French": [
-                                    "10 CM  X 10 CM X 8 PLY PLAIN",
-                                    "7.5 CM  X 7.5 CM X 8 PLY PLAIN",
-                                    "5 CM  X 5 CM X 8 PLY PLAIN",
-                                    "10 CM  X 10 CM X 12 PLY PLAIN",
-                                    "7.5 CM  X 7.5 CM X 12 PLY PLAIN",
-                                    "5 CM  X 5 CM X 12 PLY PLAIN",
-                                    "10 CM  X 10 CM X 16 PLY PLAIN",
-                                    "7.5 CM  X 7.5 CM X 16 PLY PLAIN",
-                                    "5 CM  X 5 CM X 16 PLY PLAIN"
-                                ],
-                                "Type-17_French": [
-                                    "10 CM  X 10 CM X 8 PLY PLAIN",
-                                    "7.5 CM  X 7.5 CM X 8 PLY PLAIN",
-                                    "5 CM  X 5 CM X 8 PLY PLAIN",
-                                    "10 CM  X 10 CM X 12 PLY PLAIN",
-                                    "7.5 CM  X 7.5 CM X 12 PLY PLAIN",
-                                    "5 CM  X 5 CM X 12 PLY PLAIN",
-                                    "10 CM  X 10 CM X 16 PLY PLAIN",
-                                    "7.5 CM  X 7.5 CM X 16 PLY PLAIN",
-                                    "5 CM  X 5 CM X 16 PLY PLAIN",
-                                    "10 CM  X 10 CM X 12 PLY X-RAY",
-                                    "7.5 CM  X 7.5 CM X 12 PLY X-RAY"
-                                ],
-                                "Type-17_American": [
-                                    "10 CM X 10 CM X 12 PLY PLAIN",
-                                    "7.5 CM X 7.5 CM X 12 PLY PLAIN",
-                                    "5 CM X 5 CM X 12 PLY PLAIN",
-                                    "10 CM X 10 CM X 12 PLY X-RAY",
-                                    "7.5 CM X 7.5 CM X 12 PLY X-RAY"
-                                ]
-                            }
+                        dependsOn: ["quality", "folding"],
+                        options: {
+                            // Type-13 with French Folding
+                            "Type-13_French": [
+                                "10 CM  X 10 CM X 8 PLY PLAIN",
+                                "7.5 CM  X 7.5 CM X 8 PLY PLAIN",
+                                "5 CM  X 5 CM X 8 PLY PLAIN",
+                                "10 CM  X 10 CM X 12 PLY PLAIN",
+                                "7.5 CM  X 7.5 CM X 12 PLY PLAIN",
+                                "5 CM  X 5 CM X 12 PLY PLAIN",
+                                "10 CM  X 10 CM X 16 PLY PLAIN",
+                                "7.5 CM  X 7.5 CM X 16 PLY PLAIN",
+                                "5 CM  X 5 CM X 16 PLY PLAIN"
+                            ],
+                            // Type-13 with American Folding - No options available
+                            "Type-13_American": [],
+                            // Type-17 with French Folding
+                            "Type-17_French": [
+                                "10 CM  X 10 CM X 8 PLY PLAIN",
+                                "7.5 CM  X 7.5 CM X 8 PLY PLAIN",
+                                "5 CM  X 5 CM X 8 PLY PLAIN",
+                                "10 CM  X 10 CM X 12 PLY PLAIN",
+                                "7.5 CM  X 7.5 CM X 12 PLY PLAIN",
+                                "5 CM  X 5 CM X 12 PLY PLAIN",
+                                "10 CM  X 10 CM X 16 PLY PLAIN",
+                                "7.5 CM  X 7.5 CM X 16 PLY PLAIN",
+                                "5 CM  X 5 CM X 16 PLY PLAIN",
+                                "10 CM  X 10 CM X 12 PLY X-RAY",
+                                "7.5 CM  X 7.5 CM X 12 PLY X-RAY"
+                            ],
+                            // Type-17 with American Folding
+                            "Type-17_American": [
+                                "10 CM X 10 CM X 12 PLY PLAIN",
+                                "7.5 CM X 7.5 CM X 12 PLY PLAIN",
+                                "5 CM X 5 CM X 12 PLY PLAIN",
+                                "10 CM X 10 CM X 12 PLY X-RAY",
+                                "7.5 CM X 7.5 CM X 12 PLY X-RAY"
+                            ]
                         },
                         required: true
                     },
@@ -1111,8 +1118,7 @@ if ($sql1->rowCount() > 0) {
                         showIf: {
                             field: "sterility",
                             value: "Sterile"
-                        },
-                        required: true
+                        }
                     }
                 ]
             },
@@ -1477,8 +1483,149 @@ if ($sql1->rowCount() > 0) {
                 }]
             }
         };
-        </script>
-        <script>
+    </script>
+    <script>
+        // Update the handleFieldChange function to properly handle Gauze Swabs
+        function handleFieldChange(selectElement, productName, fieldName) {
+            const productRow = selectElement.closest('.product-row');
+            const value = selectElement.value;
+
+            // Show/hide custom inputs
+            if (value && (value.includes('Custom') || value === 'Custom Size' || value === 'Custom TPI' || value === 'Custom width' || value === 'custom PLY' || value === 'Custom Contents' || value === 'Custom Quality' || value === 'Custom size')) {
+                const customInput = productRow.querySelector(`input[name="custom_${fieldName}[]"]`);
+                if (customInput) {
+                    customInput.style.display = 'block';
+                    customInput.required = true;
+                }
+            } else {
+                const customInput = productRow.querySelector(`input[name="custom_${fieldName}[]"]`);
+                if (customInput) {
+                    customInput.style.display = 'none';
+                    customInput.required = false;
+                    customInput.value = '';
+                }
+            }
+
+            // Handle dynamic field dependencies for Absorbent Gauze
+            if (productName === 'Absorbent Gauze' && fieldName === 'quality') {
+                updateSizeOptions(productRow, value);
+            }
+
+            // Handle dynamic field dependencies for Gauze Swabs
+            if (productName === 'Gauze Swabs') {
+                const qualitySelect = productRow.querySelector('select[name="quality[]"]');
+                const foldingSelect = productRow.querySelector('select[name="folding[]"]');
+
+                const quality = qualitySelect ? qualitySelect.value : '';
+                const folding = foldingSelect ? foldingSelect.value : '';
+
+                // Update size options when either quality or folding changes
+                if ((fieldName === 'quality' || fieldName === 'folding') && quality && folding) {
+                    updateGauzeSwabsSizeOptions(productRow, quality, folding);
+                }
+
+                // Handle conditional fields (like pieces for sterile gauze swabs)
+                if (fieldName === 'sterility') {
+                    updatePiecesFieldVisibility(productRow, value);
+                }
+            }
+        }
+
+        // Fixed function to update Gauze Swabs size options
+        function updateGauzeSwabsSizeOptions(productRow, quality, folding) {
+
+           
+// const key = `${quality.trim()}_${folding.trim()}`;
+// console.log("Key:", key);
+// console.log("Available keys:", Object.keys(sizeField.options));
+
+            const sizeSelect = productRow.querySelector('select[name="size[]"]');
+
+            if (sizeSelect && productConfig["Gauze Swabs"]) {
+                const sizeField = productConfig["Gauze Swabs"].fields.find(f => f.name === 'size');
+
+                if (sizeField && sizeField.options) {
+                    const key = `${quality.trim()}_${folding.trim()}`;
+                    console.log(key);
+                    console.log(sizeField.options);
+                    const sizeOptions = sizeField.options[key];
+
+                    // Store current value
+                    const currentValue = sizeSelect.value;
+
+                    // Clear existing options
+                    sizeSelect.innerHTML = '<option value="" selected disabled>Select Size</option>';
+
+                    if (sizeOptions && sizeOptions.length > 0) {
+                        sizeOptions.forEach(size => {
+                            const option = document.createElement('option');
+                            option.value = size;
+                            option.textContent = size;
+                            sizeSelect.appendChild(option);
+                        });
+
+                        // Try to restore previous selection if possible
+                        if (currentValue && sizeOptions.includes(currentValue)) {
+                            sizeSelect.value = currentValue;
+                        }
+                    } else {
+                        sizeSelect.innerHTML = '<option value="" selected disabled>No sizes available for this combination</option>';
+                    }
+                }
+            }
+        }
+
+        // Update the addFieldEventListeners function to ensure Gauze Swabs works properly
+        function addFieldEventListeners(productRow, productName) {
+            const selects = productRow.querySelectorAll('select');
+
+            selects.forEach(select => {
+                // Remove existing event listeners to avoid duplicates
+                const newSelect = select.cloneNode(true);
+                select.parentNode.replaceChild(newSelect, select);
+            });
+
+            // Get fresh references after cloning
+            const freshSelects = productRow.querySelectorAll('select');
+
+            freshSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    const productNameSelect = productRow.querySelector('.product-name');
+                    const currentProductName = productNameSelect ? productNameSelect.value : productName;
+                    const fieldName = this.name.replace('[]', '');
+
+                    if (currentProductName) {
+                        handleFieldChange(this, currentProductName, fieldName);
+                    }
+                });
+
+                // Trigger change event on existing values to initialize dependent fields
+                if (select.value) {
+                    select.dispatchEvent(new Event('change'));
+                }
+            });
+
+            // If it's Absorbent Gauze and quality is already selected, trigger size update
+            if (productName === 'Absorbent Gauze') {
+                const qualitySelect = productRow.querySelector('select[name="quality[]"]');
+                if (qualitySelect && qualitySelect.value) {
+                    updateSizeOptions(productRow, qualitySelect.value);
+                }
+            }
+
+            // If it's Gauze Swabs and both quality and folding are selected, trigger size update
+            if (productName === 'Gauze Swabs') {
+                const qualitySelect = productRow.querySelector('select[name="quality[]"]');
+                const foldingSelect = productRow.querySelector('select[name="folding[]"]');
+
+                const quality = qualitySelect ? qualitySelect.value : '';
+                const folding = foldingSelect ? foldingSelect.value : '';
+
+                if (quality && folding) {
+                    updateGauzeSwabsSizeOptions(productRow, quality, folding);
+                }
+            }
+        }
 
         // Update product fields based on selection
         function updateProductFields(selectElement) {
@@ -1566,38 +1713,6 @@ if ($sql1->rowCount() > 0) {
             }
 
             return html;
-        }
-
-        // Create HTML for a field
-        // Handle field changes for dynamic updates
-        function handleFieldChange(selectElement, productName, fieldName) {
-            const productRow = selectElement.closest('.product-row');
-            const value = selectElement.value;
-
-            // Show/hide custom inputs
-            if (value && (value.includes('Custom') || value === 'Custom Size' || value === 'Custom TPI' || value === 'Custom width' || value === 'custom PLY' || value === 'Custom Contents' || value === 'Custom Quality' || value === 'Custom size')) {
-                const customInput = productRow.querySelector(`input[name="custom_${fieldName}[]"]`);
-                if (customInput) {
-                    customInput.style.display = 'block';
-                    customInput.required = true;
-                }
-            } else {
-                const customInput = productRow.querySelector(`input[name="custom_${fieldName}[]"]`);
-                if (customInput) {
-                    customInput.style.display = 'none';
-                    customInput.required = false;
-                }
-            }
-
-            // Handle dynamic field dependencies for Absorbent Gauze
-            if (productName === 'Absorbent Gauze' && fieldName === 'quality') {
-                updateSizeOptions(productRow, value);
-            }
-
-            // Handle conditional fields (like pieces for sterile gauze swabs)
-            if (productName === 'Gauze Swabs' && fieldName === 'sterility') {
-                updatePiecesFieldVisibility(productRow, value);
-            }
         }
 
         // Update size options for Absorbent Gauze based on quality
@@ -1718,6 +1833,7 @@ if ($sql1->rowCount() > 0) {
                                                 <input type="number" class="form-control product-quantity" name="productQuantity[]" placeholder="Enter quantity" onkeyup="disbtn()" min="1" required>
                                                 <div class="note mt-1"><small> Quantity must fill</small></div>
                                             </div>
+            </div>
             </div>
         `;
             productsContainer.appendChild(newProductRow);
@@ -1850,7 +1966,7 @@ if ($sql1->rowCount() > 0) {
                 if (plySelect && plySelect.value) {
                     details.push(`Ply: ${plySelect.value}`);
                 }
-                if(xraySelect && xraySelect.value) {
+                if (xraySelect && xraySelect.value) {
                     details.push(`X-Ray Detectable: ${xraySelect.value}`);
                 }
                 if (contentsSelect && contentsSelect.value) {
@@ -1966,74 +2082,6 @@ if ($sql1->rowCount() > 0) {
                 return html;
             }
 
-            // Handle field changes for dynamic updates
-            function handleFieldChange(selectElement, productName, fieldName) {
-                const productRow = selectElement.closest('.product-row');
-                const value = selectElement.value;
-
-                // Show/hide custom inputs
-                if (value && (value.includes('Custom') || value === 'Custom Size' || value === 'Custom TPI' || value === 'Custom width' || value === 'custom PLY' || value === 'Custom Contents' || value === 'Custom Quality' || value === 'Custom size')) {
-                    const customInput = productRow.querySelector(`input[name="custom_${fieldName}[]"]`);
-                    if (customInput) {
-                        customInput.style.display = 'block';
-                        customInput.required = true;
-                    }
-                } else {
-                    const customInput = productRow.querySelector(`input[name="custom_${fieldName}[]"]`);
-                    if (customInput) {
-                        customInput.style.display = 'none';
-                        customInput.required = false;
-                        customInput.value = '';
-                    }
-                }
-
-                // Handle dynamic field dependencies for Absorbent Gauze
-                if (productName === 'Absorbent Gauze' && fieldName === 'quality') {
-                    updateSizeOptions(productRow, value);
-                }
-
-                // Handle conditional fields (like pieces for sterile gauze swabs)
-                if (productName === 'Gauze Swabs' && fieldName === 'sterility') {
-                    updatePiecesFieldVisibility(productRow, value);
-                }
-            }
-
-            // Update size options for Absorbent Gauze based on quality
-            function updateSizeOptions(productRow, quality) {
-                const sizeSelect = productRow.querySelector('select[name="size[]"]');
-
-                if (sizeSelect && productConfig['Absorbent Gauze']) {
-                    const sizeField = productConfig['Absorbent Gauze'].fields.find(f => f.name === 'size');
-
-                    if (sizeField && sizeField.mapping && sizeField.mapping[quality]) {
-                        // Store the current value to restore it if possible
-                        const currentValue = sizeSelect.value;
-
-                        // Clear and repopulate options
-                        sizeSelect.innerHTML = '<option value="" selected disabled>Select Size</option>';
-
-                        sizeField.mapping[quality].forEach(size => {
-                            const option = document.createElement('option');
-                            option.value = size;
-                            option.textContent = size;
-                            if (size === 'Custom Size') {
-                                option.setAttribute('data-custom', 'true');
-                            }
-                            sizeSelect.appendChild(option);
-                        });
-
-                        // Try to restore previous selection if it exists in new options
-                        if (currentValue && sizeField.mapping[quality].includes(currentValue)) {
-                            sizeSelect.value = currentValue;
-                        }
-
-                        // Trigger change event to handle custom inputs
-                        sizeSelect.dispatchEvent(new Event('change'));
-                    } else {
-                        sizeSelect.innerHTML = '<option value="" selected disabled>No sizes available for this quality</option>';
-                    }
-                }
-            }
 
             // Update pieces field visibility for Gauze Swabs
             function updatePiecesFieldVisibility(productRow, sterility) {
