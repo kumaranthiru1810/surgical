@@ -447,6 +447,7 @@ if ($sql->rowCount() > 0) {
                     <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
                         <div class="contact-info text-end">
                             <div>
+                                <a href="tel:+919790972432" class="phone text-decoration-none text-dark"><i class="bi bi-telephone"></i></a>
                                 <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
@@ -481,6 +482,7 @@ if ($sql->rowCount() > 0) {
                     <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
                         <div class="contact-info text-end">
                             <div>
+                                <a href="tel:+919790972432" class="phone1 text-decoration-none text-dark"><i class="bi bi-telephone"></i></a>
                                 <a href="#" id="top-whatsapp2" class="phone1 text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
@@ -496,7 +498,7 @@ if ($sql->rowCount() > 0) {
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="../index.php">
                     <div class="d-flex align-items-center">
                         <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
                     </div>

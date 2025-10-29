@@ -1440,3 +1440,13 @@ label {
         background-color: blue !important;
     }
 }
+
+.product-fields .col-md-6 {
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .product-fields .col-md-6 {
+        margin-bottom: 10px;
+    }
+}
