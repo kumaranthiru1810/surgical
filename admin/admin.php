@@ -1443,7 +1443,7 @@ try {
                                     </div>
                                 <?php endif; ?>
                                 <input type="file" id="replaceImageFile" style="display:none;" accept="image/*">
-                                <div class="btns" id="actionButtons" style="display:none; margin-top:8px;">
+                                <div class="btns" id="actionButtons" style="display:none; margin-top:8px; margin-bottom:10px;">
                                     <button id="replaceBtn" type="button">Edit</button>
                                     <button id="deleteBtn" type="button">Delete</button>
                                 </div>
@@ -1527,7 +1527,7 @@ try {
                                             <tr>
                                                 <th>Image</th>
                                                 <th>Name</th>
-                                                <th>Category</th>
+                                                <!-- <th>Category</th> -->
                                                 <th>Key Features</th>
                                                 <th>Uses</th>
                                                 <th>Actions</th>
@@ -1537,14 +1537,21 @@ try {
                                             <?php foreach ($products as $product): ?>
                                                 <tr>
                                                     <td>
-                                                        <?php if (!empty($product['image'])): ?>
-                                                            <img src="../<?php echo $product['image']; ?>" alt="Product Image" class="product-image-thumb">
+                                                        <?php include('../db.php'); 
+                                                                $id = $product['id'];
+                                                                $result = $pdo->prepare("SELECT * FROM product_images WHERE product_id = ?");
+                                                                $result->execute([$id]);
+                                                                $productImage = $result->fetchAll(PDO::FETCH_ASSOC);
+                                                        foreach($productImage as $img){                        
+                                                        ?>
+                                                        <?php if (!empty($img['image_path'])): ?>
+                                                            <img src="../<?php echo $img['image_path']; ?>" alt="Product Image" class="product-image-thumb">
                                                         <?php else: ?>
                                                             <span class="text-muted">No image</span>
-                                                        <?php endif; ?>
-                                                    </td>
+                                                        <?php endif; } ?>
+                                                    </td> 
                                                     <td class="product-name"><?php echo htmlspecialchars($product['name']); ?></td>
-                                                    <td><?php echo htmlspecialchars($product['category']); ?></td>
+                                                    <!-- <td><?php echo htmlspecialchars($product['category']); ?></td> -->
                                                     <td><?php echo htmlspecialchars($product['key_characteristics']); ?></td>
                                                     <td><?php echo htmlspecialchars($product['uses']); ?></td>
                                                     <td>

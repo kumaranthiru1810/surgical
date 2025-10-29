@@ -321,14 +321,14 @@ if ($sql->rowCount() > 0) {
                         </li>
                         <li class="nav-item">
                             <?php if (isset($_SESSION['name'])) { ?>
-                                <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
+                                <a class="btn btn-primary2 me-3">HI, <?php echo $_SESSION['name']; ?></a>
                             <?php } else { ?>
                                 <a href="./pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
                             <?php } ?>
                         </li>
                         <li class="nav-item">
                             <?php if (isset($_SESSION['name'])) { ?>
-                                <a href="./pages/logout.php" class="btn btn-primary me-3"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                                <a href="./pages/logout.php" class="btn btn-primary2 me-3"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
                             <?php } else { ?>
                                 <a href="./pages/signin.php" class="btn btn-primary me-3">Sign In</a>
                             <?php } ?>
