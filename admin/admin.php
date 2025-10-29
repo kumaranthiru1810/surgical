@@ -1,4 +1,13 @@
 <?php
+session_start();
+if (!($_SESSION['email'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
+
+<?php
 // Database configuration
 $db_config = [
     'host' => 'localhost',
@@ -118,26 +127,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pdo = getDBConnection();
 
     // Add/Edit Product
+    // if (isset($_POST['add_product']) || isset($_POST['edit_product'])) {
+    //     $name = $_POST['product_name'];
+    //     $description = $_POST['product_description'];
+    //     $category = $_POST['product_category'];
+    //     $features = $_POST['product_features'];
+    //     $uses = $_POST['product_uses'];
+    //     $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
+
+    //     // Handle product image upload
+    //     $image = '';
+    //     if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == UPLOAD_ERR_OK) {
+    //         $uploadDir = '../uploads/products/';
+    //         if (!file_exists($uploadDir)) {
+    //             mkdir($uploadDir, 0777, true);
+    //         }
+
+    //         $fileName = time() . '_' . basename($_FILES['product_image']['name']);
+    //         $targetPath = $uploadDir . $fileName;
+
+    //         // Validate file type
+    //         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    //         $fileType = mime_content_type($_FILES['product_image']['tmp_name']);
+
+    //         if (in_array($fileType, $allowedTypes)) {
+    //             if (move_uploaded_file($_FILES['product_image']['tmp_name'], $targetPath)) {
+    //                 $image = 'uploads/products/' . $fileName;
+
+    //                 // Delete old image if editing
+    //                 if (isset($_POST['edit_product']) && $product_id && !empty($_POST['current_image'])) {
+    //                     $oldImagePath = '../' . $_POST['current_image'];
+    //                     if (file_exists($oldImagePath) && $_POST['current_image'] != $image) {
+    //                         unlink($oldImagePath);
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     } elseif (isset($_POST['current_image']) && !empty($_POST['current_image'])) {
+    //         $image = $_POST['current_image'];
+    //     }
+
+    //     try {
+    //         if (isset($_POST['edit_product']) && $product_id) {
+    //             // Update existing product
+    //             if ($image) {
+    //                 $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, image = ?, key_characteristics = ?, uses = ?, category = ? WHERE id = ?");
+    //                 $stmt->execute([$name, $description, $image, $features, $uses, $category, $product_id]);
+    //                 echo "<script>
+    //                         alert('Updated Successfully');
+    //                         window.location.href='admin.php';
+    //                     </script>";
+    //             } else {
+    //                 $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, key_characteristics = ?, uses = ?, category = ? WHERE id = ?");
+    //                 $stmt->execute([$name, $description, $features, $uses, $category, $product_id]);
+    //                 echo "<script>
+    //                         alert('Updated Successfully');
+    //                         window.location.href='admin.php';
+    //                     </script>";
+    //             }
+    //             $product_message = "Product updated successfully!";
+    //         } else {
+    //             // Add new product
+    //             $stmt = $pdo->prepare("INSERT INTO products (name, description, image, key_characteristics, uses, category) VALUES (?, ?, ?, ?, ?, ?)");
+    //             $stmt->execute([$name, $description, $image, $features, $uses, $category]);
+    //             $product_message = "Product added successfully!";
+    //         }
+    //     } catch (PDOException $e) {
+    //         $product_message = "Error: " . $e->getMessage();
+    //     }
+    // }
+
+
+
     if (isset($_POST['add_product']) || isset($_POST['edit_product'])) {
         $name = $_POST['product_name'];
         $description = $_POST['product_description'];
         $category = $_POST['product_category'];
         $features = $_POST['product_features'];
         $uses = $_POST['product_uses'];
-        $product_id = isset($_POST['product_id']) ? $_POST['product_id'] : null;
+        $product_id = $_POST['product_id'] ?? null;
 
-        // Handle product image upload
+        $uploadDir = '../uploads/products/';
+        if (!file_exists($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+
+        // ===========================
+        // 1️⃣ Handle main product image
+        // ===========================
         $image = '';
         if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] == UPLOAD_ERR_OK) {
-            $uploadDir = '../uploads/products/';
-            if (!file_exists($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
-            }
-
             $fileName = time() . '_' . basename($_FILES['product_image']['name']);
             $targetPath = $uploadDir . $fileName;
 
-            // Validate file type
             $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
             $fileType = mime_content_type($_FILES['product_image']['tmp_name']);
 
@@ -154,39 +236,85 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                 }
             }
-        } elseif (isset($_POST['current_image']) && !empty($_POST['current_image'])) {
+        } elseif (!empty($_POST['current_image'])) {
             $image = $_POST['current_image'];
         }
 
         try {
             if (isset($_POST['edit_product']) && $product_id) {
-                // Update existing product
-                if ($image) {
-                    $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, image = ?, key_characteristics = ?, uses = ?, category = ? WHERE id = ?");
-                    $stmt->execute([$name, $description, $image, $features, $uses, $category, $product_id]);
-                    echo "<script>
-                            alert('Updated Successfully');
-                            window.location.href='admin.php';
-                        </script>";
-                } else {
-                    $stmt = $pdo->prepare("UPDATE products SET name = ?, description = ?, key_characteristics = ?, uses = ?, category = ? WHERE id = ?");
-                    $stmt->execute([$name, $description, $features, $uses, $category, $product_id]);
-                    echo "<script>
-                            alert('Updated Successfully');
-                            window.location.href='admin.php';
-                        </script>";
+                // =======================================
+                // 2️⃣ Update existing product
+                // =======================================
+                $stmt = $pdo->prepare("UPDATE products SET name=?, description=?, key_characteristics=?, uses=?, category=? WHERE id=?");
+                $stmt->execute([$name, $description, $features, $uses, $category, $product_id]);
+
+                // =======================================
+                // 3️⃣ Handle multiple new images (if uploaded)
+                // =======================================
+                if (!empty($_FILES['product_image']['name'][0])) {
+                    foreach ($_FILES['product_image']['tmp_name'] as $key => $tmp_name) {
+                        if ($_FILES['product_image']['error'][$key] === UPLOAD_ERR_OK) {
+                            $fileName = uniqid() . '_' . basename($_FILES['product_image']['name'][$key]);
+                            $targetPath = $uploadDir . $fileName;
+
+                            // optional: validate mime type
+                            $mime = mime_content_type($tmp_name);
+                            $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                            if (!in_array($mime, $allowed)) continue;
+
+                            if (move_uploaded_file($tmp_name, $targetPath)) {
+                                $imagePath = 'uploads/products/' . $fileName;
+                                $stmt = $pdo->prepare("INSERT INTO product_images (product_id, image_path) VALUES (?, ?)");
+                                $stmt->execute([$product_id, $imagePath]);
+                            }
+                        }
+                    }
                 }
-                $product_message = "Product updated successfully!";
+
+                echo "<script>alert('Product updated successfully');window.location.href='admin.php';</script>";
             } else {
-                // Add new product
-                $stmt = $pdo->prepare("INSERT INTO products (name, description, image, key_characteristics, uses, category) VALUES (?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$name, $description, $image, $features, $uses, $category]);
-                $product_message = "Product added successfully!";
+                // =======================================
+                // 4️⃣ Add new product
+                // =======================================
+                $stmt = $pdo->prepare("INSERT INTO products (name, description, key_characteristics, uses, category) VALUES (?, ?, ?, ?, ?)");
+                $stmt->execute([$name, $description, $features, $uses, $category]);
+
+                // Get inserted product ID
+                $product_id = $pdo->lastInsertId();
+
+                // =======================================
+                // 5️⃣ Insert multiple images
+                // =======================================
+                if (!empty($_FILES['product_image']['name'][0])) {
+                    foreach ($_FILES['product_image']['tmp_name'] as $key => $tmp_name) {
+                        if ($_FILES['product_image']['error'][$key] === UPLOAD_ERR_OK) {
+                            $fileName = uniqid() . '_' . basename($_FILES['product_image']['name'][$key]);
+                            $targetPath = $uploadDir . $fileName;
+
+                            $mime = mime_content_type($tmp_name);
+                            $allowed = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+                            if (!in_array($mime, $allowed)) continue;
+
+                            if (move_uploaded_file($tmp_name, $targetPath)) {
+                                $imagePath = 'uploads/products/' . $fileName;
+                                $stmt = $pdo->prepare("INSERT INTO product_images (product_id, image_path) VALUES (?, ?)");
+                                $stmt->execute([$product_id, $imagePath]);
+                            }
+                        }
+                    }
+                }
+
+                echo "<script>alert('Product added successfully');window.location.href='admin.php';</script>";
             }
         } catch (PDOException $e) {
-            $product_message = "Error: " . $e->getMessage();
+            echo "Error: " . $e->getMessage();
         }
     }
+
+
+
+
+
 
     // Add/Edit Management Member
     if (isset($_POST['add_member']) || isset($_POST['edit_member'])) {
@@ -274,8 +402,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     unlink($imagePath);
                 }
             }
+            $query = $pdo->prepare("DELETE FROM product_images WHERE product_id = ?");
+            $query->execute([$product_id]);
 
-            $product_message = "Product deleted successfully!";
+            echo "<script>alert('Deleted the product Successfully');
+                            window.locatopn.href= 'admin.php';
+            </script>";
+
         } catch (PDOException $e) {
             $product_message = "Error deleting product: " . $e->getMessage();
         }
@@ -358,6 +491,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Handle GET requests for editing
 $edit_product = null;
 $edit_member = null;
+$product_images = [];
 
 if (isset($_GET['edit_product'])) {
     $pdo = getDBConnection();
@@ -366,10 +500,16 @@ if (isset($_GET['edit_product'])) {
         $stmt = $pdo->prepare("SELECT * FROM products WHERE id = ?");
         $stmt->execute([$product_id]);
         $edit_product = $stmt->fetch();
+
+        $stmt_images = $pdo->prepare("SELECT id, image_path FROM product_images WHERE product_id = ?");
+        $stmt_images->execute([$product_id]);
+        $product_images = $stmt_images->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         $product_message = "Error loading product: " . $e->getMessage();
     }
 }
+
+// Edit Member
 
 if (isset($_GET['edit_member'])) {
     $pdo = getDBConnection();
@@ -557,6 +697,8 @@ try {
     $management = [];
     $contacts = [];
     $users = [];
+    $visions = [];
+    $missions = [];
 }
 
 // Calculate statistics
@@ -742,6 +884,19 @@ try {
             max-height: 200px;
             margin-top: 10px;
             display: none;
+        }
+
+        .cancel-btn {
+            display: none;
+            margin-left: 110px;
+            margin-bottom: 15px;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+        }
+
+        .btns {
+            display: none;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -1231,37 +1386,69 @@ try {
                                     <input type="hidden" name="product_id" value="<?php echo $edit_product['id']; ?>">
                                     <input type="hidden" name="current_image" value="<?php echo $edit_product['image'] ?? ''; ?>">
                                 <?php endif; ?>
+
                                 <div class="mb-3">
                                     <label class="form-label">Product Name</label>
-                                    <input type="text" class="form-control" name="product_name" value="<?php echo $edit_product ? htmlspecialchars($edit_product['name']) : ''; ?>" required>
+                                    <input type="text" class="form-control" name="product_name"
+                                        value="<?php echo $edit_product ? htmlspecialchars($edit_product['name']) : ''; ?>" required>
                                 </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Description</label>
                                     <textarea class="form-control" name="product_description" rows="3" required><?php echo $edit_product ? htmlspecialchars($edit_product['description']) : ''; ?></textarea>
                                 </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Category</label>
-                                    <input type="text" class="form-control" name="product_category" value="<?php echo $edit_product ? htmlspecialchars($edit_product['category']) : ''; ?>" required>
+                                    <input type="text" class="form-control" name="product_category"
+                                        value="<?php echo $edit_product ? htmlspecialchars($edit_product['category']) : ''; ?>">
                                 </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Key Features</label>
                                     <textarea class="form-control" name="product_features" rows="3" required><?php echo $edit_product ? htmlspecialchars($edit_product['key_characteristics']) : ''; ?></textarea>
                                 </div>
+
                                 <div class="mb-3">
                                     <label class="form-label">Uses</label>
                                     <textarea class="form-control" name="product_uses" rows="3"><?php echo $edit_product ? htmlspecialchars($edit_product['uses']) : ''; ?></textarea>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Product Image</label>
-                                    <input type="file" class="form-control" name="product_image" id="product_image" accept="image/*">
-                                    <?php if ($edit_product && !empty($edit_product['image'])): ?>
-                                        <div class="mt-2">
-                                            <img src="../<?php echo $edit_product['image']; ?>" alt="Current Image" class="product-image-thumb">
-                                            <small class="d-block text-muted">Current image</small>
-                                        </div>
-                                    <?php endif; ?>
-                                    <img id="product_image_preview" class="image-preview mt-2" src="#" alt="Image Preview">
+
+                                <div id="imageInputsContainer">
+                                    <div class="mb-3 upload-group">
+                                        <label class="form-label">Product Image</label>
+                                        <input type="file" class="form-control product-image" name="product_image[]" accept="image/*">
+                                        <img class="image-preview mt-2" src="#" alt="Image Preview"
+                                            style="display:none; width:120px; height:120px; object-fit:cover;">
+                                    </div>
                                 </div>
+
+                                <button type="button" id="addImageBtn" title="Add more images"
+                                    style="margin:15px 0 15px 120px;">➕</button>
+                                <button type="button" class="cancel-btn" id="cancelBtn" style="display:none;">Cancel</button>
+
+                                <?php if ($edit_product && !empty($product_images)): ?>
+                                    <small class="d-block text-muted">Current images</small>
+                                    <div class="mt-2" id="existingImages">
+                                        <input type="hidden" id="product_id" value="<?= (int)$product_id ?>">
+                                        <?php foreach ($product_images as $img): ?>
+                                            <img src="../<?= htmlspecialchars($img['image_path']) ?>"
+                                                alt="Current Image"
+                                                class="product-image-thumb mb-3"
+                                                data-image-id="<?= (int)$img['id'] ?>"
+                                                data-image-path="<?= htmlspecialchars($img['image_path']) ?>"
+                                                style="width:120px; height:120px; object-fit:cover; margin:5px; border:1px solid #ccc; cursor:pointer;">
+                                        <?php endforeach; ?>
+
+                                    </div>
+                                <?php endif; ?>
+                                <input type="file" id="replaceImageFile" style="display:none;" accept="image/*">
+                                <div class="btns" id="actionButtons" style="display:none; margin-top:8px;">
+                                    <button id="replaceBtn" type="button">Edit</button>
+                                    <button id="deleteBtn" type="button">Delete</button>
+                                </div>
+
+
                                 <?php if ($edit_product): ?>
                                     <button type="submit" name="edit_product" class="btn btn-primary w-100">Update Product</button>
                                     <a href="admin.php" class="btn btn-secondary w-100 mt-2">Cancel</a>
@@ -1269,6 +1456,53 @@ try {
                                     <button type="submit" name="add_product" class="btn btn-primary w-100">Add Product</button>
                                 <?php endif; ?>
                             </form>
+
+                            <script>
+                                const addBtn = document.getElementById("addImageBtn");
+                                const container = document.getElementById("imageInputsContainer");
+                                const cancelBtn = document.getElementById("cancelBtn");
+
+                                // Add new file input dynamically
+                                addBtn.addEventListener("click", () => {
+                                    const div = document.createElement("div");
+                                    div.classList.add("upload-group");
+                                    div.innerHTML = `
+                                            <input type="file" class="form-control product-image" name="product_image[]" accept="image/*">
+                                            <img class="image-preview mt-2" src="#" alt="Image Preview" style="display:none; width:120px; height:120px; object-fit:cover;">
+                                        `;
+                                    container.appendChild(div);
+                                    cancelBtn.style.display = "inline-block";
+                                });
+
+                                // Remove last file input
+                                cancelBtn.addEventListener("click", () => {
+                                    const groups = container.querySelectorAll(".upload-group");
+                                    if (groups.length > 1) {
+                                        container.removeChild(groups[groups.length - 1]);
+                                    }
+                                    if (groups.length - 1 <= 1) {
+                                        cancelBtn.style.display = "none";
+                                    }
+                                });
+
+                                // Show image preview when file selected
+                                document.addEventListener("change", (e) => {
+                                    if (e.target.classList.contains("product-image")) {
+                                        const file = e.target.files[0];
+                                        if (file) {
+                                            const reader = new FileReader();
+                                            reader.onload = (ev) => {
+                                                // find the image-preview in the same upload-group
+                                                const parentGroup = e.target.closest(".upload-group");
+                                                const preview = parentGroup.querySelector(".image-preview");
+                                                preview.src = ev.target.result;
+                                                preview.style.display = "block";
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
@@ -1923,6 +2157,253 @@ try {
             });
         }
     </script>
+
+    <!-- <script>
+        const addBtn = document.getElementById("addImageBtn");
+        const container = document.getElementById("imageInputsContainer");
+        const cancelBtn = document.getElementById("cancelBtn");
+
+        addBtn.addEventListener("click", () => {
+            const div = document.createElement("div");
+            div.classList.add("upload-group");
+            div.innerHTML = `<input type="file" class="form-control" name="product_image[]" accept="image/*" multiple>
+                            <img id="product_image_preview" class="image-preview mt-2" src="#" alt="Image Preview">
+                            `;
+            container.appendChild(div);
+            const inputs = container.querySelectorAll('input[type="file"]');
+            if (inputs.length > 1) {
+                cancelBtn.style.display = 'inline-block';
+            }
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            const inputs = container.querySelectorAll('.upload-group');
+            if (inputs.length > 1) {
+                // Remove last input group
+                container.removeChild(inputs[inputs.length - 1]);
+            }
+
+            // Hide cancel button if only 1 input remains
+            if (inputs.length - 1 <= 1) {
+                cancelBtn.style.display = 'none';
+            }
+        });
+    </script>  -->
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const existingImages = document.getElementById('existingImages');
+            if (!existingImages) return;
+
+            const actionButtons = document.getElementById('actionButtons');
+            const deleteBtn = document.getElementById('deleteBtn');
+            const replaceBtn = document.getElementById('replaceBtn');
+            const replaceImageFile = document.getElementById('replaceImageFile');
+            const productId = document.getElementById('product_id').value;
+
+            let selectedImgEl = null;
+            // click any thumbnail to select
+            existingImages.addEventListener('click', (e) => {
+                const img = e.target.closest('.product-image-thumb');
+                if (!img) return;
+                // highlight selected
+                if (selectedImgEl) selectedImgEl.style.outline = '';
+                selectedImgEl = img;
+                selectedImgEl.style.outline = '3px solid #007bff';
+                actionButtons.style.display = 'block';
+                // move buttons below selection (optional)
+                actionButtons.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest'
+                });
+            });
+
+            // Edit
+
+            replaceBtn.addEventListener('click', () => {
+                if (!selectedImgEl) return alert('Select an image first');
+                replaceImageFile.click();
+            });
+
+            replaceImageFile.addEventListener('change', function() {
+                const file = this.files[0];
+                if (!file || !selectedImgEl) return;
+                const imageId = selectedImgEl.dataset.imageId;
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('image_id', imageId);
+                formData.append('product_id', productId);
+
+                fetch('replace_image.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(r => r.json())
+                    .then(resp => {
+                        if (resp.success) {
+                            // update thumbnail src (use returned new_path) and data-image-path
+                            selectedImgEl.src = '../' + resp.new_path;
+                            selectedImgEl.dataset.imagePath = resp.new_path;
+                            alert('Image replaced');
+                        } else {
+                            alert('Error: ' + (resp.error || 'Failed to replace image'));
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Network error');
+                    })
+                    .finally(() => {
+                        replaceImageFile.value = '';
+                        if (selectedImgEl) selectedImgEl.style.outline = '';
+                        actionButtons.style.display = 'none';
+                        selectedImgEl = null;
+                    });
+            });
+
+            // Delete
+            deleteBtn.addEventListener('click', () => {
+                if (!selectedImgEl) return alert('Select an image first');
+                if (!confirm('Are you sure you want to delete this image?')) return;
+
+                const imageId = selectedImgEl.dataset.imageId;
+                fetch('delete_image.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            image_id: imageId
+                        })
+                    })
+                    .then(r => r.json())
+                    .then(resp => {
+                        if (resp.success) {
+                            // remove from DOM
+                            selectedImgEl.remove();
+                            alert('Image deleted');
+                        } else {
+                            alert('Delete failed: ' + (resp.error || 'unknown'));
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Network error');
+                    })
+                    .finally(() => {
+                        if (selectedImgEl) selectedImgEl.style.outline = '';
+                        actionButtons.style.display = 'none';
+                        selectedImgEl = null;
+                    });
+            });
+        });
+    </script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const existingImages = document.getElementById('existingImages');
+            if (!existingImages) return;
+
+            const actionButtons = document.getElementById('actionButtons');
+            const deleteBtn = document.getElementById('deleteBtn');
+            const replaceBtn = document.getElementById('replaceBtn');
+            const replaceImageFile = document.getElementById('replaceImageFile');
+            const productId = document.getElementById('product_id').value;
+
+            let selectedImgEl = null;
+
+            // Select image
+            existingImages.addEventListener('click', (e) => {
+                const img = e.target.closest('.product-image-thumb');
+                if (!img) return;
+                if (selectedImgEl) selectedImgEl.style.outline = '';
+                selectedImgEl = img;
+                selectedImgEl.style.outline = '3px solid #007bff';
+                actionButtons.style.display = 'block';
+                actionButtons.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest'
+                });
+            });
+
+            // Edit image
+            replaceBtn.addEventListener('click', () => {
+                if (!selectedImgEl) return alert('Select an image first');
+                replaceImageFile.click(); // open hidden file input
+            });
+
+            replaceImageFile.addEventListener('change', function() {
+                const file = this.files[0];
+                if (!file || !selectedImgEl) return;
+
+                const imageId = selectedImgEl.dataset.imageId;
+                const formData = new FormData();
+                formData.append('image', file);
+                formData.append('image_id', imageId);
+                formData.append('product_id', productId);
+
+                fetch('replace_image.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(r => r.json())
+                    .then(resp => {
+                        if (resp.success) {
+                            selectedImgEl.src = '../' + resp.new_path;
+                            selectedImgEl.dataset.imagePath = resp.new_path;
+                            alert('Image replaced successfully');
+                        } else {
+                            alert('Error: ' + (resp.error || 'Failed to replace image'));
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Network error');
+                    })
+                    .finally(() => {
+                        replaceImageFile.value = '';
+                        if (selectedImgEl) selectedImgEl.style.outline = '';
+                        actionButtons.style.display = 'none';
+                        selectedImgEl = null;
+                    });
+            });
+
+            // Delete image
+            deleteBtn.addEventListener('click', () => {
+                if (!selectedImgEl) return alert('Select an image first');
+                if (!confirm('Are you sure you want to delete this image?')) return;
+
+                const imageId = selectedImgEl.dataset.imageId;
+                fetch('delete_image.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            image_id: imageId
+                        })
+                    })
+                    .then(r => r.json())
+                    .then(resp => {
+                        if (resp.success) {
+                            selectedImgEl.remove();
+                            alert('Image deleted successfully');
+                        } else {
+                            alert('Delete failed: ' + (resp.error || 'unknown'));
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Network error');
+                    })
+                    .finally(() => {
+                        if (selectedImgEl) selectedImgEl.style.outline = '';
+                        actionButtons.style.display = 'none';
+                        selectedImgEl = null;
+                    });
+            });
+        });
+    </script>
+
 </body>
 
 </html>

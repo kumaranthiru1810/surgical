@@ -54,7 +54,7 @@ if ($sql->rowCount() > 0) {
 
         @media (min-width:558px) and (max-width:768px) {
             .phone {
-                font-size: 12px;
+                font-size: 15px;
             }
         }
 
@@ -66,7 +66,7 @@ if ($sql->rowCount() > 0) {
 
         @media(min-width:425px) and (max-width:454px) {
             .phone {
-                font-size: 11px;
+                font-size: 12px;
             }
         }
 
@@ -102,6 +102,81 @@ if ($sql->rowCount() > 0) {
         @media(min-width:320px) and (max-width:374px) {
             .phone1 {
                 font-size: 13px;
+            }
+        }
+
+
+
+
+
+        /* Flash Message Styles */
+
+        #flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            /* hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 999999;
+        }
+
+        /* Message box */
+        #flash-box {
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease;
+        }
+
+        #flash-box h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        #flash-box p {
+            color: #444;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        #flash-ok {
+            margin-top: 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        #flash-ok:hover {
+            background-color: #2980b9;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 991px) {
+            .offcanvas {
+                background-color: blue !important;
             }
         }
     </style>
@@ -162,17 +237,17 @@ if ($sql->rowCount() > 0) {
                         <div class="social-icons text-center">
                             <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                             <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                            <a id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                         </div>
                     </div>
 
 
-                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                        <div class="contact-info text-end">
-                            <a id="top-whatsapp" class="phone text-decoration-none text-dark">
-                                <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
-                            </a>
-                        </div>
+                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                    <div class="contact-info text-end">
+                        <a href="tel:+919790972432"><i class="bi bi-telephone"></i></a>
+                        <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
+                            <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -185,35 +260,38 @@ if ($sql->rowCount() > 0) {
                         <div class="social-icons">
                             <a href="<?php echo $data1['facebook']; ?>" aria-label="Facebook" class="social-icon facebook"><i class="bi bi-facebook"></i></a>
                             <a href="<?php echo $data1['insta']; ?>" aria-label="Instagram" class="social-icon instagram"><i class="bi bi-instagram"></i></a>
-                            <a id="nav-open-chat2" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
+                            <a href="#" id="nav-open-chat" aria-label="WhatsApp" class="social-icon whatsapp"><i class="bi bi-whatsapp"></i></a>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
                         <div class="contact-info text-start">
                             <a href="mailto:<?php echo $data['email']; ?>" class="phone1 text-decoration-none text-dark">
                                 <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
                             </a>
                         </div>
                     </div>
-
-                    <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
-                        <div class="contact-info text-end">
-                            <a id="top-whatsapp2" class="phone1 text-decoration-none text-dark">
-                                <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
-                            </a>
-                        </div>
+                </div>
+                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                    <div class="contact-info text-end">
+                        <a href="tel:+919790972432"><i class="bi bi-phone"></i></a>
+                        <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
+                            <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
+                        </a>
                     </div>
                 </div>
             </div>
         </nav>
 
 
+
+
+
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="./index.php">
                     <div class="d-flex align-items-center">
                         <img src="./assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
                     </div>
@@ -230,13 +308,13 @@ if ($sql->rowCount() > 0) {
                             <a class="nav-link" href="./pages/about.php">About Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./pages/Products.php">Products</a>
+                            <a class="nav-link" href="./pages/products.php">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./pages/Management.php">Management</a>
+                            <a class="nav-link" href="./pages/management.php">Management</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="./forms/place_order.php">Place Order</a>
+                            <a class="nav-link" href="./forms/request_sample.php">Place Order</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="./pages/contact-us.php">Contact Us</a>
@@ -250,7 +328,7 @@ if ($sql->rowCount() > 0) {
                         </li>
                         <li class="nav-item">
                             <?php if (isset($_SESSION['name'])) { ?>
-                                <a href="./pages/logout.php" onclick="return confirm('Are you sure you want to logout?');" class="btn btn-primary me-3">Logout</a>
+                                <a href="./pages/logout.php" class="btn btn-primary me-3"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
                             <?php } else { ?>
                                 <a href="./pages/signin.php" class="btn btn-primary me-3">Sign In</a>
                             <?php } ?>
@@ -261,7 +339,7 @@ if ($sql->rowCount() > 0) {
         </nav>
     </div>
 
-    <section class="hero-section pt-4">
+    <section class="hero-section pt-5">
         <div class="container">
             <div class="row h-100 align-items-center flex-column">
                 <div class="col-lg-6 content-wrapper_btns" data-aos="fade-up" data-aos-duration="1000">
@@ -455,7 +533,7 @@ if ($sql->rowCount() > 0) {
         </button>
         <div class="helper-menu">
             <ul>
-                <li><a href="./forms/place_order.php">Place Orders</a></li>
+                <li><a href="./forms/request_sample.php">Place Orders</a></li>
                 <li><a href="./forms/get_a_qoute.php">Get Quote</a></li>
                 <li><a href="./forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
@@ -465,22 +543,6 @@ if ($sql->rowCount() > 0) {
             </ul>
         </div>
     </div>
-    <script>
-        document.getElementById('nav-open-chat2').addEventListener('click', function() {
-            let message = `How can I help You? %0A`;
-
-            const storeNumber = "919790972432"; // Your WhatsApp number
-            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
-
-            // WhatsApp URL - fixed encoding
-            const whatsappURL = isMobile ?
-                `https://wa.me/${storeNumber}?text=${message}` :
-                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
-
-            // Open WhatsApp in a new tab
-            window.open(whatsappURL, '_blank');
-        });
-    </script>
 
     <script>
         document.getElementById('top-whatsapp').addEventListener('click', function() {
@@ -512,9 +574,9 @@ if ($sql->rowCount() > 0) {
         <input type="text" id="chatbot-input" placeholder="Type your message...">
         <button id="chatbot-send">Send</button>
     </div> -->
-
+    
     <script>
-        document.getElementById('top-whatsapp2').addEventListener('click', function() {
+        document.getElementById('top-whatsapp').addEventListener('click', function() {
             let message = `How can I help You? %0A`;
 
             const storeNumber = "919790972432"; // Your WhatsApp number

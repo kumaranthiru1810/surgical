@@ -173,6 +173,7 @@ if ($sql->rowCount() > 0) {
           <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
             <div class="contact-info text-end">
               <div>
+                <a href="tel:+919790972432"><i class="bi bi-telephone"></i></a>
                 <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
                   <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                 </a>
@@ -207,6 +208,7 @@ if ($sql->rowCount() > 0) {
           <div class="col-6 col-md-4 col-lg-4 col-sm-3 col-xs-3">
             <div class="contact-info text-end">
               <div>
+                <a href="tel:+919790972432"><i class="bi bi-telephone"></i></a>
                 <a href="#" id="top-whatsapp2" class="phone1 text-decoration-none text-dark">
                   <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                 </a>
@@ -219,7 +221,7 @@ if ($sql->rowCount() > 0) {
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="../index.php">
         <div class="d-flex align-items-center">
           <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
         </div>
@@ -388,9 +390,10 @@ if ($sql->rowCount() > 0) {
         <!-- Contact Number -->
         <div class="col-md-6">
           <div class="d-flex flex-column align-items-center">
-            <div class="mb-3">
+            <div>
+              <a href="tel:+919790972432"><img src="../assets/contact-no.png" alt="Phone Icon" style="margin-top:-35px; padding-right:10px;"></a>
               <a href="#" id="whatsapp" class="phone1 text-decoration-none text-dark">
-                <i class="bi bi-whatsapp" style="color: #007BFF; font-size:50px;"></i>
+                <i class="bi bi-whatsapp" style="color: #007BFF; font-size:60px;"></i>
               </a>
             </div>
             <h5 class="mb-2">Contact Number</h5>
@@ -409,7 +412,9 @@ if ($sql->rowCount() > 0) {
               </a>
             </div>
             <h5 class="mb-2">Email us</h5>
-            <p class="text-muted"><?php echo htmlspecialchars($res['email']); ?></p>
+            <a href="mailto:<?php echo $res['email']; ?>" class="text-decoration-none text-dark">
+              <p class="text-muted"><?php echo htmlspecialchars($res['email']); ?></p>
+            </a>
           </div>
         </div>
       </div>
