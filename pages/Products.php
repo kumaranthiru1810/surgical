@@ -43,24 +43,15 @@ function getDBConnection()
 $pageTitle = "Bharathi Surgicals - Products";
 $pageDescription = "Explore our range of high-quality medical products including Absorbent Gauze and Roller Bandage.";
 
-// Fetch products from database
-$productCategories = [];
+
 
 try {
     $pdo = getDBConnection();
 
-    // Get all distinct categories
-    $stmt = $pdo->query("SELECT DISTINCT category FROM products ORDER BY category");
-    $categories = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-    // Get products for each category
-    foreach ($categories as $category) {
-        $stmt = $pdo->prepare("SELECT * FROM products WHERE category = ? ORDER BY name");
-        $stmt->execute([$category]);
-        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        $productCategories[$category] = $products;
-    }
+    // Get products 
+    $stmt = $pdo->prepare("SELECT * FROM products");
+    $stmt->execute();
+    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     // Fallback to hardcoded data if database fails
     $productCategories = [
@@ -229,13 +220,11 @@ try {
             color: #6c757d;
         }
 
-        .product-image {
-            height: 350px;
+        .product-image{
             object-fit: cover;
-            /* object-position:center; */
-            border-radius: 20px;
-            width: 40vw;
+            
         }
+
 
         .key-title {
             font-size: 24px;
@@ -245,6 +234,65 @@ try {
             margin-bottom: 15px;
             display: flex;
             align-items: center;
+        }
+
+        .image-slider {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 420px;
+            border-radius: 15px;
+            background: #f8f9fa;
+        }
+
+        .slides-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .product-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .prev-btn,
+        .next-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.35);
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            font-size: 22px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 5;
+            transition: background-color 0.2s;
+        }
+
+        .prev-btn:hover,
+        .next-btn:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .prev-btn {
+            left: 10px;
+        }
+
+        .next-btn {
+            right: 10px;
+        }
+
+        @media (max-width: 576px) {
+            .image-slider {
+                height: 380px;
+            }
         }
     </style>
 </head>
@@ -282,6 +330,7 @@ try {
                     <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
                         <div class="contact-info text-end">
                             <div>
+                                <a href="tel:+919790972432"><i class="bi bi-telephone"></i></a>
                                 <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
@@ -317,6 +366,7 @@ try {
                     <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
                         <div class="contact-info text-end">
                             <div>
+                                <a href="tel:+919790972432"><i class="bi bi-telephone"></i></a>
                                 <a href="#" id="top-whatsapp2" class="phone1 text-decoration-none text-dark">
                                     <i class="bi bi-whatssapp"></i><?php echo $data['phone']; ?>
                                 </a>
@@ -330,37 +380,37 @@ try {
 
 
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <div class="d-flex align-items-center">
-                    <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
-                </div>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../index.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./about.php">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Products.php">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./Management.php">Management</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../forms/place_order.php">Place Order</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="./contact-us.php">Contact Us</a>
-                    </li>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="../index.php">
+                    <div class="d-flex align-items-center">
+                        <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+                    </div>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.php">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./about.php">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Products.php">Products</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./Management.php">Management</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="../forms/place_order.php">Place Order</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="./contact-us.php">Contact Us</a>
+                        </li>
                         <li class="nav-item">
                             <?php if (isset($_SESSION['name'])) { ?>
                                 <a class="btn btn-primary me-3">HI, <?php echo $_SESSION['name']; ?></a>
@@ -399,115 +449,111 @@ try {
     </div>
 
     <?php
-    // Loop through product categories
     $categoryDelay = 100;
-    foreach ($productCategories as $categoryName => $products) {
-        $categoryDelay += 50;
-        echo '<!-- ' . $categoryName . ' -->
-        <div class="container py-5">
-            <h1 class="text-primary mb-4" data-aos="fade-up" data-aos-delay="' . $categoryDelay . '">' . $categoryName . '</h1>
-            <div class="row g-7">';
-
-        // Check if category has products
-        if (count($products) > 0) {
-            // Loop through products in this category
-            $productDelay = $categoryDelay;
-            foreach ($products as $product) {
-                $productDelay += 50;
-
-                // Handle image path - check if it's from database or fallback data
-                $imagePath = '';
-                if (!empty($product['image'])) {
-                    // If image path doesn't start with "../" and doesn't contain "assets", it's from database
-                    if (strpos($product['image'], '../') === false && strpos($product['image'], 'assets') === false) {
-                        $imagePath = '../' . $product['image'];
-                    } else {
-                        $imagePath = $product['image'];
-                    }
-                }
-
-                echo '<div class="col-md-6 col-lg-6 mt-5" data-aos="fade-up" data-aos-delay="' . $productDelay . '">
-                        <div class="card product-card h-100">';
-
-                // Display product image or placeholder
-                if (!empty($imagePath)) {
-                    echo '<a href="product-details.php?id=' . htmlspecialchars($product['id']) . '">
-                            <img src="' . $imagePath . '" class="product-image" alt="' . htmlspecialchars($product['name']) . '">
-                          </a>  
-                          ';
-                } else {
-                    echo '<div class="default-product-img">
-                            <i class="bi bi-image" style="font-size: 3rem;"></i>
-                          </div>';
-                }
-
-
-                echo '<div class="card-body">
-                        <a href="product-details.php?id=' . htmlspecialchars($product['id']) . '" style="text-decoration:none;">
-                            <h5 class="key-title">' . htmlspecialchars($product['name']) . '</h5>
-                        </a>
-                        <p class="card-text">' . htmlspecialchars($product['description']) . '</p>
-                        <div class="features-box">
-                            <div class="key-title">
-                                <i class="fas fa-list-check"></i> Key Features
-                            </div>
-                            <ul class="check-list">';
-                                $features = explode("\n", $product['key_characteristics']);
-                                foreach ($features as $line) {
-                                    if (trim($line)) {
-                                        echo '<li>' . htmlspecialchars(trim($line)) . '</li>';
-                                    }
-                                }
-                echo '      </ul>
-                        </div>';
-                        if($product['uses']!=NULL){
-                    echo '<div class="uses-box">
-                            <div class="key-title">
-                                <i class="fas fa-stethoscope"></i> Uses
-                            </div>
-                            <ul class="check-list">';
-                                $uses = explode("\n", htmlspecialchars($product['uses']));
-                                foreach ($uses as $line) {
-                                    if (trim($line)) {
-                                        echo "<li>" . trim($line) . "</li>";
-                                    }
-                                }
-                echo '      </ul>
-                        </div>';
-                            }
-                            
-
-
-
-                // Display price if available
-                // if (!empty($product['price'])) {
-                //     echo '<p class="card-text"><strong>Price: ₹' . number_format($product['price'], 2) . '</strong></p>';
-                // }
-
-                // Display stock status if available
-                // if (!empty($product['stock'])) {
-                //     $stockClass = $product['stock'] > 10 ? 'text-success' : ($product['stock'] > 0 ? 'text-warning' : 'text-danger');
-                //     $stockText = $product['stock'] > 0 ? 'In Stock (' . $product['stock'] . ')' : 'Out of Stock';
-                //     echo '<p class="card-text ' . $stockClass . '"><strong>' . $stockText . '</strong></p>';
-                // }
-
-                echo '</div>
-                            <div class="card-footer bg-transparent border-0">
-                                <a href="../forms/get_a_qoute.php" class="btn btn-outline-primary w-100 inquire-btn" data-product="' . htmlspecialchars($product['name']) . '">Get Quote</a>
-                            </div>
-                      </div>
-                    </div>';
-            }
-        } else {
-            echo '<div class="col-12 text-center">
-                    <p class="text-muted">No products available in this category yet.</p>
-                  </div>';
-        }
-
-        echo '</div>
-        </div>';
-    }
     ?>
+
+
+    <div class="container py-5">
+        <div class="row g-4">
+
+            <?php if (count($products) > 0): ?>
+                <?php foreach ($products as $product): ?>
+                    <?php
+                    $categoryDelay += 50;
+
+                    // Fetch all images for this product
+                    $imgStmt = $pdo->prepare("SELECT * FROM product_images WHERE product_id = ?");
+                    $imgStmt->execute([$product['id']]);
+                    $images = $imgStmt->fetchAll(PDO::FETCH_ASSOC);
+                    ?>
+
+                    <div class="col-md-6 col-lg-6 mt-4" data-aos="fade-up" data-aos-delay="<?= $categoryDelay ?>">
+                        <div class="card product-card h-100">
+
+                            <!-- Product Image Slider -->
+                            <div class="image-slider position-relative">
+                                <div class="slides-container">
+                                    <?php if (!empty($images)): ?>
+                                        <?php foreach ($images as $index => $img): ?>
+                                            <img
+                                                src="../<?= htmlspecialchars($img['image_path']) ?>"
+                                                class="product-slide <?= $index === 0 ? 'active' : '' ?> product-image"
+                                                alt="<?= htmlspecialchars($product['name']) ?>"
+                                                data-index="<?= $index ?>"
+                                            >
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
+
+                                <!-- Arrows -->
+                                <?php if (count($images) > 1): ?>
+                                    <button class="prev-btn" aria-label="Previous">&#10094;</button>
+                                    <button class="next-btn" aria-label="Next">&#10095;</button>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Product Details -->
+                            <div class="card-body">
+                                <a href="product-details.php?id=<?= htmlspecialchars($product['id']) ?>" style="text-decoration:none;">
+                                    <h5 class="key-title"><?= htmlspecialchars($product['name']) ?></h5>
+                                </a>
+                                <p class="card-text"><?= htmlspecialchars($product['description']) ?></p>
+
+                                <!-- Key Features -->
+                                <div class="features-box">
+                                    <div class="key-title">
+                                        <i class="fas fa-list-check"></i> Key Features
+                                    </div>
+                                    <ul class="check-list">
+                                        <?php
+                                        $features = explode("\n", $product['key_characteristics']);
+                                        foreach ($features as $line):
+                                            if (trim($line)): ?>
+                                                <li><?= htmlspecialchars(trim($line)) ?></li>
+                                        <?php endif;
+                                        endforeach; ?>
+                                    </ul>
+                                </div>
+
+                                <!-- Uses -->
+                                <?php if (!empty($product['uses'])): ?>
+                                    <div class="uses-box">
+                                        <div class="key-title">
+                                            <i class="fas fa-stethoscope"></i> Uses
+                                        </div>
+                                        <ul class="check-list">
+                                            <?php
+                                            $uses = explode("\n", $product['uses']);
+                                            foreach ($uses as $line):
+                                                if (trim($line)): ?>
+                                                    <li><?= htmlspecialchars(trim($line)) ?></li>
+                                            <?php endif;
+                                            endforeach; ?>
+                                        </ul>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+
+                            <!-- Footer -->
+                            <div class="card-footer bg-transparent border-0">
+                                <a href="../forms/get_a_qoute.php"
+                                    class="btn btn-outline-primary w-100 inquire-btn"
+                                    data-product="<?= htmlspecialchars($product['name']) ?>">
+                                    Get Quote
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="col-12 text-center">
+                    <p class="text-muted">No products available yet.</p>
+                </div>
+            <?php endif; ?>
+
+        </div>
+    </div>
 
     <!-- Inquiry Modal -->
     <!-- <div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
@@ -615,13 +661,13 @@ try {
     </footer>
 
     <div class="helper-widget">
-      <button class="helper-toggle">
-          <i class="bi bi-question-circle-fill"></i>
-      </button>
-      <div class="helper-menu">
-          <ul>
-            <li><a href="../forms/place_order.php">Place Orders</a></li>
-              <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
+        <button class="helper-toggle">
+            <i class="bi bi-question-circle-fill"></i>
+        </button>
+        <div class="helper-menu">
+            <ul>
+                <li><a href="../forms/place_order.php">Place Orders</a></li>
+                <li><a href="../forms/get_a_qoute.php">Get Quote</a></li>
                 <li><a href="../forms/request_sample.php">Request Samples</a></li>
                 <li><a href="#brochure">Download Brochure</a></li>
                 <li><a href="../forms/raise_of_complaint.php">Raise a Complaint</a></li>
@@ -832,6 +878,53 @@ try {
             document.getElementById('inquiryForm').reset();
         });
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.image-slider').forEach(slider => {
+                const container = slider.querySelector('.slides-container');
+                const slides = slider.querySelectorAll('.product-slide');
+                if (!slides.length) return;
+
+                let index = 0;
+
+                const updateSlide = () => {
+                    container.style.transform = `translateX(-${index * 100}%)`;
+                };
+
+                const prevBtn = slider.querySelector('.prev-btn');
+                const nextBtn = slider.querySelector('.next-btn');
+
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        index = (index - 1 + slides.length) % slides.length;
+                        updateSlide();
+                    });
+                }
+
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        index = (index + 1) % slides.length;
+                        updateSlide();
+                    });
+                }
+
+                // Swipe support (optional)
+                let startX = 0;
+                slider.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+                slider.addEventListener('touchend', e => {
+                    const endX = e.changedTouches[0].clientX;
+                    if (endX - startX > 50) {
+                        index = (index - 1 + slides.length) % slides.length;
+                    } else if (startX - endX > 50) {
+                        index = (index + 1) % slides.length;
+                    }
+                    updateSlide();
+                });
+            });
+        });
+    </script>
+
 </body>
 
 </html>
