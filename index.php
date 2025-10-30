@@ -518,7 +518,7 @@ if ($sql->rowCount() > 0) {
                     </div>
                     <div class="col-md-4">
                         <div class="footer-links text-end">
-                            <a href="#">Terms & Conditions</a>
+                            <a href="./terms_and_conditions.php">Terms & Conditions</a>
                             <a href="#">Privacy Policy</a>
                         </div>
                     </div>
