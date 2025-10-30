@@ -36,79 +36,6 @@ if ($sql->rowCount() > 0) {
     <link rel="stylesheet" href="./index.css" />
 
     <style>
-        .respon2 {
-            /* background-color: #fff !important; */
-            background-color: rgba(255, 255, 255, 0.95) !important;
-
-        }
-
-        .respon {
-            display: none;
-        }
-
-        @media (max-width: 991px) {
-            .offcanvas {
-                background-color: blue !important;
-            }
-        }
-
-        @media (min-width:558px) and (max-width:768px) {
-            .phone {
-                font-size: 15px;
-            }
-        }
-
-        @media(min-width:454px) and (max-width:557px) {
-            .phone {
-                font-size: 13px;
-            }
-        }
-
-        @media(min-width:425px) and (max-width:454px) {
-            .phone {
-                font-size: 12px;
-            }
-        }
-
-        @media(max-width:424px) {
-            .phone {
-                display: none;
-            }
-
-            .social-icons {
-                display: flex;
-                justify-self: start;
-                text-align: start;
-            }
-
-            .respon2 {
-                display: none;
-            }
-
-            .respon {
-                display: block;
-                /* background-color: #fff; */
-                background-color: rgba(255, 255, 255, 0.95) !important;
-
-            }
-
-            .respon .social-icons {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-
-        @media(min-width:320px) and (max-width:374px) {
-            .phone1 {
-                font-size: 13px;
-            }
-        }
-
-
-
-
-
         /* Flash Message Styles */
 
         #flash-overlay {
@@ -242,15 +169,15 @@ if ($sql->rowCount() > 0) {
                     </div>
 
 
-                <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
-                    <div class="contact-info text-end">
-                        <a href="tel:+919790972432"><i class="bi bi-telephone"></i></a>
-                        <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
-                            <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
-                        </a>
+                    <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
+                        <div class="contact-info text-end">
+                            <a href="tel:+919790972432" class="phone text-decoration-none text-dark"><i class="bi bi-telephone"></i></a>
+                            <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
+                                <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
         </nav>
 
         <nav class="respon">
@@ -272,71 +199,73 @@ if ($sql->rowCount() > 0) {
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
-                    <div class="contact-info text-end">
-                        <a href="tel:+919790972432"><i class="bi bi-phone"></i></a>
-                        <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
-                            <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
-                        </a>
+
+                    <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
+                        <div class="contact-info text-end">
+                            <a href="tel:+919790972432" class="phone1 text-decoration-none text-dark"><i class="bi bi-telephone"></i></a>
+                            <a href="#" id="top-whatsapp" class="phone1 text-decoration-none text-dark">
+                                <i class="bi bi-whatsapp"></i> <?php echo $data['phone']; ?>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </nav>
+    </div>
+    </nav>
 
 
 
 
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand" href="./index.php">
-                    <div class="d-flex align-items-center">
-                        <img src="./assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
-                    </div>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="./index.php">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./pages/about.php">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./pages/products.php">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./pages/management.php">Management</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./forms/request_sample.php">Place Order</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./pages/contact-us.php">Contact Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <?php if (isset($_SESSION['name'])) { ?>
-                                <a class="btn btn-primary2 me-3">HI, <?php echo $_SESSION['name']; ?></a>
-                            <?php } else { ?>
-                                <a href="./pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
-                            <?php } ?>
-                        </li>
-                        <li class="nav-item">
-                            <?php if (isset($_SESSION['name'])) { ?>
-                                <a href="./pages/logout.php" class="btn btn-primary2 me-3"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
-                            <?php } else { ?>
-                                <a href="./pages/signin.php" class="btn btn-primary me-3">Sign In</a>
-                            <?php } ?>
-                        </li>
-                    </ul>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="./index.php">
+                <div class="d-flex align-items-center">
+                    <img src="./assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
                 </div>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./index.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./pages/about.php">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./pages/products.php">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./pages/management.php">Management</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./forms/request_sample.php">Place Order</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./pages/contact-us.php">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <?php if (isset($_SESSION['name'])) { ?>
+                            <a class="btn btn-primary2 me-3">HI, <?php echo $_SESSION['name']; ?></a>
+                        <?php } else { ?>
+                            <a href="./pages/signup.php" class="btn btn-primary me-3">Sign Up</a>
+                        <?php } ?>
+                    </li>
+                    <li class="nav-item">
+                        <?php if (isset($_SESSION['name'])) { ?>
+                            <a href="./pages/logout.php" class="btn btn-primary2 me-3"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                        <?php } else { ?>
+                            <a href="./pages/signin.php" class="btn btn-primary me-3">Sign In</a>
+                        <?php } ?>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
     </div>
 
     <section class="hero-section pt-5">
@@ -574,7 +503,7 @@ if ($sql->rowCount() > 0) {
         <input type="text" id="chatbot-input" placeholder="Type your message...">
         <button id="chatbot-send">Send</button>
     </div> -->
-    
+
     <script>
         document.getElementById('top-whatsapp').addEventListener('click', function() {
             let message = `How can I help You? %0A`;

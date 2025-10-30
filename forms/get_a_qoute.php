@@ -218,72 +218,6 @@ if ($sql1->rowCount() > 0) {
             display: none;
         }
 
-        .respon2 {
-            background-color: rgba(255, 255, 255, 0.95) !important;
-        }
-
-        .respon {
-            display: none;
-        }
-
-        @media (max-width: 991px) {
-            .offcanvas {
-                background-color: blue !important;
-            }
-        }
-
-        @media (min-width:558px) and (max-width:768px) {
-            .phone {
-                font-size: 15px;
-            }
-        }
-
-        @media(min-width:454px) and (max-width:557px) {
-            .phone {
-                font-size: 13px;
-            }
-        }
-
-        @media(min-width:425px) and (max-width:454px) {
-            .phone {
-                font-size: 12px;
-            }
-        }
-
-        @media(max-width:424px) {
-            .phone {
-                display: none;
-            }
-
-            .social-icons {
-                display: flex;
-                justify-self: start;
-                text-align: start;
-            }
-
-            .respon2 {
-                display: none;
-            }
-
-            .respon {
-                display: block;
-                background-color: #fff;
-            }
-
-            .respon .social-icons {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-
-        @media(min-width:320px) and (max-width:374px) {
-            .phone1 {
-                font-size: 13px;
-            }
-        }
-
-
         /* CAPTCHA Styles */
         .captcha-container {
             background-color: #f8f9fa;
@@ -434,7 +368,7 @@ if ($sql1->rowCount() > 0) {
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg">
             <div class="container">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="../index.php">
                     <div class="d-flex align-items-center">
                         <img src="../assets/logo.jpeg" alt="Logo" class="me-2">
                     </div>
