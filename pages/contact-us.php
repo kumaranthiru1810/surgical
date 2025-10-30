@@ -42,71 +42,6 @@ if ($sql->rowCount() > 0) {
   <link rel="stylesheet" href="../index.css" />
 
   <style>
-    .respon2 {
-      background-color: rgba(255, 255, 255, 0.95) !important;
-    }
-
-    .respon {
-      display: none;
-    }
-
-    @media (max-width: 991px) {
-      .offcanvas {
-        background-color: blue !important;
-      }
-    }
-
-    @media (min-width:558px) and (max-width:768px) {
-      .phone {
-        font-size: 15px;
-      }
-    }
-
-    @media(min-width:454px) and (max-width:557px) {
-      .phone {
-        font-size: 13px;
-      }
-    }
-
-    @media(min-width:425px) and (max-width:454px) {
-      .phone {
-        font-size: 12px;
-      }
-    }
-
-    @media(max-width:424px) {
-      .phone {
-        display: none;
-      }
-
-      .social-icons {
-        display: flex;
-        justify-self: start;
-        text-align: start;
-      }
-
-      .respon2 {
-        display: none;
-      }
-
-      .respon {
-        display: block;
-        background-color: #fff;
-      }
-
-      .respon .social-icons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-    }
-
-    @media(min-width:320px) and (max-width:374px) {
-      .phone1 {
-        font-size: 13px;
-      }
-    }
-
     #map {
       height: 600px;
       width: 550px;
@@ -155,7 +90,7 @@ if ($sql->rowCount() > 0) {
                   <i class="bi bi-envelope-fill"></i><?php echo $data['email']; ?>
                 </a>
               </div>
-          </div>
+            </div>
           </div>
           <?php
           $sql1 = $pdo->query("SELECT * FROM social_links WHERE id = 1");
@@ -218,53 +153,53 @@ if ($sql->rowCount() > 0) {
         </div>
       </div>
     </nav>
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <a class="navbar-brand" href="../index.php">
-        <div class="d-flex align-items-center">
-          <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container">
+        <a class="navbar-brand" href="../index.php">
+          <div class="d-flex align-items-center">
+            <img src="../assets/logo.jpeg" alt="<?php echo $company_name; ?> Logo" class="me-2">
+          </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../index.php">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./about.php">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./Products.php">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./Management.php">Management</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../forms/place_order.php">Place Order</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./contact-us.php">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <?php if (isset($_SESSION['name'])) { ?>
+                <a class="btn btn-primary2 me-3">HI, <?php echo $_SESSION['name']; ?></a>
+              <?php } else { ?>
+                <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
+              <?php } ?>
+            </li>
+            <li class="nav-item">
+              <?php if (isset($_SESSION['name'])) { ?>
+                <a href="./logout.php" onclick="return confirm('Are you sure you want to logout?');" class="btn btn-primary2 me-3">Logout</a>
+              <?php } else { ?>
+                <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
+              <?php } ?>
+            </li>
+          </ul>
         </div>
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="../index.php">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./about.php">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./Products.php">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./Management.php">Management</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="../forms/place_order.php">Place Order</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./contact-us.php">Contact Us</a>
-          </li>
-          <li class="nav-item">
-            <?php if (isset($_SESSION['name'])) { ?>
-              <a class="btn btn-primary2 me-3">HI, <?php echo $_SESSION['name']; ?></a>
-            <?php } else { ?>
-              <a href="./signup.php" class="btn btn-primary me-3">Sign Up</a>
-            <?php } ?>
-          </li>
-          <li class="nav-item">
-            <?php if (isset($_SESSION['name'])) { ?>
-              <a href="./logout.php" onclick="return confirm('Are you sure you want to logout?');" class="btn btn-primary2 me-3">Logout</a>
-            <?php } else { ?>
-              <a href="./signin.php" class="btn btn-primary me-3">Sign In</a>
-            <?php } ?>
-          </li>
-        </ul>
-      </div>
     </nav>
   </div>
 
@@ -560,33 +495,33 @@ if ($sql->rowCount() > 0) {
                   <i class="bi bi-envelope-fill"></i> <?php echo $data['email']; ?>
                 </a>
               </div>
-                <div>
-                  <a href="https://www.google.com/maps/search/<?php echo $data['address']; ?>" target="_blank" class="text-decoration-none text-dark">
-                    <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
-                  </a>
-                </div>
-
+              <div>
+                <a href="https://www.google.com/maps/search/<?php echo $data['address']; ?>" target="_blank" class="text-decoration-none text-dark">
+                  <i class="bi bi-geo-alt-fill"></i> <?php echo $data['address']; ?>
+                </a>
               </div>
+
             </div>
           </div>
+        </div>
 
-          <div class="footer-bottom">
-            <div class="row">
-              <div class="col-md-4">
-                <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
-              </div>
-              <div class="col-md-4 text-center">
-                <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
-              </div>
-              <div class="col-md-4">
-                <div class="footer-links text-end">
-                  <a href="#">Terms & Conditions</a>
-                  <a href="#">Privacy Policy</a>
-                </div>
+        <div class="footer-bottom">
+          <div class="row">
+            <div class="col-md-4">
+              <p>Developed by <a href="https://anjanainfotech.in/" style="color: #007BFF; text-decoration: none;">Anjana Infotech</a></p>
+            </div>
+            <div class="col-md-4 text-center">
+              <p>© <?php echo date('Y'); ?> All Rights Reserved.</p>
+            </div>
+            <div class="col-md-4">
+              <div class="footer-links text-end">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
               </div>
             </div>
           </div>
         </div>
+      </div>
     </footer>
 
     <div class="helper-widget">
@@ -608,36 +543,36 @@ if ($sql->rowCount() > 0) {
 
 
     <script>
-        document.getElementById('top-whatsapp').addEventListener('click', function() {
-            let message = `How can I help You? %0A`;
+      document.getElementById('top-whatsapp').addEventListener('click', function() {
+        let message = `How can I help You? %0A`;
 
-            const storeNumber = "919790972432"; // Your WhatsApp number
-            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+        const storeNumber = "919790972432"; // Your WhatsApp number
+        const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
-            // WhatsApp URL - fixed encoding
-            const whatsappURL = isMobile ?
-                `https://wa.me/${storeNumber}?text=${message}` :
-                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+        // WhatsApp URL - fixed encoding
+        const whatsappURL = isMobile ?
+          `https://wa.me/${storeNumber}?text=${message}` :
+          `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
 
-            // Open WhatsApp in a new tab
-            window.open(whatsappURL, '_blank');
-        });
+        // Open WhatsApp in a new tab
+        window.open(whatsappURL, '_blank');
+      });
     </script>
     <script>
-        document.getElementById('top-whatsapp2').addEventListener('click', function() {
-            let message = `How can I help You? %0A`;
+      document.getElementById('top-whatsapp2').addEventListener('click', function() {
+        let message = `How can I help You? %0A`;
 
-            const storeNumber = "919790972432"; // Your WhatsApp number
-            const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+        const storeNumber = "919790972432"; // Your WhatsApp number
+        const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
-            // WhatsApp URL - fixed encoding
-            const whatsappURL = isMobile ?
-                `https://wa.me/${storeNumber}?text=${message}` :
-                `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
+        // WhatsApp URL - fixed encoding
+        const whatsappURL = isMobile ?
+          `https://wa.me/${storeNumber}?text=${message}` :
+          `https://web.whatsapp.com/send?phone=${storeNumber}&text=${message}`;
 
-            // Open WhatsApp in a new tab
-            window.open(whatsappURL, '_blank');
-        });
+        // Open WhatsApp in a new tab
+        window.open(whatsappURL, '_blank');
+      });
     </script>
 
     <script>

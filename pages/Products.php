@@ -115,70 +115,6 @@ try {
     <!-- css -->
     <link rel="stylesheet" href="../index.css" />
     <style>
-        .respon2 {
-            background-color: rgba(255, 255, 255, 0.95) !important;
-        }
-
-        .respon {
-            display: none;
-        }
-
-        @media (max-width: 991px) {
-            .offcanvas {
-                background-color: blue !important;
-            }
-        }
-
-        @media (min-width:558px) and (max-width:768px) {
-            .phone {
-                font-size: 15px;
-            }
-        }
-
-        @media(min-width:454px) and (max-width:557px) {
-            .phone {
-                font-size: 13px;
-            }
-        }
-
-        @media(min-width:425px) and (max-width:454px) {
-            .phone {
-                font-size: 12px;
-            }
-        }
-
-        @media(max-width:424px) {
-            .phone {
-                display: none;
-            }
-
-            .social-icons {
-                display: flex;
-                justify-self: start;
-                text-align: start;
-            }
-
-            .respon2 {
-                display: none;
-            }
-
-            .respon {
-                display: block;
-                background-color: #fff;
-            }
-
-            .respon .social-icons {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-
-        @media(min-width:320px) and (max-width:374px) {
-            .phone1 {
-                font-size: 13px;
-            }
-        }
 
         .product-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -330,7 +266,7 @@ try {
                     <div class="col-4 col-md-4 col-lg-4 mt-2 col-sm-4 col-xs-6">
                         <div class="contact-info text-end">
                             <div>
-                                <a href="tel:+919790972432"><i class="bi bi-telephone"></i></a>
+                                <a href="tel:+919790972432" class="phone text-decoration-none text-dark"><i class="bi bi-telephone"></i></a>
                                 <a href="#" id="top-whatsapp" class="phone text-decoration-none text-dark">
                                     <i class="bi bi-whatsapp"></i><?php echo $data['phone']; ?>
                                 </a>
@@ -366,7 +302,7 @@ try {
                     <div class="col-6 col-md-4 col-lg-4 mt-2 col-sm-3 col-xs-3">
                         <div class="contact-info text-end">
                             <div>
-                                <a href="tel:+919790972432"><i class="bi bi-telephone"></i></a>
+                                <a href="tel:+919790972432" class="phone text-decoration-none text-dark"><i class="bi bi-telephone"></i></a>
                                 <a href="#" id="top-whatsapp2" class="phone1 text-decoration-none text-dark">
                                     <i class="bi bi-whatssapp"></i><?php echo $data['phone']; ?>
                                 </a>

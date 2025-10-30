@@ -144,70 +144,8 @@ if (empty($managementTeam)) {
             justify-content: center;
             color: #6c757d;
         }
-
-        .respon2 {
-            background-color: rgba(255, 255, 255, 0.95) !important;
-        }
-
-        .respon {
-            display: none;
-        }
-
-        @media (max-width: 991px) {
-            .offcanvas {
-                background-color: blue !important;
-            }
-        }
-
-        @media (min-width:558px) and (max-width:768px) {
-            .phone {
-                font-size: 15px;
-            }
-        }
-
-        @media(min-width:454px) and (max-width:557px) {
-            .phone {
-                font-size: 13px;
-            }
-        }
-
-        @media(min-width:425px) and (max-width:454px) {
-            .phone {
-                font-size: 12px;
-            }
-        }
-
-        @media(max-width:424px) {
-            .phone {
-                display: none;
-            }
-
-            .social-icons {
-                display: flex;
-                justify-self: start;
-                text-align: start;
-            }
-
-            .respon2 {
-                display: none;
-            }
-
-            .respon {
-                display: block;
-                background-color: #fff;
-            }
-
-            .respon .social-icons {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-        }
-
-        @media(min-width:320px) and (max-width:374px) {
-            .phone1 {
-                font-size: 13px;
-            }
+        .management-name-card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
